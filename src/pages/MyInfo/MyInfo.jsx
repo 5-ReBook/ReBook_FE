@@ -1,21 +1,45 @@
 import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import AuthAxios from '../../interceptors/AuthAxios';
 
 const MyInfo = () => {
   const { user } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [nickname, setNickname] = useState('');
   const [university, setUniversity] = useState('');
   const [majors, setMajors] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userInfoResponse = AuthAxios.get('http://localhost:8080/members');
+
+        if (userInfoResponse.status === 200) {
+          const { username, nickname, university, majors } =
+            userInfoResponse.data.result;
+          setUser({ username, nickname, university, majors });
+          setNickname(nickname);
+          setMajors(majors);
+          setUniversity(university);
+        }
+      } catch (error) {
+        console.error('fetching user info failed:', error);
+        alert('재로그인이 필요합니다.');
+      }
+    };
+
     if (user) {
       setNickname(user.nickname);
       setUniversity(user.university);
       setMajors(user.majors);
+    } else {
+      fetchUserData();
     }
-  }, [user]);
+    console.log(user);
+  }, [user, setUser, navigate]);
 
   const handleEditProfile = () => {
     alert('프로필 사진을 편집합니다.');
