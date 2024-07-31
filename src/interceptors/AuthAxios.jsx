@@ -64,7 +64,7 @@ AuthAxios.interceptors.response.use(
       } catch (refreshError) {
         // 토큰 갱신 실패 시, 사용자 로그아웃 처리 및 로그인 페이지로 리디렉션
         localStorage.removeItem('Authorization');
-        window.location.href = '/login';
+        window.location.href = '/';
         return Promise.reject(refreshError);
       }
     }
