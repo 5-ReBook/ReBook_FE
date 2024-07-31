@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from 'react-router-dom';
+import SignUp from './pages/SignUp/SignUp';
+import Footer from './components/Footer';
+import Login from './pages/Login/Login';
+import Products from './pages/Product/Products';
+import MyInfo from './pages/MyInfo/MyInfo';
+import { UserProvider } from './context/UserContext';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('Authorization');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <UserProvider>
+      <Router>
+        <div style={{ minHeight: '100vh', position: 'relative' }}>
+          <header>
+            <h1>ReBook Logo</h1>
+          </header>
+          <main style={{ paddingBottom: '60px' }}>
+            {' '}
+            {/* Footer를 위한 공간 확보 */}
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  !isAuthenticated ? (
+                    <Login onLogin={() => setIsAuthenticated(true)} />
+                  ) : (
+                    <Navigate to="/products" replace />
+                  )
+                }
+              />
+              <Route path="/signup" element={<SignUp />} />
+              <Route
+                path="/products"
+                element={
+                  isAuthenticated ? <Products /> : <Navigate to="/" replace />
+                }
+              />
+              <Route
+                path="/myinfo/*"
+                element={
+                  isAuthenticated ? <MyInfo /> : <Navigate to="/" replace />
+                }
+              />
+            </Routes>
+          </main>
+          {isAuthenticated && <Footer />}{' '}
+          {/* 로그인된 상태에서만 Footer 표시 */}
+        </div>
+      </Router>
+    </UserProvider>
+  );
 }
 
-export default App
+export default App;
