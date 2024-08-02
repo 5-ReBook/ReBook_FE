@@ -1,12 +1,11 @@
 import { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import AuthAxios from '../../interceptors/AuthAxios';
+import './styles/MyInfo.style.css';
 
 const MyInfo = () => {
-  const { user } = useContext(UserContext);
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [nickname, setNickname] = useState('');
   const [university, setUniversity] = useState('');
   const [majors, setMajors] = useState('');
@@ -15,30 +14,32 @@ const MyInfo = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userInfoResponse = AuthAxios.get('http://localhost:8080/members');
+        const userInfoResponse = await AuthAxios.get(
+          'http://localhost:8080/members',
+        );
 
         if (userInfoResponse.status === 200) {
           const { username, nickname, university, majors } =
             userInfoResponse.data.result;
           setUser({ username, nickname, university, majors });
           setNickname(nickname);
-          setMajors(majors);
           setUniversity(university);
+          setMajors(majors);
         }
       } catch (error) {
         console.error('fetching user info failed:', error);
         alert('재로그인이 필요합니다.');
+        navigate('/'); // 에러 발생 시 메인 페이지로 이동
       }
     };
 
-    if (user) {
+    if (!user) {
+      fetchUserData();
+    } else {
       setNickname(user.nickname);
       setUniversity(user.university);
       setMajors(user.majors);
-    } else {
-      fetchUserData();
     }
-    console.log(user);
   }, [user, setUser, navigate]);
 
   const handleEditProfile = () => {
@@ -50,7 +51,7 @@ const MyInfo = () => {
   };
 
   const handleLogout = () => {
-    delete axios.defaults.headers.common['Authorization'];
+    delete AuthAxios.defaults.headers.common['Authorization'];
     document.cookie =
       'refresh=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     localStorage.removeItem('Authorization');
@@ -82,86 +83,69 @@ const MyInfo = () => {
 
   return (
     <div>
-      <div style={profileImageContainerStyle} onClick={handleEditProfile}>
-        <img
-          src="https://via.placeholder.com/150"
-          alt="프로필"
-          style={profileImageStyle}
-        />
+      <div className="profile-image__container_outer">
+        <div className="profile-image__container_inner">
+          <img
+            className="profile-image"
+            src="https://via.placeholder.com/150"
+            alt="프로필사진"
+          />
+        </div>
+        <button className="profile-image__button" onClick={handleEditProfile}>
+          📷
+        </button>
       </div>
       <div>
-        <div>
+        <div className="user-info__container_outer">
           <label htmlFor="nickname">닉네임</label>
-          <div id="nickname" style={infoStyle}>
+          <div className="user-info__container_inner">
             {nickname || '닉네임 정보 없음'}
+            <button
+              className="user-info__edit-button"
+              onClick={() => alert('닉네임 수정')}
+            >
+              ✏️
+            </button>
           </div>
         </div>
-        <div>
+        <div className="user-info__container_outer">
           <label htmlFor="university">대학교</label>
-          <div id="university" style={infoStyle}>
+          <div className="user-info__container_inner">
             {university || '대학교 정보 없음'}
+            <button
+              className="user-info__edit-button"
+              onClick={() => alert('대학교 수정')}
+            >
+              ✏️
+            </button>
           </div>
         </div>
-        <div>
+        <div className="user-info__container_outer">
           <label htmlFor="majors">관심전공들</label>
-          <div id="majors" style={scrollableInfoStyle}>
+          <div className="user-info__container_inner-scrollable">
             {majors || '관심 전공 정보 없음'}
+            <button
+              className="user-info__edit-button"
+              onClick={() => alert('관심 전공 수정')}
+            >
+              ✏️
+            </button>
           </div>
         </div>
       </div>
-      <div style={{ marginTop: '20px' }}>
-        <button
-          onClick={handleSave}
-          style={{ display: 'block', marginBottom: '10px' }}
-        >
+      <div className="user-info__button-container">
+        <button className="user-info__button" onClick={handleSave}>
           수정하기
         </button>
-        <button
-          onClick={handleLogout}
-          style={{ display: 'block', marginBottom: '10px' }}
-        >
+        <button className="user-info__button" onClick={handleLogout}>
           로그아웃
         </button>
-        <button onClick={handleDeleteAccount} style={{ display: 'block' }}>
+        <button className="user-info__button" onClick={handleDeleteAccount}>
           회원 탈퇴
         </button>
       </div>
     </div>
   );
-};
-
-const profileImageContainerStyle = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '150px',
-  height: '150px',
-  borderRadius: '50%',
-  overflow: 'hidden',
-  border: '3px solid #ccc',
-  margin: '0 auto',
-};
-
-const profileImageStyle = {
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-};
-
-const infoStyle = {
-  padding: '10px',
-  border: '1px solid #ddd',
-  borderRadius: '4px',
-  backgroundColor: '#f9f9f9',
-  marginTop: '5px',
-  maxWidth: '300px', // 가로 최대 길이 설정
-  overflowX: 'hidden', // 가로 스크롤 숨기기
-};
-
-const scrollableInfoStyle = {
-  ...infoStyle,
-  maxHeight: '150px', // 최대 높이 설정
-  overflowY: 'auto', // 세로 스크롤 설정
 };
 
 export default MyInfo;
