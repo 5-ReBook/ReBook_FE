@@ -43,3 +43,20 @@
   font-size: 24px;
   color: #a345f0;
 }
+
+.status-label {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 12px;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.pending {
+  background-color: #a674f5; /* 판매중 색상 */
+}
+
+.completed {
+  background-color: #aaa; /* 판매완료 색상 */
+}

@@ -1,6 +1,20 @@
 import './ProductListItem.css';
 
 const ProductListItem = ({ product }) => {
+  const getStatusLabel = (status) => {
+    if (status === 'PENDING') {
+      return (
+        <span className="status-label pending">판매중</span>
+      );
+    } else if (status === 'COMPLETED') {
+      return (
+        <span className="status-label completed">
+          판매완료
+        </span>
+      );
+    }
+  };
+
   return (
     <div className="ProductListItem">
       <div className="img_section">
@@ -14,7 +28,7 @@ const ProductListItem = ({ product }) => {
           {product.university} {product.major}
         </div>
         <div className="price">{product.price}</div>
-        <div className="status">{product.status}</div>
+        {getStatusLabel(product.status)}
       </div>
     </div>
   );
