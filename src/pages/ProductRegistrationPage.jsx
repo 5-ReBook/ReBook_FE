@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import InputField from '../components/Product/InputField';
 import Button from '../components/Button';
 import Header from '../components/Header';
@@ -11,6 +12,7 @@ const ProductRegistrationPage = () => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
+  const nav = useNavigate();
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
@@ -57,7 +59,12 @@ const ProductRegistrationPage = () => {
 
   return (
     <div className="product-registration">
-      <Header leftChild={'<'} title={'ReBook'} />
+      <Header
+        title={'ReBook'}
+        leftChild={
+          <button onClick={() => nav(-1)}>{'<'}</button>
+        }
+      />
 
       <InputField
         label="글 제목"

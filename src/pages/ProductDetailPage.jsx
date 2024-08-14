@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import ProductImage from '../components/Product/ProductImage';
 import SellerInfo from '../components/Product/SellerInfo';
@@ -8,6 +9,7 @@ import Button from '../components/Button';
 
 const ProductDetailPage = () => {
   const [product, setProduct] = useState(null);
+  const nav = useNavigate();
 
   useEffect(() => {
     // JSON 파일에서 데이터를 불러옴
@@ -32,7 +34,12 @@ const ProductDetailPage = () => {
 
   return (
     <div className="product-detail">
-      <Header />
+      <Header
+        title={'ReBook'}
+        leftChild={
+          <button onClick={() => nav(-1)}>{'<'}</button>
+        }
+      />
       <ProductImage
         imageUrl={product.imageUrl}
         title={product.title}
