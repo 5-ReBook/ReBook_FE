@@ -1,0 +1,78 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px; /* 사이드바를 왼쪽에 숨김 */
+  width: 250px;
+  height: 100%;
+  background-color: #f4f4f4;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar.open {
+  left: 0; /* 사이드바가 열릴 때 화면에 보이게 함 */
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.sidebar-content {
+  padding: 20px;
+}
+
+.profile {
+  text-align: center;
+  padding: 20px 0;
+  background-color: #d2a8ff;
+  color: #000;
+  border-radius: 5px;
+}
+
+.profile img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.profile h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.profile p {
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 10px 0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar ul li a i {
+  margin-right: 10px;
+}

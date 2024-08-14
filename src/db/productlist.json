@@ -1,0 +1,29 @@
+[
+  {
+    "productId": 1,
+    "storeFileName": "8a446282-fa27-4d9d-8730-32c63ef6f032.png",
+    "title": "자료구조",
+    "price": 12800,
+    "university": "인천대학교",
+    "major": "컴퓨터공학부",
+    "status": "PENDING"
+  },
+  {
+    "productId": 2,
+    "storeFileName": "8a446282-fa27-4d9d-8730-32c63ef6f032.png",
+    "title": "데이터베이스",
+    "price": 14800,
+    "university": "서울대학교",
+    "major": "컴퓨터공학부",
+    "status": "PENDING"
+  },
+  {
+    "productId": 3,
+    "storeFileName": "8a446282-fa27-4d9d-8730-32c63ef6f032.png",
+    "title": "Academic English",
+    "price": 23000,
+    "university": "서울대학교",
+    "major": "",
+    "status": "PENDING"
+  }
+]

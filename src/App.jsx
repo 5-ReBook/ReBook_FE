@@ -1,30 +1,27 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Signin from './views/Signin/Signin';
-
-function Product() {
-  return <h1>Product 페이지입니다.</h1>;
-}
+import { Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+// import ProductRegistrationPage from "./pages/ProductRegistrationPage";
+// import ProductDetailPage from "./pages/ProductDetailPage";
+// import MyProductsPage from "./pages/MyProductsPage";
 
 function App() {
-  const isAuthenticated = localStorage.getItem('Authorization');
+  const isAuthenticated = localStorage.getItem("Authorization");
 
   return (
-    <Router>
-      <Routes>
-        <Route 
-          path="/signin" 
-          element={!isAuthenticated ? <Signin /> : <Navigate to="/product" />} 
-        />
-        <Route 
-          path="/product" 
-          element={isAuthenticated ? <Product /> : <Navigate to="/signin" />} 
-        />
-        <Route 
-          path="/" 
-          element={<Navigate to={isAuthenticated ? "/product" : "/signin"} />} 
-        />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      {/* <Route
+        path="/signin"
+        element={!isAuthenticated ? <Signin /> : <Navigate to="/product" />}
+      /> */}
+      {/* <Route
+        path="/product"
+        element={isAuthenticated ? <Product /> : <Navigate to="/signin" />}
+      /> */}
+      {/* <Route path="/products/new" element={<ProductRegistrationPage />} /> */}
+      {/* <Route path="/products/detail" element={<ProductDetailPage />} /> */}
+      {/* <Route path="/products/me" element={<MyProductsPage />} /> */}
+    </Routes>
   );
 }
 

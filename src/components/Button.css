@@ -1,0 +1,22 @@
+.Button {
+  width: 100%; /* 버튼을 부모 요소의 너비에 맞게 확장 */
+  padding: 15px; /* 버튼의 상하좌우에 패딩을 추가 */
+  font-size: 16px; /* 텍스트 크기 */
+  font-weight: bold; /* 텍스트를 굵게 표시 */
+  color: white; /* 텍스트 색상 */
+  background-color: #9e6cff; /* 버튼 배경색 */
+  border: none; /* 테두리 없음 */
+  border-radius: 10px; /* 버튼의 모서리를 둥글게 */
+  cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+  text-align: center; /* 텍스트를 가운데 정렬 */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
+  transition: background-color 0.3s ease; /* 배경색 전환 애니메이션 */
+}
+
+.Button:hover {
+  background-color: #824de8; /* 호버 시 버튼 색상 */
+}
+
+.Button:active {
+  background-color: #6c3bbf; /* 클릭 시 버튼 색상 */
+}

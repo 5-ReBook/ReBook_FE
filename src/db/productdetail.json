@@ -1,0 +1,12 @@
+{
+  "imageUrl": "/path/to/book-image.jpg",
+  "sellerImageUrl": "/path/to/seller-image.jpg",
+  "sellerName": "이서준",
+  "sellerUniversity": "단국대학교 컴퓨터공학부",
+  "status": "판매중",
+  "title": "이산 수학 판매합니다.",
+  "description": "올해 3월에 구매한 책입니다. 필기한 적 없어서 깨끗합니다.",
+  "price": 22000,
+  "university": "단국대학교",
+  "major": "컴퓨터공학부"
+}
