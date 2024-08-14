@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <h1>REBOOK!!!!</h1>
     <App />
   </BrowserRouter>
 );
