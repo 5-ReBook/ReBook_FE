@@ -1,0 +1,82 @@
+.signin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f8f8f8;
+  }
+  
+  .signin-title {
+    font-family: 'Cursive', sans-serif;
+    font-size: 48px;
+    margin-bottom: 40px;
+  }
+  
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 400px;
+  }
+  
+  .input-container input {
+    height: 40px;
+    margin-bottom: 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 16px;
+  }
+  
+  .button-row {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 400px;
+    margin-bottom: 20px;
+  }
+  
+  .signup-button,
+  .signin-button {
+    width: 48%;
+    background-color: #9b59b6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    height: 45px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .signup-button {
+    background-color: #ffffff;
+    color: #9b59b6;
+    border: 2px solid #9b59b6;
+  }
+  
+  .divider {
+    width: 80%;
+    max-width: 400px;
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+  }
+  
+  .kakao-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  
+  .kakao-image {
+    width: 80%;
+    max-width: 320px;
+    height: auto;
+  }
+  
+  
