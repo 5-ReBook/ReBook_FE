@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import FilterBar from '../components/Product/FilterBar';
 import ProductList from '../components/Product/ProductList';
 import Header from '../components/Header';
+import Sidebar from '../components/SideBar';
+import axios from 'axios';
 
 const MainPage = () => {
   const [products, setProducts] = useState([]);
@@ -12,15 +14,40 @@ const MainPage = () => {
     maxPrice: '',
     sortOrder: 'asc',
   });
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    fetch('src/db/productlist.json')
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
-      .catch((error) =>
-        console.error('Error fetching products', error)
-      );
+    axios
+      .get('/src/db/productlist.json')
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.error(
+          'There was an error fetching the products!',
+          error
+        );
+      });
   }, []);
+
+  // useEffect(() => {
+  //   // 데이터 가져오기
+  //   axios
+  //     .get('https://localhost/products')
+  //     .then((response) => {
+  //       if (response.data.status === 'OK') {
+  //         setProducts(response.data.result);
+  //       } else {
+  //         console.error(
+  //           'Failed to fetch products:',
+  //           response.data.message
+  //         );
+  //       }
+  //     })
+  //     .catch((error) =>
+  //       console.error('Error fetching products:', error)
+  //     );
+  // }, []);
 
   //   const fetchProducts = () => {
   //     let url = `/api/products?sortOrder=${filters.sortOrder}`;
@@ -53,9 +80,22 @@ const MainPage = () => {
     // TODO : 검색 버튼 클릭 시의 로직
   };
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div>
-      <Header title="ReBook" />
+      <Header
+        title="ReBook"
+        leftChild={
+          <button onClick={toggleSidebar}>=</button>
+        }
+      />
+      <Sidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+      />
       <FilterBar
         filters={filters}
         onInputChange={handleInputChange}
