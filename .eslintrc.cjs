@@ -13,11 +13,11 @@ module.exports = {
   ],
   plugins: ['react', 'jsx-a11y', 'import'],
   parserOptions: {
+    ecmaVersion: 2021, // 또는 최신 버전 (2023 등으로 설정 가능)
+    sourceType: 'module', // ES6 모듈 사용 가능
     ecmaFeatures: {
-      jsx: true,
+      jsx: true, // JSX 지원
     },
-    ecmaVersion: 6,
-    sourceType: 'module',
   },
   rules: {
     'prettier/prettier': 'error', // Prettier 규칙을 ESLint 규칙으로 사용
