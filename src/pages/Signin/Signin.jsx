@@ -1,6 +1,7 @@
 import './styles/Signin.css'
 import axios from 'axios';
 import { useState } from 'react';
+import Button from '../../components/Button';
 
 function Signin() {
 
@@ -46,8 +47,8 @@ function Signin() {
         />
       </div>
       <div className="button-row">
-        <button className="signup-button">가입하기</button>
-        <button className="signin-button" onClick={handleSignin}>로그인</button>
+        <Button className="signup-button" text={"가입하기"} onClick={}/>
+        <Button className="signin-button" text={"로그인"} onClick={handleSignin}/>
       </div>
       <hr className="divider" />
       <button className="kakao-button">
