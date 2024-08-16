@@ -2,7 +2,7 @@ import './styles/Signin.css'
 import axios from 'axios';
 import { useState } from 'react';
 import Button from '../../components/Button';
-import InputFieldWithButton from '../../components/Members/InputFieldWithButton';
+import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 
 function Signin() {
 
