@@ -1,24 +1,24 @@
-import './styles/Signin.css'
+import './styles/Signin.css';
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
-import { useNavigate } from 'react-router-dom';
 
 function Signin() {
   const nav = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignin = async () => { 
+  const handleSignin = async () => {
     try {
-      const response = await axios.post('https://localhost/auth/signin', {
-        username: username,
-        password: password
+      const response = await axios.post('http://localhost/auth/signin', {
+        username,
+        password,
       });
 
       // 서버로부터 받은 액세스 토큰을 localStorage에 저장
-      const accessToken = response.headers['access'];
+      const accessToken = response.headers.access;
       localStorage.setItem('Authorization', accessToken);
 
       // 로그인 성공 후 필요한 로직 처리 (예: 페이지 이동)
@@ -46,25 +46,37 @@ function Signin() {
         <InputFieldWithButton
           type="text"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={e => setUsername(e.target.value)}
           buttonImage="src/assets/images/Members/button_x_in_circle.png" // 버튼 이미지 경로
           onClickHandler={clearUsername}
         />
         <InputFieldWithButton
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
           buttonImage="src/assets/images/Members/button_x_in_circle.png" // 버튼 이미지 경로
           onClickHandler={clearPassword}
         />
       </div>
       <div className="button-row">
-        <Button className="signup-button" text={"가입하기"} onClick={()=> nav('/signupform')}/>
-        <Button className="signin-button" text={"로그인"} onClick={handleSignin}/>
+        <Button
+          className="signup-button"
+          text="가입하기"
+          onClick={() => nav('/signupform')}
+        />
+        <Button
+          className="signin-button"
+          text="로그인"
+          onClick={handleSignin}
+        />
       </div>
       <hr className="divider" />
-      <button className="kakao-button">
-        <img src="src/assets/images/Signin/kakao_login_large_wide.png" alt="카카오로 로그인" className="kakao-image" />
+      <button type="button" className="kakao-button">
+        <img
+          src="src/assets/images/Signin/kakao_login_large_wide.png"
+          alt="카카오로 로그인"
+          className="kakao-image"
+        />
       </button>
     </div>
   );
