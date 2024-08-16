@@ -6,7 +6,7 @@ const MembersLayout = ({children}) => {
     const nav = useNavigate();
 
     return (
-      <div className='member-layout'>
+      <div className='members-layout'>
         <Header
           title={'ReBook'}
           leftChild={
