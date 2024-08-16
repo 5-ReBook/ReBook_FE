@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../Header';
 import { useNavigate } from 'react-router-dom';
+import "./styles/MembersLayout.css";
 
 const MembersLayout = ({children}) => {
     const nav = useNavigate();
