@@ -2,6 +2,7 @@ import './styles/Signin.css'
 import axios from 'axios';
 import { useState } from 'react';
 import Button from '../../components/Button';
+import InputFieldWithButton from '../../components/Members/InputFieldWithButton';
 
 function Signin() {
 
@@ -29,25 +30,35 @@ function Signin() {
     }
   };
 
+  const clearUsername = () => {
+    setUsername(''); // username 필드를 비웁니다.
+  };
+
+  const clearPassword = () => {
+    setPassword(''); // password 필드를 비웁니다.
+  };
+
   return (
     <div className="signin-container">
       <h1 className="signin-title">ReBook</h1>
       <div className="input-container">
-      <input 
-          type="text" 
-          placeholder="아이디" 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
+        <InputFieldWithButton
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          buttonImage="src/assets/images/Members/button_x_in_circle.png" // 버튼 이미지 경로
+          onClickHandler={clearUsername}
         />
-        <input 
-          type="password" 
-          placeholder="비밀번호" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
+        <InputFieldWithButton
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          buttonImage="src/assets/images/Members/button_x_in_circle.png" // 버튼 이미지 경로
+          onClickHandler={clearPassword}
         />
       </div>
       <div className="button-row">
-        <Button className="signup-button" text={"가입하기"} onClick={}/>
+        <Button className="signup-button" text={"가입하기"}/>
         <Button className="signin-button" text={"로그인"} onClick={handleSignin}/>
       </div>
       <hr className="divider" />
