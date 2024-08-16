@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MemberLayout from '../../components/Layouts/MemberLayout';
+import MembersLayout from '../../components/Layouts/MembersLayout';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
 import { validateUsername, validatePassword } from '../../utils/validation';
@@ -41,7 +41,7 @@ const SignupForm = () => {
     };
   
     return (
-      <MemberLayout>
+      <MembersLayout>
         <div className="signup-form">
           {error && <div className="error-popup">{error}</div>} {/* 에러 팝업 */}
   
@@ -73,7 +73,7 @@ const SignupForm = () => {
             onClick={handleSignup} 
           />
         </div>
-      </MemberLayout>
+      </MembersLayout>
     );
   };
   

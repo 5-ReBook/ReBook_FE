@@ -2,11 +2,11 @@ import React from 'react';
 import Header from '../Header';
 import { useNavigate } from 'react-router-dom';
 
-const MemberLayout = ({children}) => {
+const MembersLayout = ({children}) => {
     const nav = useNavigate();
 
     return (
-      <div>
+      <div className='member-layout'>
         <Header
           title={'ReBook'}
           leftChild={
@@ -18,4 +18,4 @@ const MemberLayout = ({children}) => {
     );
 };
 
-export default MemberLayout;
+export default MembersLayout;
