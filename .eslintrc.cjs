@@ -20,7 +20,6 @@ module.exports = {
     },
   },
   rules: {
-    'prettier/prettier': 'error', // Prettier 규칙을 ESLint 규칙으로 사용
     'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.js'] }], // JSX를 사용하는 파일 확장자를 .jsx와 .js로 설정
     'react/react-in-jsx-scope': 'off', // 리액트 17+에서는 React import가 필요 없으므로 끔
     'import/prefer-default-export': 'off', // named export를 선호
