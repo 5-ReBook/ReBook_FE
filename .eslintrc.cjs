@@ -1,26 +1,29 @@
 module.exports = {
-  root: true,
-  env: { browser: true, es2020: true },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-    'plugin:react-hooks/recommended',
-  ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
+  env: {
+    browser: true,
+    es6: true,
   },
-  settings: { react: { version: '18.2' } },
-  plugins: ['react-refresh'],
+  extends: [
+    'airbnb', // Airbnb 스타일 가이드 적용
+    'plugin:react/recommended', // 리액트 관련 규칙 적용
+    'plugin:jsx-a11y/recommended', // 접근성 관련 규칙 적용
+    'plugin:import/errors', // import 관련 오류 규칙 적용
+    'plugin:import/warnings', // import 관련 경고 규칙 적용
+    'prettier', // Prettier와 충돌하는 규칙 비활성화
+  ],
+  plugins: ['react', 'jsx-a11y', 'import'],
+  parserOptions: {
+    ecmaVersion: 2021, // 또는 최신 버전 (2023 등으로 설정 가능)
+    sourceType: 'module', // ES6 모듈 사용 가능
+    ecmaFeatures: {
+      jsx: true, // JSX 지원
+    },
+  },
   rules: {
-    'react/jsx-no-target-blank': 'off',
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-    'no-unused-vars': 'off',
-    'react/prop-types': 'off',
+    'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.js'] }], // JSX를 사용하는 파일 확장자를 .jsx와 .js로 설정
+    'react/react-in-jsx-scope': 'off', // 리액트 17+에서는 React import가 필요 없으므로 끔
+    'import/prefer-default-export': 'off', // named export를 선호
+    'react/prop-types': 'off', // prop-types 사용을 강제하지 않음
+    'react/jsx-props-no-spreading': 'off', // JSX에서 props spreading 허용
   },
 };
