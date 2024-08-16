@@ -4,6 +4,7 @@ import Signin from "./pages/Signin/Signin";
 import ProductRegistrationPage from "./pages/ProductRegistrationPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import MyProductsPage from "./pages/ProductDetailPage";
+import SignupForm from "./pages/Signup/SignupForm";
 
 
 function App() {
@@ -18,6 +19,10 @@ function App() {
       <Route
         path="/"
         element={isAuthenticated ? <MainPage/> : <Navigate to="/signin"/>}
+      />
+      <Route
+        path="/signupform"
+        element={<SignupForm/>}
       />
       <Route
         path="/products/new"
