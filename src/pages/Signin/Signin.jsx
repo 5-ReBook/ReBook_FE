@@ -3,9 +3,10 @@ import axios from 'axios';
 import { useState } from 'react';
 import Button from '../../components/Button';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
+import { useNavigate } from 'react-router-dom';
 
 function Signin() {
-
+  const nav = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -58,7 +59,7 @@ function Signin() {
         />
       </div>
       <div className="button-row">
-        <Button className="signup-button" text={"가입하기"}/>
+        <Button className="signup-button" text={"가입하기"} onClick={()=> nav('/signupform')}/>
         <Button className="signin-button" text={"로그인"} onClick={handleSignin}/>
       </div>
       <hr className="divider" />
