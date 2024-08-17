@@ -73,28 +73,11 @@ function App() {
           element={isAuthenticated ? <MainPage /> : <Navigate to="/signin" />}
         />
         <Route path="/signupform" element={<SignupForm />} />
-        <Route
-          path="/products/new"
-          element={
-            isAuthenticated ? (
-              <ProductRegistrationPage />
-            ) : (
-              <Navigate to="/signin" />
-            )
-          }
-        />
-        <Route
-          path="/products/detail"
-          element={
-            isAuthenticated ? <ProductDetailPage /> : <Navigate to="/signin" />
-          }
-        />
-        <Route
-          path="/products/me"
-          element={
-            isAuthenticated ? <MyProductsPage /> : <Navigate to="/signin" />
-          }
-        />
+        <Route path="/products/new" element={<ProductRegistrationPage />} />
+        <Route path="/products/detail" element={<ProductDetailPage />} />
+        <Route path="/products/me" element={<MyProductsPage />} />
+
+        {/* <Route path="*" element={<Navigate to="/"></Navigate>} */}
       </Routes>
     </div>
   );
