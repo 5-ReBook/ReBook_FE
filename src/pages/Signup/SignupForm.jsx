@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import MembersLayout from '../../components/Layouts/MembersLayout';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
@@ -14,6 +15,8 @@ function SignupForm() {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [authNumber, setAuthNumber] = useState('');
   const [authNumberError, setAuthNumberError] = useState('');
+
+  const nav = useNavigate();
 
   const handleUsernameChange = e => {
     const newUsername = e.target.value;
@@ -78,11 +81,14 @@ function SignupForm() {
     }
 
     try {
-      await axios.post('http://localhost/auth/members/signup/verify', {
-        username,
-        password,
-        code: authNumber,
-      });
+      await axios.post(
+        'http://localhost/auth/members/signup/verify',
+        {
+          username,
+          code: authNumber,
+        },
+        { withCredentials: true }
+      );
       alert('인증번호가 확인되었습니다.');
     } catch (error) {
       console.error('인증번호 확인 요청 중 오류 발생:', error);
@@ -112,6 +118,7 @@ function SignupForm() {
       alert('회원가입이 완료되었습니다.');
       setUsernameError('');
       setPasswordError('');
+      nav('/signin');
     } catch (error) {
       console.error('회원가입 요청 중 오류 발생:', error);
       alert('회원가입 요청 중 오류가 발생했습니다.');
