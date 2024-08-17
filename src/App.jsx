@@ -62,39 +62,41 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route
-        path="/signin"
-        element={!isAuthenticated ? <Signin /> : <Navigate to="/products" />}
-      />
-      <Route
-        path="/"
-        element={isAuthenticated ? <MainPage /> : <Navigate to="/signin" />}
-      />
-      <Route path="/signupform" element={<SignupForm />} />
-      <Route
-        path="/products/new"
-        element={
-          isAuthenticated ? (
-            <ProductRegistrationPage />
-          ) : (
-            <Navigate to="/signin" />
-          )
-        }
-      />
-      <Route
-        path="/products/detail"
-        element={
-          isAuthenticated ? <ProductDetailPage /> : <Navigate to="/signin" />
-        }
-      />
-      <Route
-        path="/products/me"
-        element={
-          isAuthenticated ? <MyProductsPage /> : <Navigate to="/signin" />
-        }
-      />
-    </Routes>
+    <div className="container">
+      <Routes>
+        <Route
+          path="/signin"
+          element={!isAuthenticated ? <Signin /> : <Navigate to="/products" />}
+        />
+        <Route
+          path="/"
+          element={isAuthenticated ? <MainPage /> : <Navigate to="/signin" />}
+        />
+        <Route path="/signupform" element={<SignupForm />} />
+        <Route
+          path="/products/new"
+          element={
+            isAuthenticated ? (
+              <ProductRegistrationPage />
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+        <Route
+          path="/products/detail"
+          element={
+            isAuthenticated ? <ProductDetailPage /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/products/me"
+          element={
+            isAuthenticated ? <MyProductsPage /> : <Navigate to="/signin" />
+          }
+        />
+      </Routes>
+    </div>
   );
 }
 
