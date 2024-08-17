@@ -13,6 +13,7 @@ function SignupForm() {
   const [passwordError, setPasswordError] = useState('');
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [authNumber, setAuthNumber] = useState('');
+  const [authNumberError, setAuthNumberError] = useState('');
 
   const handleUsernameChange = e => {
     const newUsername = e.target.value;
@@ -42,11 +43,22 @@ function SignupForm() {
 
   const handleAuthNumberChange = e => {
     setAuthNumber(e.target.value);
+
+    if (!/^\d{6}$/.test(e.target.value)) {
+      setAuthNumberError('인증번호는 6자리 숫자여야 합니다.');
+    } else {
+      setAuthNumberError('');
+    }
   };
 
   // TODO : CORS 해결하고 다시 해보기
   /// POST /auth/members/signup/mail
   const handleEmailVerification = async () => {
+    if (usernameError) {
+      alert('아이디를 다시 확인해 주세요.');
+      return;
+    }
+
     try {
       await axios.post('http://localhost/auth/members/signup/mail', {
         username,
@@ -62,6 +74,11 @@ function SignupForm() {
   // TODO : CORS 해결하고 다시 해보기
   // POST /auth/members/signup/verify
   const handleAuthNumberCheck = async () => {
+    if (authNumberError) {
+      alert('인증번호를 다시 확인해 주세요.');
+      return;
+    }
+
     try {
       await axios.post('http://localhost/auth/members/signup/verify', {
         username,
@@ -84,20 +101,23 @@ function SignupForm() {
     setUsernameError(usernameValidationError);
     setPasswordError(passwordValidationError);
 
-    if (!usernameValidationError && !passwordValidationError) {
-      try {
-        await axios.post(
-          'http://localhost/auth/members/signup',
-          { username, password },
-          { withCredentials: true }
-        );
-        alert('회원가입이 완료되었습니다.');
-        setUsernameError('');
-        setPasswordError('');
-      } catch (error) {
-        console.error('회원가입 요청 중 오류 발생:', error);
-        alert('회원가입 요청 중 오류가 발생했습니다.');
-      }
+    if (usernameValidationError || passwordValidationError) {
+      alert('아이디와 비밀번호를 다시 확인해 주세요.');
+      return;
+    }
+
+    try {
+      await axios.post(
+        'http://localhost/auth/members/signup',
+        { username, password },
+        { withCredentials: true }
+      );
+      alert('회원가입이 완료되었습니다.');
+      setUsernameError('');
+      setPasswordError('');
+    } catch (error) {
+      console.error('회원가입 요청 중 오류 발생:', error);
+      alert('회원가입 요청 중 오류가 발생했습니다.');
     }
   };
 
@@ -117,7 +137,11 @@ function SignupForm() {
           />
         </label>
         {usernameError && <div className="error-message">{usernameError}</div>}
-        <Button text="이메일 인증하기" onClick={handleEmailVerification} />
+        <Button
+          text="이메일 인증하기"
+          onClick={handleEmailVerification}
+          disabled={Boolean(usernameError)}
+        />
       </div>
 
       {isEmailSent && (
@@ -133,7 +157,11 @@ function SignupForm() {
               buttonImage="src/assets/images/Members/button_x_in_circle.png"
             />
           </label>
-          <Button text="인증번호 확인" onClick={handleAuthNumberCheck} />
+          <Button
+            text="인증번호 확인"
+            onClick={handleAuthNumberCheck}
+            disabled={Boolean(authNumberError)}
+          />
         </div>
       )}
 
@@ -151,7 +179,11 @@ function SignupForm() {
           />
         </label>
         {passwordError && <div className="error-message">{passwordError}</div>}
-        <Button text="회원 가입" onClick={handleSignup} />
+        <Button
+          text="회원 가입"
+          onClick={handleSignup}
+          disabled={Boolean(usernameError || passwordError)}
+        />
       </div>
     </MembersLayout>
   );
