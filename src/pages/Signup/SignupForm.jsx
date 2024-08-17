@@ -51,7 +51,6 @@ function SignupForm() {
     }
   };
 
-  // TODO : CORS 해결하고 다시 해보기
   /// POST /auth/members/signup/mail
   const handleEmailVerification = async () => {
     if (usernameError) {
@@ -60,9 +59,9 @@ function SignupForm() {
     }
 
     try {
-      await axios.post('http://localhost/auth/members/signup/mail', {
-        username,
-      });
+      await axios.post(
+        `http://localhost/auth/members/signup/mail?username=${encodeURIComponent(username)}`
+      );
       alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
       setIsEmailSent(true);
     } catch (error) {
@@ -71,7 +70,6 @@ function SignupForm() {
     }
   };
 
-  // TODO : CORS 해결하고 다시 해보기
   // POST /auth/members/signup/verify
   const handleAuthNumberCheck = async () => {
     if (authNumberError) {
@@ -92,7 +90,6 @@ function SignupForm() {
     }
   };
 
-  // TODO : CORS 해결하고 다시 해보기
   // POST /auth/members/signup
   const handleSignup = async () => {
     const usernameValidationError = validateUsername(username);
