@@ -3,7 +3,7 @@ import MainPage from './pages/MainPage';
 import Signin from './pages/Signin/Signin';
 import ProductRegistrationPage from './pages/ProductRegistrationPage';
 import ProductDetailPage from './pages/ProductDetailPage';
-import MyProductsPage from './pages/ProductDetailPage';
+import MyProductsPage from './pages/MyProductsPage';
 import SignupForm from './pages/Signup/SignupForm';
 import './App.css';
 
