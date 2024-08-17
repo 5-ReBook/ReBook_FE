@@ -15,6 +15,7 @@ function SignupForm() {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [authNumber, setAuthNumber] = useState('');
   const [authNumberError, setAuthNumberError] = useState('');
+  const [passwordInputType, setPasswordInputType] = useState('password');
 
   const nav = useNavigate();
 
@@ -39,9 +40,11 @@ function SignupForm() {
     setUsernameError(''); // 에러 메시지를 초기화
   };
 
-  const clearPassword = () => {
-    setPassword(''); // password 필드를 비웁니다.
-    setPasswordError(''); // 에러 메시지를 초기화
+  // 비밀번호 입력 타입을 토글하는 함수
+  const togglePasswordVisibility = () => {
+    setPasswordInputType(prevType =>
+      prevType === 'password' ? 'text' : 'password'
+    );
   };
 
   const handleAuthNumberChange = e => {
@@ -178,8 +181,8 @@ function SignupForm() {
             type="password"
             value={password}
             onChange={handlePasswordChange}
-            onClickHandler={clearPassword}
-            buttonImage="src/assets/images/Members/button_x_in_circle.png"
+            onClickHandler={togglePasswordVisibility}
+            buttonImage="src/assets/images/Members/eye.png"
           />
         </label>
         {passwordError && <div className="error-message">{passwordError}</div>}
