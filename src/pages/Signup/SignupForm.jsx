@@ -178,7 +178,7 @@ function SignupForm() {
         <label className="input-label">
           희망 비밀번호
           <InputFieldWithButton
-            type="password"
+            type={passwordInputType}
             value={password}
             onChange={handlePasswordChange}
             onClickHandler={togglePasswordVisibility}
