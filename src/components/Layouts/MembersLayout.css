@@ -1,0 +1,19 @@
+img {
+  height: 15px;
+  width: 15px;
+}
+
+button {
+  border: 1px solid #f8f8f8;
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+button:active {
+  background-color: #e0e0e0; /* 버튼이 눌렸을 때의 배경색 */
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2); /* 버튼이 눌린 것처럼 보이게 함 */
+}
