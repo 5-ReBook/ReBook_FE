@@ -1,22 +1,23 @@
 import React from 'react';
-import Header from '../Header';
 import { useNavigate } from 'react-router-dom';
-import "./styles/MembersLayout.css";
+import Header from '../Header';
 
-const MembersLayout = ({children}) => {
-    const nav = useNavigate();
+function MembersLayout({ children }) {
+  const nav = useNavigate();
 
-    return (
-      <div className='members-layout'>
-        <Header
-          title={'ReBook'}
-          leftChild={
-            <button onClick={() => nav(-1)}>{'<'}</button>
-          }
-        />
-        {children}
-      </div>
-    );
-};
+  return (
+    <div className="members-layout">
+      <Header
+        title="ReBook"
+        leftChild={
+          <button type="button" onClick={() => nav(-1)}>
+            {'<'}
+          </button>
+        }
+      />
+      {children}
+    </div>
+  );
+}
 
 export default MembersLayout;
