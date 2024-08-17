@@ -5,21 +5,26 @@
 .input-field__input {
   width: 100%;
   padding: 10px 40px 10px 10px; /* 버튼을 위한 여유 공간 확보 */
-  border: none;
-  outline: none; 
+  outline: none;
   box-sizing: border-box; /* 패딩을 포함한 전체 크기 조정 */
   background-color: transparent; /* 배경색을 컨테이너와 맞추기 위해 투명 처리 */
+  height: 40px;
+  margin-bottom: 15px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 16px;
 }
 
 .input-field__button {
   position: absolute;
   right: 3%; /* 원본 스타일에서 약간 왼쪽으로 조정 */
   top: 42%;
-  transform: translateY(-50%) scaleX(-1); 
-  background-color: transparent; 
-  border: none; 
-  cursor: pointer; 
-  padding: 0; 
+  transform: translateY(-50%) scaleX(-1);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 .input-field__button img {
