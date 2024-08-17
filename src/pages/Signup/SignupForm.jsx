@@ -1,80 +1,160 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import MembersLayout from '../../components/Layouts/MembersLayout';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
 import { validateUsername, validatePassword } from '../../utils/validation';
+import './styles/SignupForm.css';
 
-// TODO 레이아웃 확인을 위해 기본 틀만 추가함
-// 추후 이슈로 signupForm 작업 필요.
-const SignupForm = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-  
-    const handleSignup = () => {
-      const usernameError = validateUsername(username);
-      const passwordError = validatePassword(password);
-  
-      if (usernameError) {
-        setError(usernameError);
-        return;
+function SignupForm() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [isEmailSent, setIsEmailSent] = useState(false);
+  const [authNumber, setAuthNumber] = useState('');
+
+  const handleUsernameChange = e => {
+    const newUsername = e.target.value;
+    setUsername(newUsername);
+
+    const validationError = validateUsername(newUsername);
+    setUsernameError(validationError);
+  };
+
+  const handlePasswordChange = e => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+
+    const validationError = validatePassword(newPassword);
+    setPasswordError(validationError);
+  };
+
+  const clearUsername = () => {
+    setUsername(''); // username 필드를 비웁니다.
+    setUsernameError(''); // 에러 메시지를 초기화
+  };
+
+  const clearPassword = () => {
+    setPassword(''); // password 필드를 비웁니다.
+    setPasswordError(''); // 에러 메시지를 초기화
+  };
+
+  const handleAuthNumberChange = e => {
+    setAuthNumber(e.target.value);
+  };
+
+  // TODO : CORS 해결하고 다시 해보기
+  /// POST /auth/members/signup/mail
+  const handleEmailVerification = async () => {
+    try {
+      await axios.post('http://localhost/auth/members/signup/mail', {
+        username,
+      });
+      alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
+      setIsEmailSent(true);
+    } catch (error) {
+      console.error('이메일 인증 요청 중 오류 발생:', error);
+      alert('이메일 인증 요청 중 오류가 발생했습니다.');
+    }
+  };
+
+  // TODO : CORS 해결하고 다시 해보기
+  // POST /auth/members/signup/verify
+  const handleAuthNumberCheck = async () => {
+    try {
+      await axios.post('http://localhost/auth/members/signup/verify', {
+        username,
+        password,
+        code: authNumber,
+      });
+      alert('인증번호가 확인되었습니다.');
+    } catch (error) {
+      console.error('인증번호 확인 요청 중 오류 발생:', error);
+      alert('인증번호 확인 요청 중 오류가 발생했습니다.');
+    }
+  };
+
+  // TODO : CORS 해결하고 다시 해보기
+  // POST /auth/members/signup
+  const handleSignup = async () => {
+    const usernameValidationError = validateUsername(username);
+    const passwordValidationError = validatePassword(password);
+
+    setUsernameError(usernameValidationError);
+    setPasswordError(passwordValidationError);
+
+    if (!usernameValidationError && !passwordValidationError) {
+      try {
+        await axios.post(
+          'http://localhost/auth/members/signup',
+          { username, password },
+          { withCredentials: true }
+        );
+        alert('회원가입이 완료되었습니다.');
+        setUsernameError('');
+        setPasswordError('');
+      } catch (error) {
+        console.error('회원가입 요청 중 오류 발생:', error);
+        alert('회원가입 요청 중 오류가 발생했습니다.');
       }
-  
-      if (passwordError) {
-        setError(passwordError);
-        return;
-      }
-  
-      // 회원가입 로직을 여기에 추가하세요.
-      console.log('회원가입:', { username, password });
-      setError(''); // 에러 메시지를 초기화
-    };
-  
-    const handleUsernameChange = (e) => {
-      setUsername(e.target.value);
-      setError(''); // 입력이 바뀔 때마다 에러 메시지를 초기화
-    };
-  
-    const handlePasswordChange = (e) => {
-      setPassword(e.target.value);
-      setError(''); // 입력이 바뀔 때마다 에러 메시지를 초기화
-    };
-  
-    return (
-      <MembersLayout>
-        <div className="signup-form">
-          {error && <div className="error-popup">{error}</div>} {/* 에러 팝업 */}
-  
-          <label>아이디</label>
+    }
+  };
+
+  return (
+    <MembersLayout>
+      <div className="input-group">
+        {/* 아이디 입력 필드 */}
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label className="input-label">
+          아이디
           <InputFieldWithButton
             type="text"
             value={username}
             onChange={handleUsernameChange}
-            onClickHandler={() => {}}
+            onClickHandler={clearUsername}
             buttonImage="src/assets/images/Members/button_x_in_circle.png"
           />
-  
-          <Button 
-            text="인증하기" 
-            onClick={handleSignup} 
-          />
-  
-          <label>희망 비밀번호</label>
+        </label>
+        {usernameError && <div className="error-message">{usernameError}</div>}
+        <Button text="이메일 인증하기" onClick={handleEmailVerification} />
+      </div>
+
+      {isEmailSent && (
+        <div className="input-group">
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label className="input-label">
+            인증번호
+            <InputFieldWithButton
+              type="password"
+              value={authNumber}
+              onChange={handleAuthNumberChange}
+              onClickHandler={() => setAuthNumber('')}
+              buttonImage="src/assets/images/Members/button_x_in_circle.png"
+            />
+          </label>
+          <Button text="인증번호 확인" onClick={handleAuthNumberCheck} />
+        </div>
+      )}
+
+      <div className="input-group">
+        {/* 비밀번호 입력 필드 */}
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label className="input-label">
+          희망 비밀번호
           <InputFieldWithButton
             type="password"
             value={password}
             onChange={handlePasswordChange}
-            onClickHandler={() => {}}
+            onClickHandler={clearPassword}
             buttonImage="src/assets/images/Members/button_x_in_circle.png"
           />
-  
-          <Button 
-            text="회원 가입하기" 
-            onClick={handleSignup} 
-          />
-        </div>
-      </MembersLayout>
-    );
-  };
-  
-  export default SignupForm;
+        </label>
+        {passwordError && <div className="error-message">{passwordError}</div>}
+        <Button text="회원 가입" onClick={handleSignup} />
+      </div>
+    </MembersLayout>
+  );
+}
+
+export default SignupForm;
