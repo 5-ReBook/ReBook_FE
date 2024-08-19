@@ -1,9 +1,17 @@
-.error-popup {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #f5c6cb;
-    border-radius: 4px;
-  }
-  
+.input-group {
+  margin-bottom: 1.25rem; /* 20px을 1.25rem으로 변경 */
+  padding: 0.3125rem; /* 5px을 0.3125rem으로 변경 */
+  margin-top: 0.3125rem; /* 5px을 0.3125rem으로 변경 */
+}
+
+.input-label {
+  display: flex;
+  flex-direction: column;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.75rem; /* 12px을 0.75rem으로 변경 */
+  margin-top: -0.625rem; /* -10px을 -0.625rem으로 변경 */
+  margin-bottom: 0.3125rem; /* 5px을 0.3125rem으로 변경 */
+}

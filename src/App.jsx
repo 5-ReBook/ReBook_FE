@@ -1,6 +1,4 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import MainPage from './pages/MainPage';
@@ -9,6 +7,7 @@ import ProductRegistrationPage from './pages/ProductRegistrationPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import MyProductsPage from './pages/MyProductsPage';
 import SignupForm from './pages/Signup/SignupForm';
+import './App.css';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -16,44 +15,36 @@ function App() {
 
   useEffect(() => {
     const hasAccess = localStorage.getItem('Authorization');
-    const hasRefresh = Cookies.get('refresh');
 
-    if (hasAccess && hasRefresh) {
+    if (hasAccess) {
       setIsAuthenticated(true);
       setIsLoading(false);
-    } else if (!hasAccess && hasRefresh) {
-      // 리프레시 토큰이 있으면 새로 액세스 토큰을 발급받습니다.
+    } else {
+      // 리프레시 토큰이 있다면 서버에 새 액세스 토큰 발급 요청
       axios
         .post(
           'https://localhost/auth/members/refreshtoken/reissue',
           {},
           {
-            withCredentials: true,
+            withCredentials: true, // HttpOnly 쿠키를 포함해 요청을 보냄
           }
         )
         .then(response => {
-          // 응답 헤더에서 액세스 토큰을 추출합니다.
           const newAccessToken = response.headers.access;
           if (newAccessToken) {
             localStorage.setItem('Authorization', newAccessToken);
             setIsAuthenticated(true);
           } else {
-            throw new Error('Access token is missing in response');
+            throw new Error('액세스 토큰 획득에 실패했습니다.');
           }
         })
         .catch(() => {
-          // 토큰 재생성 실패하면 로그인 페이지로 보냅니다.
-          Cookies.remove('refresh');
           localStorage.removeItem('Authorization');
           setIsAuthenticated(false);
         })
         .finally(() => {
           setIsLoading(false);
         });
-    } else {
-      // 액세스도 없고 리프레쉬도 없으면 로그인 페이지로 보냅니다.
-      setIsAuthenticated(false);
-      setIsLoading(false);
     }
   }, []);
 
@@ -66,7 +57,7 @@ function App() {
       <Routes>
         <Route
           path="/signin"
-          element={!isAuthenticated ? <Signin /> : <Navigate to="/products" />}
+          element={!isAuthenticated ? <Signin /> : <Navigate to="/" />}
         />
         <Route
           path="/"

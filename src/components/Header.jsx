@@ -1,6 +1,6 @@
-import "./Header.css";
+import './Header.css';
 
-const Header = ({ title, leftChild, rightChild }) => {
+function Header({ title, leftChild, rightChild }) {
   return (
     <header className="header">
       <div className="header_left">{leftChild}</div>
@@ -8,6 +8,6 @@ const Header = ({ title, leftChild, rightChild }) => {
       <div className="header_right">{rightChild}</div>
     </header>
   );
-};
+}
 
 export default Header;
