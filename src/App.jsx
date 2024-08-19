@@ -66,7 +66,7 @@ function App() {
       <Routes>
         <Route
           path="/signin"
-          element={!isAuthenticated ? <Signin /> : <Navigate to="/products" />}
+          element={!isAuthenticated ? <Signin /> : <Navigate to="/" />}
         />
         <Route
           path="/"

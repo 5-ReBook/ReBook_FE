@@ -4,25 +4,29 @@
 
 .input-field__input {
   width: 100%;
-  padding: 10px 40px 10px 10px; /* 버튼을 위한 여유 공간 확보 */
-  border: none;
-  outline: none; 
+  padding: 0.625rem 0.625rem 0.625rem 0.625rem; /* 10px 40px 10px 10px을 0.625rem 2.5rem 0.625rem 0.625rem으로 변경 */
+  outline: none;
   box-sizing: border-box; /* 패딩을 포함한 전체 크기 조정 */
   background-color: transparent; /* 배경색을 컨테이너와 맞추기 위해 투명 처리 */
+  height: 2.5rem; /* 40px을 2.5rem으로 변경 */
+  margin-bottom: 0.9375rem; /* 15px을 0.9375rem으로 변경 */
+  border: 0.125rem solid #ccc; /* 2px을 0.125rem으로 변경 */
+  border-radius: 0.3125rem; /* 5px을 0.3125rem으로 변경 */
+  font-size: 1rem; /* 16px을 1rem으로 변경 */
 }
 
 .input-field__button {
   position: absolute;
-  right: 3%; /* 원본 스타일에서 약간 왼쪽으로 조정 */
-  top: 42%;
-  transform: translateY(-50%) scaleX(-1); 
-  background-color: transparent; 
-  border: none; 
-  cursor: pointer; 
-  padding: 0; 
+  right: 3%;
+  top: 40%;
+  transform: translateY(-50%) scaleX(-1);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 .input-field__button img {
-  width: 20px; /* 버튼 이미지 크기 조정 */
-  height: 20px;
+  width: 1.25rem; /* 20px을 1.25rem으로 변경 */
+  height: 1.25rem; /* 20px을 1.25rem으로 변경 */
 }
