@@ -10,23 +10,23 @@
 
 .signin-title {
   font-family: 'Cursive', sans-serif;
-  font-size: 48px;
-  margin-bottom: 40px;
+  font-size: 3rem; /* 48px을 3rem으로 변경 */
+  margin-bottom: 2.5rem; /* 40px을 2.5rem으로 변경 */
 }
 
 .input-container {
   display: flex;
   flex-direction: column;
   width: 80%;
-  max-width: 400px;
+  max-width: 25rem; /* 400px을 25rem으로 변경 */
 }
 
 .button-row {
   display: flex;
   justify-content: space-between;
   width: 80%;
-  max-width: 400px;
-  margin-bottom: 20px;
+  max-width: 25rem; /* 400px을 25rem으로 변경 */
+  margin-bottom: 1.25rem; /* 20px을 1.25rem으로 변경 */
 }
 
 .signup-button,
@@ -34,8 +34,8 @@
   width: 48%;
   background-color: #9b59b6;
   color: white;
-  height: 48px;
-  border: 2px solid #9b59b6;
+  height: 3rem; /* 48px을 3rem으로 변경 */
+  border: 0.125rem solid #9b59b6; /* 2px을 0.125rem으로 변경 */
 }
 
 .signup-button {
@@ -49,15 +49,15 @@
 
 .divider {
   width: 80%;
-  max-width: 400px;
+  max-width: 25rem; /* 400px을 25rem으로 변경 */
   border: none;
-  border-top: 1px solid #ccc;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  border-top: 0.0625rem solid #ccc; /* 1px을 0.0625rem으로 변경 */
+  margin-top: 0.625rem; /* 10px을 0.625rem으로 변경 */
+  margin-bottom: 1.25rem; /* 20px을 1.25rem으로 변경 */
 }
 
 .kakao-button {
-  max-width: 240px;
+  max-width: 15rem; /* 240px을 15rem으로 변경 */
   width: 80%;
   background-color: transparent;
   border: none;
@@ -73,10 +73,11 @@
 
 .kakao-button:hover {
   transform: scale(0.95); /* 버튼이 살짝 눌린 것 같은 효과 */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 눌렸을 때 약간의 그림자 */
+  box-shadow: 0rem 0.25rem 0.375rem rgba(0, 0, 0, 0.1); /* 0px 4px 6px을 0rem 0.25rem 0.375rem으로 변경 */
 }
 
 .kakao-image {
-  max-width: 240px;
+  width: 100%; /* 이미지가 부모 요소의 너비에 맞게 설정되도록 변경 */
+  max-width: 18rem; /* 15rem에서 18rem으로 변경 */
   height: auto;
 }

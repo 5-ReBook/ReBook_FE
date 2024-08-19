@@ -1,12 +1,12 @@
 .header {
-  width: 300px;
+  width: 100%; /* 부모 컨테이너에 맞게 너비를 100%로 설정 */
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  padding: 10px 10px;
-  border-top: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 0.625rem; /* 10px을 0.625rem으로 변경 */
+  border-top: 0.0625rem solid #e0e0e0; /* 1px을 0.0625rem으로 변경 */
+  border-bottom: 0.0625rem solid #e0e0e0; /* 1px을 0.0625rem으로 변경 */
 }
 
 .header_left,
@@ -17,7 +17,7 @@
 .header_center {
   flex: 8;
   text-align: center;
-  font-size: 18px;
+  font-size: 1.125rem; /* 18px을 1.125rem으로 변경 */
   font-weight: bold;
   color: #000;
 }

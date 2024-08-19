@@ -1,7 +1,7 @@
 .input-group {
-  margin-bottom: 20px;
-  padding: 5px;
-  margin-top: 5px;
+  margin-bottom: 1.25rem; /* 20px을 1.25rem으로 변경 */
+  padding: 0.3125rem; /* 5px을 0.3125rem으로 변경 */
+  margin-top: 0.3125rem; /* 5px을 0.3125rem으로 변경 */
 }
 
 .input-label {
@@ -11,7 +11,7 @@
 
 .error-message {
   color: red;
-  font-size: 12px;
-  margin-top: -10px;
-  margin-bottom: 5px;
+  font-size: 0.75rem; /* 12px을 0.75rem으로 변경 */
+  margin-top: -0.625rem; /* -10px을 -0.625rem으로 변경 */
+  margin-bottom: 0.3125rem; /* 5px을 0.3125rem으로 변경 */
 }
