@@ -1,5 +1,7 @@
 import './styles/Signin.css';
 import axios from 'axios';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
@@ -32,6 +34,17 @@ function Signin() {
 
       // 로그인 성공 후 필요한 로직 처리
       console.log('로그인 성공:', accessToken);
+
+      // js-cookie를 사용하여 refresh 쿠키를 확인
+      const refreshCookie = Cookies.get('refresh');
+      if (refreshCookie) {
+        console.log('Refresh 쿠키 내용:', refreshCookie);
+      } else {
+        console.log('Refresh 쿠키가 설정되지 않았습니다.');
+      }
+
+      // 페이지 새로고침
+      window.location.reload();
       nav('/');
     } catch (error) {
       console.error('로그인 실패:', error);
