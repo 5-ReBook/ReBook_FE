@@ -7,15 +7,18 @@ function InputFieldWithButton({
   buttonImage,
   value,
   onChange,
+  disabled = 0,
+  className = '',
 }) {
   return (
-    <div className="input-field__container">
+    <div className={`input-field__container ${className}`}>
       <input
         className="input-field__input"
         type={type}
         value={value}
         onChange={onChange}
         autoComplete="off"
+        disabled={disabled !== 0}
       />
       <button
         type="button"
