@@ -19,7 +19,7 @@
   position: absolute;
   right: 3%;
   top: 40%;
-  transform: translateY(-50%) scaleX(-1);
+  transform: translateY(-50%);
   background-color: transparent;
   border: none;
   cursor: pointer;
