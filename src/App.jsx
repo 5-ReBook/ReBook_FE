@@ -18,6 +18,7 @@ function App() {
   useEffect(() => {
     const hasAccess = localStorage.getItem('Authorization');
 
+    // TODO : 여기서 단순히 액세스 유무만 보는게 아니라 서버 갔다와서 이게 유효한 토큰인지 보는 것 추가하기??
     if (hasAccess) {
       setIsAuthenticated(true);
       setIsLoading(false);
