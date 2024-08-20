@@ -28,7 +28,7 @@ html {
   background-color: white; /* 컨테이너 배경 색상 */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
   border-radius: 10px; /* 모서리 둥글게 */
-  padding: 20px; /* 내부 여백 */
+  padding: 1px; /* 내부 여백 */
   box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
   display: flex;
   flex-direction: column;
@@ -45,9 +45,10 @@ html {
 .content {
   width: 100%;
   flex: 1; /* 남은 공간을 모두 차지 */
+  overflow: hidden;;
 }
 
-.footer {
+.footer-nav-container {
   width: 100%;
   flex: 0 0 auto; /* 고정 높이 */
 }

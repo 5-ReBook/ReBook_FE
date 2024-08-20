@@ -9,6 +9,8 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import MyProductsPage from './pages/MyProductsPage';
 import SignupForm from './pages/Signup/SignupForm';
 import FindPassword from './pages/FindPassword/FindPassword';
+import { ChakraProvider } from '@chakra-ui/react';
+
 import './App.css';
 import ChatRoomListPage from './pages/Chat/ChatRoomListPage';
 
@@ -57,24 +59,26 @@ function App() {
   // }
 
   return (
-    <Layout>
-      <Routes>
-        <Route
-          path="/signin"
-          element={!isAuthenticated ? <Signin /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/"
-          element={isAuthenticated ? <MainPage /> : <Navigate to="/signin" />}
-        />
-        <Route path="/signupform" element={<SignupForm />} />
-        <Route path="/products/new" element={<ProductRegistrationPage />} />
-        <Route path="/products/detail" element={<ProductDetailPage />} />
-        <Route path="/products/me" element={<MyProductsPage />} />
-        <Route path="/chat/roomlist" element={<ChatRoomListPage />} />
-        {/* <Route path="*" element={<Navigate to="/"></Navigate>} */}
-      </Routes>
-    </Layout>
+    <ChakraProvider>
+      <Layout>
+        <Routes>
+          <Route
+            path="/signin"
+            element={!isAuthenticated ? <Signin /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/"
+            element={isAuthenticated ? <MainPage /> : <Navigate to="/signin" />}
+          />
+          <Route path="/signupform" element={<SignupForm />} />
+          <Route path="/products/new" element={<ProductRegistrationPage />} />
+          <Route path="/products/detail" element={<ProductDetailPage />} />
+          <Route path="/products/me" element={<MyProductsPage />} />
+          <Route path="/chat/roomlist" element={<ChatRoomListPage />} />
+          {/* <Route path="*" element={<Navigate to="/"></Navigate>} */}
+        </Routes>
+      </Layout>
+    </ChakraProvider>
   );
 }
 

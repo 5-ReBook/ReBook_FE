@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Avatar, AvatarBadge, AvatarGroup } from '@chakra-ui/react';
+import { Avatar } from '@chakra-ui/react';
 
-const ProfileImage = ({ src, name = "XprofileImage", size = "xl" }) => {
+const ProfileImage = ({ src, name = "XprofileImage", size = "xl", fill }) => {
   return (
     <Avatar
       size={size}
