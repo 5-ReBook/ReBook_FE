@@ -137,6 +137,9 @@ function SignupForm() {
       );
       setUsernameError('');
       setPasswordError('');
+      localStorage.removeItem('Authorization');
+      document.cookie =
+        'refresh=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       nav('/signin');
     } catch (error) {
       console.error('비밀번호 수정 중 오류 발생:', error);
