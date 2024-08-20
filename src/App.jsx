@@ -8,6 +8,7 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import MyProductsPage from './pages/MyProductsPage';
 import SignupForm from './pages/Signup/SignupForm';
 import FindPassword from './pages/FindPassword/FindPassword';
+import MyPage from './pages/MyPage/MyPage';
 import './App.css';
 
 function App() {
@@ -65,6 +66,10 @@ function App() {
           element={isAuthenticated ? <MainPage /> : <Navigate to="/signin" />}
         />
         <Route path="/signupform" element={<SignupForm />} />
+        <Route
+          path="/mypage"
+          element={isAuthenticated ? <MyPage /> : <Navigate to="/signin" />}
+        />
         <Route
           path="/products/new"
           element={
