@@ -44,10 +44,6 @@ function UpdateUniversity({ location }) {
     setUniversityList([]); // 리스트를 숨기기 위해 초기화
   };
 
-  /*
-    @PatchMapping("/api/members/university")
-    @RequestBody UpdateUniversityDTO universityDTO){
-  */
   const handleSave = async () => {
     try {
       const token = localStorage.getItem('Authorization'); // 토큰 가져오기
@@ -64,6 +60,7 @@ function UpdateUniversity({ location }) {
       );
 
       console.log('University updated to:', selectedUniversity);
+      alert('대학교 업데이트 완료!');
       if (window.history.length > 1) {
         navigate(-1); // 이전 페이지로 돌아가기
       } else {
