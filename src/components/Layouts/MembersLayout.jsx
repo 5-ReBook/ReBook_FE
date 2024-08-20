@@ -11,8 +11,16 @@ function MembersLayout({ children }) {
       <Header
         title="ReBook"
         leftChild={
-          <button type="button" onClick={() => nav(-1)}>
-            <img src="src/assets/images/left-chevron.png" alt="버튼" />
+          <button
+            className="header-button"
+            type="button"
+            onClick={() => nav(-1)}
+          >
+            <img
+              className="header-button-img"
+              src="src/assets/images/left-chevron.png"
+              alt="버튼"
+            />
           </button>
         }
       />

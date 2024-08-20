@@ -14,12 +14,12 @@
   max-width: 25rem; /* 최대 너비를 25rem (400px)로 설정 */
 }
 
-img {
+.header-button-img {
   height: 0.9375rem; /* 15px을 0.9375rem으로 변경 */
   width: 0.9375rem; /* 15px을 0.9375rem으로 변경 */
 }
 
-button {
+.header-button {
   border: 0.0625rem solid #f8f8f8; /* 1px을 0.0625rem으로 변경 */
   border-radius: 0.3125rem; /* 5px을 0.3125rem으로 변경 */
   background-color: transparent;
@@ -32,7 +32,7 @@ button {
   justify-content: center; /* 수평 중앙 정렬 */
 }
 
-button:active {
+.header-button:active {
   background-color: #e0e0e0; /* 버튼이 눌렸을 때의 배경색 */
   box-shadow: inset 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, 0.2); /* 2px 2px 5px을 0.125rem 0.125rem 0.3125rem으로 변경 */
 }
