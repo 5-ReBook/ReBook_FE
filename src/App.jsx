@@ -11,6 +11,7 @@ import FindPassword from './pages/FindPassword/FindPassword';
 import MyPage from './pages/MyPage/MyPage';
 import './App.css';
 import UpdateUniversity from './pages/UpdateUniversity/UpdateUniversity';
+import UpdateMajors from './pages/UpdateMajors/UpdateMajors';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -77,6 +78,12 @@ function App() {
           path="/myunv"
           element={
             isAuthenticated ? <UpdateUniversity /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/mymajors"
+          element={
+            isAuthenticated ? <UpdateMajors /> : <Navigate to="/signin" />
           }
         />
         <Route
