@@ -28,7 +28,7 @@ const Layout = ({ children }) => {
         isOpen={isSidebarOpen}
         toggleSidebar={() => buttonActions.menu}
       />
-      {children}
+      <div className="content">{children}</div>
       <FooterNav />
     </div>
   );

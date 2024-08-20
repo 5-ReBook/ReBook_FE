@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import Layout from './components/Layouts/Layout';
 import MainPage from './pages/MainPage';
 import Signin from './pages/Signin/Signin';
 import ProductRegistrationPage from './pages/ProductRegistrationPage';
@@ -53,7 +54,7 @@ function App() {
   }
 
   return (
-    <div className="container">
+    <Layout>
       <Routes>
         <Route
           path="/signin"
@@ -87,7 +88,7 @@ function App() {
           }
         />
       </Routes>
-    </div>
+    </Layout>
   );
 }
 
