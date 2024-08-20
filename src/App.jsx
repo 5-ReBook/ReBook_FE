@@ -10,6 +10,7 @@ import SignupForm from './pages/Signup/SignupForm';
 import FindPassword from './pages/FindPassword/FindPassword';
 import MyPage from './pages/MyPage/MyPage';
 import './App.css';
+import UpdateUniversity from './pages/UpdateUniversity/UpdateUniversity';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -70,6 +71,13 @@ function App() {
         <Route
           path="/mypage"
           element={isAuthenticated ? <MyPage /> : <Navigate to="/signin" />}
+        />
+        {/* TODO /mypage/unv 로 path 지정했을 때 이미지 로드 안되는 버그 왜인지 알아보기 */}
+        <Route
+          path="/myunv"
+          element={
+            isAuthenticated ? <UpdateUniversity /> : <Navigate to="/signin" />
+          }
         />
         <Route
           path="/products/new"
