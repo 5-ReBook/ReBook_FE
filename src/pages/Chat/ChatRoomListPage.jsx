@@ -79,13 +79,11 @@ const ChatRoomListPage = () => {
       <ul className="chat-list-items">
         {chats.map(chat => (
           <li key={chat.id} className="chat-item">
-            <>
               <ProfileImage
                 src="https://avatars.githubusercontent.com/u/93255519?v=4&size=64" //TODO: 실제 사용자 프로필 주소로 변경
                 name="XprofileImage"
                 size="sm"
               />
-            </>
             <div className="chat-item-content">
               <p className="chat-item-name">{chat.name}</p>
               <p className="chat-item-message">{chat.message}</p>

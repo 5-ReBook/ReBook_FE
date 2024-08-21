@@ -12,6 +12,7 @@ import FindPassword from './pages/FindPassword/FindPassword';
 import { ChakraProvider } from '@chakra-ui/react';
 import './App.css';
 import ChatRoomListPage from './pages/Chat/ChatRoomListPage';
+import ChatRoomPage from './pages/Chat/ChatRoomPage';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -100,6 +101,12 @@ function App() {
             path="/chat/roomlist"
             element={
               isAuthenticated ? <ChatRoomListPage /> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/chat/room/:id"
+            element={
+              isAuthenticated ? <ChatRoomPage /> : <Navigate to="/signin" />
             }
           />
         </Routes>
