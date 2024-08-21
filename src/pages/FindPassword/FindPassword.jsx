@@ -6,7 +6,7 @@ import Button from '../../components/Button';
 import { validateUsername, validatePassword } from '../../utils/validation';
 import './styles/FindPassword.css';
 
-function SignupForm() {
+function FindPassword() {
   const location = useLocation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -136,6 +136,26 @@ function SignupForm() {
       );
       setUsernameError('');
       setPasswordError('');
+      const token = localStorage.getItem('Authorization');
+
+      try {
+        await axios.post(
+          '/api/auth/signout',
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          }
+        );
+        // 로그아웃 후 로컬 스토리지에서 토큰 제거
+        localStorage.removeItem('Authorization');
+        window.location.reload();
+        console.log('User logged out');
+      } catch (error) {
+        console.error('Failed to log out:', error);
+      }
       nav('/signin');
     } catch (error) {
       console.error('비밀번호 수정 중 오류 발생:', error);
@@ -211,4 +231,4 @@ function SignupForm() {
   );
 }
 
-export default SignupForm;
+export default FindPassword;
