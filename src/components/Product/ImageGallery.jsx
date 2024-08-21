@@ -1,10 +1,6 @@
 import './ImageGallery.css';
 
-const ImageGallery = ({
-  images,
-  onImageRemove,
-  onImageUpload,
-}) => {
+const ImageGallery = ({ images, onImageRemove, onImageUpload }) => {
   return (
     <div className="image-gallery">
       {images.length < 3 && (
@@ -22,7 +18,7 @@ const ImageGallery = ({
       {images.map((image, index) => (
         <div key={index} className="image-preview">
           <img src={image.url} alt={`uploaded ${index}`} />
-          <button onClick={() => onImageRemove(index)}>
+          <button type="button" onClick={() => onImageRemove(index)}>
             X
           </button>
         </div>

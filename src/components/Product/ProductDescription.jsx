@@ -1,15 +1,10 @@
-const ProductDescription = ({
-  title,
-  description,
-  price,
-}) => {
+const ProductDescription = ({ title, content, price }) => {
   return (
     <div className="product-description">
       <h2>{title}</h2>
-      <p>{description}</p>
+      <p>{content}</p>
       <div className="product-price">
-        <strong>판매가격 :</strong> {price.toLocaleString()}
-        원
+        <strong>판매가격 :</strong> {price.toLocaleString()}원
       </div>
     </div>
   );
