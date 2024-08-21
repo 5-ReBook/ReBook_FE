@@ -57,9 +57,8 @@ axiosAuthInstance.interceptors.response.use(
       } catch (refreshError) {
         // 리프레시 토큰 갱신이 실패하면 사용자 로그아웃 처리 등의 로직 추가
         console.error('Refresh token failed', refreshError);
-        // 쿠키 강제로 만료 시킨 후 로그인 페이지로 리다이렉트
-        document.cookie =
-          'refresh=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+        // 로그인 페이지로 리다이렉트
         window.location.href = '/signin';
         return Promise.reject(refreshError);
       }
