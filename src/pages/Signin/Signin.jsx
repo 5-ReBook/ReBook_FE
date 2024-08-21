@@ -1,10 +1,12 @@
-import './styles/Signin.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
-import { defaultLayoutConfig, useLayout } from '../../components/Layouts/provider/LayoutProvider';
+import {
+  defaultLayoutConfig,
+  useLayout,
+} from '../../components/Layouts/provider/LayoutProvider';
 
 function Signin() {
   const { setLayoutConfig } = useLayout();
@@ -53,6 +55,7 @@ function Signin() {
   };
 
   useEffect(() => {
+    import('./styles/Signin.css');
     // Signin 페이지에 필요한 레이아웃 설정 적용
     setLayoutConfig({
       header: false,
@@ -65,7 +68,6 @@ function Signin() {
       setLayoutConfig(defaultLayoutConfig);
     };
   }, [setLayoutConfig, defaultLayoutConfig]);
-
 
   return (
     <div className="signin-container">
