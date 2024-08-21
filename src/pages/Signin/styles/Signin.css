@@ -81,3 +81,19 @@
   max-width: 18rem; /* 15rem에서 18rem으로 변경 */
   height: auto;
 }
+
+.forgot-password-text {
+  margin-top: 1rem; /* 16px을 1rem으로 변경 */
+  font-size: 0.8rem; /* 16px */
+  color: #555555;
+  text-align: center;
+}
+
+.forgot-password-text a {
+  color: #6ca6cd; /* 링크 색상 */
+  text-decoration: none;
+}
+
+.forgot-password-text a:hover {
+  text-decoration: underline;
+}

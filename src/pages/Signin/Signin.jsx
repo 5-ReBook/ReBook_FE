@@ -1,7 +1,7 @@
 import './styles/Signin.css';
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 
@@ -38,6 +38,7 @@ function Signin() {
       nav('/');
     } catch (error) {
       console.error('로그인 실패:', error);
+      alert('해당 정보로 등록된 회원이 없습니다.');
     }
   };
 
@@ -88,6 +89,15 @@ function Signin() {
           className="kakao-image"
         />
       </button>
+      <p className="forgot-password-text">
+        비밀번호를 혹시 잊어버렸습니까?
+        <br /> 그렇다면{' '}
+        {/* 만약 아이디가 입력되어있다면 비밀번호 찾기 페이지에 전달함 */}
+        <Link to="/findpassword" state={{ username }}>
+          여기
+        </Link>
+        를 클릭해 주세요.
+      </p>
     </div>
   );
 }
