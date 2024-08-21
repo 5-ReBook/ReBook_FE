@@ -137,9 +137,25 @@ function SignupForm() {
       );
       setUsernameError('');
       setPasswordError('');
-      localStorage.removeItem('Authorization');
-      document.cookie =
-        'refresh=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      const token = localStorage.getItem('Authorization');
+
+      try {
+        await axios.post(
+          '/api/auth/signout',
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          }
+        );
+        // 로그아웃 후 로컬 스토리지에서 토큰 제거
+        localStorage.removeItem('Authorization');
+        console.log('User logged out');
+      } catch (error) {
+        console.error('Failed to log out:', error);
+      }
       nav('/signin');
     } catch (error) {
       console.error('비밀번호 수정 중 오류 발생:', error);
