@@ -1,0 +1,113 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+}
+
+.product-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-title {
+  font-weight: bold;
+}
+
+.product-price {
+  color: #A435F0;
+  font-weight: bold;
+}
+
+.seller-info {
+  font-weight: bold;
+}
+
+.message-list {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.user-message {
+  align-items: flex-end;
+}
+
+.other-message {
+  align-items: flex-start;
+}
+
+.message-text {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #e0e0e0;
+}
+
+.user-message .message-text {
+  background-color: #8e44ad;
+  border-radius: 15px 0px 15px 15px;
+  color: #fff;
+}
+
+.other-message .message-text {
+    border-radius: 0px 15px 15px 15px;
+}
+
+.message-time {
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+}
+
+.message-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #f8f8f8;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  outline: none;
+}
+
+.message-input button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #555;
+}
