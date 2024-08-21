@@ -1,11 +1,6 @@
 import React from 'react';
-import Button from '../Button';
 
-const FilterBar = ({
-  filters,
-  onInputChange,
-  onClickSearchButton,
-}) => {
+const FilterBar = ({ filters, onInputChange, onClickSearchButton }) => {
   return (
     <div className="FilterBar">
       <select
@@ -24,7 +19,10 @@ const FilterBar = ({
         placeholder="검색어를 입력하세요"
         type="text"
       />
-      <button onClick={onClickSearchButton}> 🔍 </button>
+      <button type="button" onClick={onClickSearchButton}>
+        {' '}
+        🔍{' '}
+      </button>
       <div className="price-filter">
         <span>최저가</span>
         <input
