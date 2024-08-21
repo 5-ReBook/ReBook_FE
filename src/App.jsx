@@ -10,7 +10,6 @@ import MyProductsPage from './pages/MyProductsPage';
 import SignupForm from './pages/Signup/SignupForm';
 import FindPassword from './pages/FindPassword/FindPassword';
 import { ChakraProvider } from '@chakra-ui/react';
-
 import './App.css';
 import ChatRoomListPage from './pages/Chat/ChatRoomListPage';
 
@@ -83,7 +82,11 @@ function App() {
           <Route
             path="/products/detail"
             element={
-              isAuthenticated ? <ProductDetailPage /> : <Navigate to="/signin" />
+              isAuthenticated ? (
+                <ProductDetailPage />
+              ) : (
+                <Navigate to="/signin" />
+              )
             }
           />
           <Route
@@ -93,6 +96,12 @@ function App() {
             }
           />
           <Route path="/findpassword" element={<FindPassword />} />
+          <Route
+            path="/chat/roomlist"
+            element={
+              isAuthenticated ? <ChatRoomListPage /> : <Navigate to="/signin" />
+            }
+          />
         </Routes>
       </Layout>
     </ChakraProvider>
