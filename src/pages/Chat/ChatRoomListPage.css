@@ -1,0 +1,56 @@
+.chat-list {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .chat-list-title {
+    padding: 8px;
+    font-weight: bold;
+    border-bottom: 1px solid lightgray;
+  }
+  
+  .chat-list-items {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 95%; /* 왜인지 모르겠지만 100%로 하면 footer 영역까지 침범함 */
+    overflow-y: auto;
+  }
+  
+  .chat-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+    gap: 1rem;
+  }
+  
+  .chat-item:last-child {
+    border-bottom: none;
+  }
+  
+  .chat-item-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 16px;
+    object-fit: cover;
+  }
+  
+  .chat-item-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-item-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .chat-item-message {
+    font-size: 14px;
+    color: #666;
+    margin: 4px 0 0;
+  }
+  

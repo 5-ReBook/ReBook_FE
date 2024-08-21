@@ -1,11 +1,13 @@
 import './styles/Signin.css';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
+import { defaultLayoutConfig, useLayout } from '../../components/Layouts/provider/LayoutProvider';
 
 function Signin() {
+  const { setLayoutConfig } = useLayout();
   const nav = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -49,6 +51,21 @@ function Signin() {
   const clearPassword = () => {
     setPassword(''); // password 필드를 비웁니다.
   };
+
+  useEffect(() => {
+    // Signin 페이지에 필요한 레이아웃 설정 적용
+    setLayoutConfig({
+      header: false,
+      leftButton: 'none',
+      footerNav: false,
+    });
+
+    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
+    return () => {
+      setLayoutConfig(defaultLayoutConfig);
+    };
+  }, [setLayoutConfig, defaultLayoutConfig]);
+
 
   return (
     <div className="signin-container">

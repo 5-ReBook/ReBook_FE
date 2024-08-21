@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import MembersLayout from '../../components/Layouts/MembersLayout';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
 import { validateUsername, validatePassword } from '../../utils/validation';
@@ -129,7 +128,7 @@ function SignupForm() {
   };
 
   return (
-    <MembersLayout>
+    <>
       <div className="input-group">
         {/* 아이디 입력 필드 */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -192,7 +191,7 @@ function SignupForm() {
           disabled={Boolean(usernameError || passwordError)}
         />
       </div>
-    </MembersLayout>
+    </>
   );
 }
 
