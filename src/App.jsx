@@ -9,7 +9,10 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import MyProductsPage from './pages/MyProductsPage';
 import SignupForm from './pages/Signup/SignupForm';
 import FindPassword from './pages/FindPassword/FindPassword';
+import { ChakraProvider } from '@chakra-ui/react';
+
 import './App.css';
+import ChatRoomListPage from './pages/Chat/ChatRoomListPage';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -25,7 +28,7 @@ function App() {
       // 리프레시 토큰이 있다면 서버에 새 액세스 토큰 발급 요청
       axios
         .post(
-          'http://localhost/auth/members/refreshtoken/reissue',
+          'https://localhost/auth/members/refreshtoken/reissue',
           {},
           {
             withCredentials: true, // HttpOnly 쿠키를 포함해 요청을 보냄
@@ -55,42 +58,44 @@ function App() {
   }
 
   return (
-    <Layout>
-      <Routes>
-        <Route
-          path="/signin"
-          element={!isAuthenticated ? <Signin /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/"
-          element={isAuthenticated ? <MainPage /> : <Navigate to="/signin" />}
-        />
-        <Route path="/signupform" element={<SignupForm />} />
-        <Route
-          path="/products/new"
-          element={
-            isAuthenticated ? (
-              <ProductRegistrationPage />
-            ) : (
-              <Navigate to="/signin" />
-            )
-          }
-        />
-        <Route
-          path="/products/detail"
-          element={
-            isAuthenticated ? <ProductDetailPage /> : <Navigate to="/signin" />
-          }
-        />
-        <Route
-          path="/products/me"
-          element={
-            isAuthenticated ? <MyProductsPage /> : <Navigate to="/signin" />
-          }
-        />
-        <Route path="/findpassword" element={<FindPassword />} />
-      </Routes>
-    </Layout>
+    <ChakraProvider>
+      <Layout>
+        <Routes>
+          <Route
+            path="/signin"
+            element={!isAuthenticated ? <Signin /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/"
+            element={isAuthenticated ? <MainPage /> : <Navigate to="/signin" />}
+          />
+          <Route path="/signupform" element={<SignupForm />} />
+          <Route
+            path="/products/new"
+            element={
+              isAuthenticated ? (
+                <ProductRegistrationPage />
+              ) : (
+                <Navigate to="/signin" />
+              )
+            }
+          />
+          <Route
+            path="/products/detail"
+            element={
+              isAuthenticated ? <ProductDetailPage /> : <Navigate to="/signin" />
+            }
+          />
+          <Route
+            path="/products/me"
+            element={
+              isAuthenticated ? <MyProductsPage /> : <Navigate to="/signin" />
+            }
+          />
+          <Route path="/findpassword" element={<FindPassword />} />
+        </Routes>
+      </Layout>
+    </ChakraProvider>
   );
 }
 
