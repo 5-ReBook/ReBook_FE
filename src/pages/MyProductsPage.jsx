@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const MyProductsPage = () => {
   const [products, setProducts] = useState([]);
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     axios
@@ -22,23 +21,8 @@ const MyProductsPage = () => {
       });
   }, []);
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
-
   return (
     <div>
-      <Header
-        title="ReBook"
-        leftChild={
-          <button onClick={toggleSidebar}>=</button>
-        }
-      />
-      <Sidebar
-        isOpen={isSidebarOpen}
-        toggleSidebar={toggleSidebar}
-      />
-
       <ProductList products={products} />
     </div>
   );

@@ -4,6 +4,7 @@ import ProductList from '../components/Product/ProductList';
 import Header from '../components/Header';
 import Sidebar from '../components/SideBar';
 import axios from 'axios';
+import { useLayout } from '../components/Layouts/provider/LayoutProvider';
 
 const MainPage = () => {
   const [products, setProducts] = useState([]);
@@ -19,14 +20,11 @@ const MainPage = () => {
   useEffect(() => {
     axios
       .get('/src/db/productlist.json')
-      .then((response) => {
+      .then(response => {
         setProducts(response.data);
       })
-      .catch((error) => {
-        console.error(
-          'There was an error fetching the products!',
-          error
-        );
+      .catch(error => {
+        console.error('There was an error fetching the products!', error);
       });
   }, []);
 
@@ -68,7 +66,7 @@ const MainPage = () => {
   //       );
   //   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     const { name, value } = e.target;
     setFilters({
       ...filters,
@@ -86,16 +84,6 @@ const MainPage = () => {
 
   return (
     <div>
-      <Header
-        title="ReBook"
-        leftChild={
-          <button onClick={toggleSidebar}>=</button>
-        }
-      />
-      <Sidebar
-        isOpen={isSidebarOpen}
-        toggleSidebar={toggleSidebar}
-      />
       <FilterBar
         filters={filters}
         onInputChange={handleInputChange}
