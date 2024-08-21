@@ -6,6 +6,7 @@ import ProductRegistrationPage from './pages/Product/ProductRegistrationPage';
 import ProductDetailPage from './pages/Product/ProductDetailPage';
 import MyProductsPage from './pages/Product/MyProductsPage';
 import SignupForm from './pages/Signup/SignupForm';
+import FindPassword from './pages/FindPassword/FindPassword';
 import './App.css';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
 
   useEffect(() => {
     const hasAccess = localStorage.getItem('Authorization');
+
     setIsAuthenticated(!!hasAccess);
     setIsLoading(false);
   }, []);
@@ -56,6 +58,7 @@ function App() {
             isAuthenticated ? <MyProductsPage /> : <Navigate to="/signin" />
           }
         />
+        <Route path="/findpassword" element={<FindPassword />} />
       </Routes>
     </div>
   );
