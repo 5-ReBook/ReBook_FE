@@ -1,0 +1,40 @@
+.product-image-slider {
+  position: relative;
+  width: 320px; /* 슬라이더의 고정된 폭 */
+  height: 240px; /* 슬라이더의 고정된 높이 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #f8f8f8; /* 이미지 배경색 */
+}
+
+.product-image-slider img {
+  width: auto;
+  height: auto;
+  min-width: 100px; /* 최소 너비 */
+  min-height: 100px; /* 최소 높이 */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* 이미지가 컨테이너 안에서 비율을 유지하며 최대 크기로 */
+  background-color: #f8f8f8; /* 이미지 배경색 */
+}
+
+.product-image-slider button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.product-image-slider button:first-of-type {
+  left: 5px;
+}
+
+.product-image-slider button:last-of-type {
+  right: 5px;
+}

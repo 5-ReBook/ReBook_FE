@@ -2,7 +2,6 @@ import axios from 'axios';
 
 // Axios 인스턴스 생성
 const AxiosInstance = axios.create({
-  // VITE는 환경변수 앞에 반드시 import.meta.env.VITE_~~~
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
