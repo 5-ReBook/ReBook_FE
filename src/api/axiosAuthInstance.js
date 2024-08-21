@@ -1,15 +1,15 @@
 import axios from 'axios';
 
 // Axios 인스턴스 생성
-const axiosAuthInstance = axios.create({
-  baseURL: 'https://api.rebook45.link/https://api.rebook45.link/',
+const AxiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 // 액세스 토큰을 모든 요청에 자동으로 추가
-axiosAuthInstance.interceptors.request.use(
+AxiosInstance.interceptors.request.use(
   config => {
     const accessToken = localStorage.getItem('Authorization');
     if (accessToken) {
@@ -23,7 +23,7 @@ axiosAuthInstance.interceptors.request.use(
 );
 
 // 응답 인터셉터 설정
-axiosAuthInstance.interceptors.response.use(
+AxiosInstance.interceptors.response.use(
   response => {
     return response;
   },
@@ -38,7 +38,7 @@ axiosAuthInstance.interceptors.response.use(
       try {
         // 리프레시 토큰을 사용해 새로운 액세스 토큰 발급
         const response = await axios.post(
-          'https://api.rebook45.link/auth/members/refreshtoken/reissue',
+          `${import.meta.env.VITE_BASE_URL}auth/members/refreshtoken/reissue`,
           {},
           {
             withCredentials: true, // 쿠키 사용을 위해 설정
@@ -53,7 +53,7 @@ axiosAuthInstance.interceptors.response.use(
 
         // 실패했던 요청에 새로운 액세스 토큰을 추가하여 재시도
         originalRequest.headers.Authorization = `Bearer=${newAccessToken}`;
-        return axiosAuthInstance(originalRequest);
+        return AxiosInstance(originalRequest);
       } catch (refreshError) {
         // 리프레시 토큰 갱신이 실패하면 사용자 로그아웃 처리 등의 로직 추가
         console.error('Refresh token failed', refreshError);
@@ -68,4 +68,4 @@ axiosAuthInstance.interceptors.response.use(
   }
 );
 
-export default axiosAuthInstance;
+export default AxiosInstance;
