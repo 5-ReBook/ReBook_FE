@@ -1,0 +1,62 @@
+.myinfo-container {
+  margin: 0;
+  padding: 0.5rem 0;
+  text-align: center;
+}
+
+.profile-picture {
+  position: relative;
+  width: 5.5rem; /* 프로필 사진 크기에 맞춰 컨테이너 크기 설정 */
+  height: 5.5rem;
+  margin: 0 auto 1rem auto; /* 가로 방향 중앙 정렬 */
+}
+
+.profile-picture__img {
+  width: inherit; /* 프로필 사진 크기 */
+  height: inherit;
+  border-radius: 50%; /* 원형으로 만들기 */
+  object-fit: cover;
+}
+
+.profile-picture__edit {
+  position: absolute;
+  left: 0; /* 왼쪽 아래 */
+  bottom: 0;
+  width: 1rem; /* 아이콘 크기 */
+  height: 1rem;
+  cursor: pointer;
+}
+
+.profile-picture__delete {
+  position: absolute;
+  right: 0; /* 오른쪽 위 */
+  top: 0;
+  width: 1rem; /* 아이콘 크기 */
+  height: 1rem;
+  cursor: pointer;
+}
+
+.input-section {
+  margin-bottom: 1.5rem;
+}
+
+.input-section label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.input-section input {
+  width: 100%;
+}
+.username-container {
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.username {
+  font-size: 0.875rem; /* 폰트 크기 */
+  font-weight: bold;
+  max-width: 100%; /* 부모 컨테이너의 최대 너비에 맞게 */
+}
