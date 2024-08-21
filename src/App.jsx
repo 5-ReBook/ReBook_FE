@@ -1,12 +1,11 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Layout from './components/Layouts/Layout';
 import MainPage from './pages/MainPage';
 import Signin from './pages/Signin/Signin';
-import ProductRegistrationPage from './pages/ProductRegistrationPage';
-import ProductDetailPage from './pages/ProductDetailPage';
-import MyProductsPage from './pages/MyProductsPage';
+import ProductRegistrationPage from './pages/Product/ProductRegistrationPage';
+import ProductDetailPage from './pages/Product/ProductDetailPage';
+import MyProductsPage from './pages/Product/MyProductsPage';
 import SignupForm from './pages/Signup/SignupForm';
 import FindPassword from './pages/FindPassword/FindPassword';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -20,36 +19,8 @@ function App() {
   useEffect(() => {
     const hasAccess = localStorage.getItem('Authorization');
 
-    if (hasAccess) {
-      setIsAuthenticated(true);
-      setIsLoading(false);
-    } else {
-      // 리프레시 토큰이 있다면 서버에 새 액세스 토큰 발급 요청
-      axios
-        .post(
-          'https://localhost/auth/members/refreshtoken/reissue',
-          {},
-          {
-            withCredentials: true, // HttpOnly 쿠키를 포함해 요청을 보냄
-          }
-        )
-        .then(response => {
-          const newAccessToken = response.headers.access;
-          if (newAccessToken) {
-            localStorage.setItem('Authorization', newAccessToken);
-            setIsAuthenticated(true);
-          } else {
-            throw new Error('액세스 토큰 획득에 실패했습니다.');
-          }
-        })
-        .catch(() => {
-          localStorage.removeItem('Authorization');
-          setIsAuthenticated(false);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
+    setIsAuthenticated(!!hasAccess);
+    setIsLoading(false);
   }, []);
 
   if (isLoading) {
