@@ -1,7 +1,7 @@
 .sliding-switch {
   position: absolute;
-  top: 1rem; /* 헤더 아래로 약간의 여백 */
-  right: 0rem; /* 오른쪽에 고정 */
+  top: 2rem; /* 헤더 아래로 약간의 여백 */
+  right: 1.7rem; /* 오른쪽에 고정 */
   width: 20vw; /* 슬라이딩 스위치의 전체 너비를 뷰포트 너비의 20%로 설정 */
   max-width: 100px; /* 최대 너비를 100px로 제한 */
   height: 5vh; /* 슬라이딩 스위치의 높이를 뷰포트 높이의 5%로 설정 */
@@ -10,7 +10,6 @@
   border-radius: 50vw; /* 둥근 모서리 */
   display: flex;
   align-items: center;
-  padding: 0.5vh; /* 패딩을 뷰포트 높이의 0.5%로 설정 */
   box-sizing: border-box;
   z-index: 10; /* 다른 요소 위에 위치 */
 }
@@ -21,6 +20,9 @@
   background-color: transparent;
   cursor: pointer;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sliding-switch img {
@@ -40,9 +42,9 @@
 }
 
 .slide-right {
-  transform: translateX(100%); /* 오른쪽으로 이동 */
+  transform: translateX(115%); /* 오른쪽으로 이동 */
 }
 
 .slide-left {
-  transform: translateX(0); /* 왼쪽으로 이동 */
+  transform: translateX(5%); /* 왼쪽으로 이동 */
 }
