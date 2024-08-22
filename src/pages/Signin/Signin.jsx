@@ -9,20 +9,36 @@ import {
 } from '../../components/Layouts/provider/LayoutProvider';
 
 function Signin() {
-  const { setLayoutConfig } = useLayout();
   const nav = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const { setLayoutConfig } = useLayout();
+  useEffect(() => {
+    import('./styles/Signin.css');
+    // Signin 페이지에 필요한 레이아웃 설정 적용
+    setLayoutConfig({
+      header: false,
+      leftButton: 'none',
+      footerNav: false,
+    });
+
+    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
+    return () => {
+      setLayoutConfig(defaultLayoutConfig);
+    };
+  }, [setLayoutConfig, defaultLayoutConfig]);
+
   const handleSignin = async () => {
     try {
       const response = await axios.post(
-        'http://localhost/auth/signin',
+        'auth/signin',
         {
           username,
           password,
         },
         {
+          baseURL: import.meta.env.VITE_BASE_URL,
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
@@ -53,21 +69,6 @@ function Signin() {
   const clearPassword = () => {
     setPassword(''); // password 필드를 비웁니다.
   };
-
-  useEffect(() => {
-    import('./styles/Signin.css');
-    // Signin 페이지에 필요한 레이아웃 설정 적용
-    setLayoutConfig({
-      header: false,
-      leftButton: 'none',
-      footerNav: false,
-    });
-
-    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
-    return () => {
-      setLayoutConfig(defaultLayoutConfig);
-    };
-  }, [setLayoutConfig, defaultLayoutConfig]);
 
   return (
     <div className="signin-container">
