@@ -15,23 +15,19 @@ function MySecurity() {
     const token = localStorage.getItem('Authorization');
 
     try {
-      await axios.post(
-        '/api/auth/signout',
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-
-          withCredentials: true,
-        }
-      );
+      // '/api/auth.signout'
+      await axios.post('/auth/signout', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        baseURL: import.meta.env.VITE_BASE_URL,
+        withCredentials: true,
+      });
       // 로그아웃 후 로컬 스토리지에서 토큰 제거
       localStorage.removeItem('Authorization');
       console.log('User logged out');
       window.location.reload();
-      navigate('/signin'); // 로그아웃 후 로그인 페이지로 이동
+      navigate('/signin');
     } catch (error) {
       console.error('Failed to log out:', error);
     }
@@ -44,11 +40,14 @@ function MySecurity() {
       const token = localStorage.getItem('Authorization');
 
       try {
-        await axios.delete('/api/members', {
+        // '/api/members'
+        await axios.delete('/members', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          baseURL: import.meta.env.VITE_BASE_URL,
         });
+
         console.log('User account deleted');
         await handleLogout();
       } catch (error) {
