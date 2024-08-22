@@ -4,7 +4,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
 import { validateUsername, validatePassword } from '../../utils/validation';
-import './styles/FindPassword.css';
+import {
+  defaultLayoutConfig,
+  useLayout,
+} from '../../components/Layouts/provider/LayoutProvider';
 
 function FindPassword() {
   const location = useLocation();
@@ -18,12 +21,25 @@ function FindPassword() {
   const [passwordInputType, setPasswordInputType] = useState('password');
 
   const nav = useNavigate();
+  const { setLayoutConfig } = useLayout();
 
   useEffect(() => {
+    import('./styles/FindPassword.css');
+    setLayoutConfig({
+      header: true,
+      leftButton: 'goBack',
+      footerNav: false,
+    });
+
     if (location.state?.username) {
       setUsername(location.state.username);
     }
-  }, [location.state]);
+
+    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
+    return () => {
+      setLayoutConfig(defaultLayoutConfig);
+    };
+  }, [setLayoutConfig, defaultLayoutConfig, location.state]);
 
   const handleUsernameChange = e => {
     const newUsername = e.target.value;
@@ -71,8 +87,9 @@ function FindPassword() {
     }
 
     try {
+      // `http://localhost/auth/members/signup/mail?username=${encodeURIComponent(username)}`
       await axios.post(
-        `http://localhost/auth/members/signup/mail?username=${encodeURIComponent(username)}`
+        `https://api.rebook45.link/auth/members/signup/mail?username=${encodeURIComponent(username)}`
       );
       alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
       setIsEmailSent(true);
@@ -90,8 +107,9 @@ function FindPassword() {
     }
 
     try {
+      // 'http://localhost/auth/members/signup/verify',
       await axios.post(
-        'http://localhost/auth/members/signup/verify',
+        'https://api.rebook45.link/auth/members/signup/verify',
         {
           username,
           code: authNumber,
@@ -105,7 +123,7 @@ function FindPassword() {
     }
   };
 
-  //
+  // PATCH auth/members/password/reset
   const handleReset = async () => {
     if (!username || !password) {
       alert('아이디와 새 비밀번호를 입력해 주세요.');
@@ -123,9 +141,11 @@ function FindPassword() {
       return;
     }
 
+    // 테스트 필요
     try {
+      // 'http://localhost/auth/members/password/reset',
       await axios.patch(
-        'http://localhost/auth/members/password/reset',
+        'https://api.rebook45.link/auth/members/password/reset',
         { username, password },
         {
           withCredentials: true,
@@ -139,17 +159,14 @@ function FindPassword() {
       const token = localStorage.getItem('Authorization');
 
       try {
-        await axios.post(
-          '/api/auth/signout',
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            withCredentials: true,
-          }
-        );
-        // 로그아웃 후 로컬 스토리지에서 토큰 제거
+        // '/api/auth/signout',
+        await axios.post('https://api.rebook45.link/auth/signout', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
+
         localStorage.removeItem('Authorization');
         window.location.reload();
         console.log('User logged out');
@@ -164,7 +181,7 @@ function FindPassword() {
   };
 
   return (
-    <>
+    <div className="find-password-container">
       <div className="input-group">
         {/* 아이디 입력 필드 */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -227,7 +244,7 @@ function FindPassword() {
           disabled={Boolean(usernameError || passwordError)}
         />
       </div>
-    </>
+    </div>
   );
 }
 
