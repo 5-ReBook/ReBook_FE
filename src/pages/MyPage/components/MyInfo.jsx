@@ -3,10 +3,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import InputFieldWithButton from '../../../components/Common/InputFieldWithButton';
 import ProfilePicture from './ProfilePicture';
 import './MyInfo.css';
+import AxiosInstance from '../../../api/AxiosInstance';
 
 function MyInfo() {
   const [username, setUsername] = useState('');
@@ -18,23 +19,22 @@ function MyInfo() {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const token = localStorage.getItem('Authorization');
-      if (token) {
-        try {
-          const response = await axios.get('/api/members/me', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+      try {
+        // const token = localStorage.getItem('Authorization');
+        // const response = await axios.get('/api/members/me', {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // });
+        const response = await AxiosInstance.get('members/me');
 
-          setProfilePicture(response.data.result.storedFileName);
-          setUsername(response.data.result.username);
-          setNickname(response.data.result.nickname);
-          setUniversity(response.data.result.university);
-          setMajors(response.data.result.majors);
-        } catch (error) {
-          console.error('Failed to fetch user data:', error);
-        }
+        setProfilePicture(response.data.result.storedFileName);
+        setUsername(response.data.result.username);
+        setNickname(response.data.result.nickname);
+        setUniversity(response.data.result.university);
+        setMajors(response.data.result.majors);
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
       }
     };
     fetchUserData();
@@ -46,18 +46,21 @@ function MyInfo() {
 
   const handleNicknameSave = async () => {
     try {
-      const token = localStorage.getItem('Authorization');
-      const response = await axios.patch(
-        '/api/members/nickname',
-        {
-          nickname,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      // const token = localStorage.getItem('Authorization');
+      // const response = await axios.patch(
+      //   '/api/members/nickname',
+      //   {
+      //     nickname,
+      //   },
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
+      const response = await AxiosInstance.patch('members/nickname', {
+        nickname,
+      });
 
       console.log('Nickname saved:', response.data.result.nickname);
     } catch (error) {
@@ -82,16 +85,21 @@ function MyInfo() {
       formData.append('picture', file);
 
       try {
-        const token = localStorage.getItem('Authorization');
-        const response = await axios.patch(
-          '/api/members/profilePicture',
+        // const token = localStorage.getItem('Authorization');
+        // const response = await axios.patch(
+        //   '/api/members/profilePicture',
+        //   formData,
+        //   {
+        //     headers: {
+        //       Authorization: `Bearer ${token}`,
+        //       'Content-Type': 'multipart/form-data',
+        //     },
+        //   }
+        // );
+        const response = await AxiosInstance.patch(
+          'members/profilePicture',
           formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'multipart/form-data',
-            },
-          }
+          { 'Content-Type': 'multipart/form-data' }
         );
 
         setProfilePicture(response.data.result.storedFileName);
@@ -108,12 +116,13 @@ function MyInfo() {
 
   const handleDeletePicture = async () => {
     try {
-      const token = localStorage.getItem('Authorization');
-      await axios.delete('/api/members/profilePicture', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // const token = localStorage.getItem('Authorization');
+      // await axios.delete('/api/members/profilePicture', {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      await AxiosInstance.delete('members/profilePicture');
 
       setProfilePicture(null);
       console.log('Profile picture deleted.');
