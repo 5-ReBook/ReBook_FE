@@ -79,7 +79,7 @@ function App() {
             }
           />
           <Route
-            path="/products/detail"
+            path="/products/:productId"
             element={
               isAuthenticated ? (
                 <ProductDetailPage />
