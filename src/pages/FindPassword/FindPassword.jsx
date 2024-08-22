@@ -89,7 +89,7 @@ function FindPassword() {
     try {
       // `http://localhost/auth/members/signup/mail?username=${encodeURIComponent(username)}`
       await axios.post(
-        `auth/members/signup/mail?username=${encodeURIComponent(username)}`,
+        `/auth/members/signup/mail?username=${encodeURIComponent(username)}`,
         {
           baseURL: import.meta.env.VITE_BASE_URL,
         }
@@ -112,7 +112,7 @@ function FindPassword() {
     try {
       // 'http://localhost/auth/members/signup/verify',
       await axios.post(
-        'auth/members/signup/verify',
+        '/auth/members/signup/verify',
         {
           username,
           code: authNumber,
@@ -126,7 +126,6 @@ function FindPassword() {
     }
   };
 
-  // PATCH auth/members/password/reset
   const handleReset = async () => {
     if (!username || !password) {
       alert('아이디와 새 비밀번호를 입력해 주세요.');
@@ -148,7 +147,7 @@ function FindPassword() {
     try {
       // 'http://localhost/auth/members/password/reset',
       await axios.patch(
-        'auth/members/password/reset',
+        '/auth/members/password/reset',
         { username, password },
         {
           baseURL: import.meta.env.VITE_BASE_URL,
@@ -164,7 +163,7 @@ function FindPassword() {
 
       try {
         // '/api/auth/signout',
-        await axios.post('auth/signout', {
+        await axios.post('/auth/signout', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

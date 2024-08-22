@@ -26,7 +26,7 @@ function MyInfo() {
         //     Authorization: `Bearer ${token}`,
         //   },
         // });
-        const response = await AxiosInstance.get('members/me');
+        const response = await AxiosInstance.get('/members/me');
 
         setProfilePicture(response.data.result.storedFileName);
         setUsername(response.data.result.username);
@@ -58,7 +58,7 @@ function MyInfo() {
       //     },
       //   }
       // );
-      const response = await AxiosInstance.patch('members/nickname', {
+      const response = await AxiosInstance.patch('/members/nickname', {
         nickname,
       });
 
@@ -97,7 +97,7 @@ function MyInfo() {
         //   }
         // );
         const response = await AxiosInstance.patch(
-          'members/profilePicture',
+          '/members/profilePicture',
           formData,
           { 'Content-Type': 'multipart/form-data' }
         );
@@ -122,7 +122,7 @@ function MyInfo() {
       //     Authorization: `Bearer ${token}`,
       //   },
       // });
-      await AxiosInstance.delete('members/profilePicture');
+      await AxiosInstance.delete('/members/profilePicture');
 
       setProfilePicture(null);
       console.log('Profile picture deleted.');

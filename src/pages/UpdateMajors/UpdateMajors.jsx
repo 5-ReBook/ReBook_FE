@@ -76,7 +76,7 @@ function UpdateMajors() {
       //     majorToSearch: searchTerm,
       //   },
       // });
-      const response = await AxiosInstance.get('members/majors', {
+      const response = await AxiosInstance.get('/members/majors', {
         params: {
           majorToSearch: searchTerm,
         },
@@ -116,7 +116,7 @@ function UpdateMajors() {
       //     },
       //   }
       // );
-      await AxiosInstance.patch('members/majors', { majors: majorsToSave });
+      await AxiosInstance.patch('/members/majors', { majors: majorsToSave });
 
       console.log('Majors updated to:', majorsToSave);
       alert('전공 목록 업데이트 완료!');

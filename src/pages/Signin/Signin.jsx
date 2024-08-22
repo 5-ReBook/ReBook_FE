@@ -32,7 +32,7 @@ function Signin() {
   const handleSignin = async () => {
     try {
       const response = await axios.post(
-        'auth/signin',
+        '/auth/signin',
         {
           username,
           password,

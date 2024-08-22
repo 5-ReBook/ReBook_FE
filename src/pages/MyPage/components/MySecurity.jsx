@@ -16,7 +16,7 @@ function MySecurity() {
 
     try {
       // '/api/auth.signout'
-      await axios.post('auth/signout', {
+      await axios.post('/auth/signout', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -27,7 +27,7 @@ function MySecurity() {
       localStorage.removeItem('Authorization');
       console.log('User logged out');
       window.location.reload();
-      navigate('/signin'); // 로그아웃 후 로그인 페이지로 이동
+      navigate('/signin');
     } catch (error) {
       console.error('Failed to log out:', error);
     }
@@ -41,7 +41,7 @@ function MySecurity() {
 
       try {
         // '/api/members'
-        await axios.delete('members', {
+        await axios.delete('/members', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

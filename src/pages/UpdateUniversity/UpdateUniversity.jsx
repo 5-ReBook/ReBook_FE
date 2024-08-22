@@ -30,7 +30,6 @@ function UpdateUniversity({ location }) {
       footerNav: false,
     });
 
-    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
     return () => {
       setLayoutConfig(defaultLayoutConfig);
     };
@@ -49,7 +48,7 @@ function UpdateUniversity({ location }) {
       //     unvToSearch: searchTerm,
       //   },
       // });
-      const response = await AxiosInstance.get('members/universities', {
+      const response = await AxiosInstance.get('/members/universities', {
         params: {
           unvToSearch: searchTerm,
         },
@@ -81,16 +80,16 @@ function UpdateUniversity({ location }) {
       //     },
       //   }
       // );
-      await AxiosInstance.patch('members/university', {
+      await AxiosInstance.patch('/members/university', {
         university: selectedUniversity,
       });
 
       console.log('University updated to:', selectedUniversity);
       alert('대학교 업데이트 완료!');
       if (window.history.length > 1) {
-        navigate(-1); // 이전 페이지로 돌아가기
+        navigate(-1);
       } else {
-        navigate('/mypage'); // 이전 페이지가 없으면 /mypage로 이동
+        navigate('/mypage');
       }
     } catch (error) {
       console.error('Failed to update university:', error);
