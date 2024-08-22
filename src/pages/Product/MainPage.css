@@ -1,0 +1,12 @@
+.product-list {
+  width: 100%;
+  height: 100%;
+}
+
+.ProductList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  height: 87%;
+  overflow-y: auto;
+}
