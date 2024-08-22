@@ -84,7 +84,8 @@ function SignupForm() {
 
     try {
       await axios.post(
-        `https://api.rebook45.link/auth/members/signup/mail?username=${encodeURIComponent(username)}`
+        `auth/members/signup/mail?username=${encodeURIComponent(username)}`,
+        { baseURL: import.meta.env.VITE_BASE_URL }
       );
       alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
       setIsEmailSent(true);
@@ -103,12 +104,12 @@ function SignupForm() {
 
     try {
       await axios.post(
-        'https://api.rebook45.link/auth/members/signup/verify',
+        'auth/members/signup/verify',
         {
           username,
           code: authNumber,
         },
-        { withCredentials: true }
+        { baseURL: import.meta.env.VITE_BASE_URL, withCredentials: true }
       );
       alert('인증번호가 확인되었습니다.');
     } catch (error) {
@@ -132,9 +133,10 @@ function SignupForm() {
 
     try {
       await axios.post(
-        'https://api.rebook45.link/auth/members/signup',
+        'auth/members/signup',
         { username, password },
         {
+          baseURL: import.meta.env.VITE_BASE_URL,
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json',
