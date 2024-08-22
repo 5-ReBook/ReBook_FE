@@ -2,13 +2,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import MembersLayout from '../../components/Layouts/MembersLayout';
+// import axios from 'axios';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
-import './styles/UpdateUniversity.css';
+import {
+  defaultLayoutConfig,
+  useLayout,
+} from '../../components/Layouts/provider/LayoutProvider';
+import AxiosInstance from '../../api/AxiosInstance';
 
 function UpdateUniversity({ location }) {
   const [searchTerm, setSearchTerm] = useState(
@@ -17,16 +20,36 @@ function UpdateUniversity({ location }) {
   const [universityList, setUniversityList] = useState([]);
   const [selectedUniversity, setSelectedUniversity] = useState('');
   const navigate = useNavigate();
+  const { setLayoutConfig } = useLayout();
+
+  useEffect(() => {
+    import('./styles/UpdateUniversity.css');
+    setLayoutConfig({
+      header: true,
+      leftButton: 'goBack',
+      footerNav: false,
+    });
+
+    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
+    return () => {
+      setLayoutConfig(defaultLayoutConfig);
+    };
+  }, [setLayoutConfig, defaultLayoutConfig]);
 
   const handleSearchChange = e => setSearchTerm(e.target.value);
 
   const handleSearchClick = async () => {
     try {
-      const token = localStorage.getItem('Authorization');
-      const response = await axios.get('/api/members/universities', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      // const token = localStorage.getItem('Authorization');
+      // const response = await axios.get('/api/members/universities', {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      //   params: {
+      //     unvToSearch: searchTerm,
+      //   },
+      // });
+      const response = await AxiosInstance.get('members/universities', {
         params: {
           unvToSearch: searchTerm,
         },
@@ -46,18 +69,21 @@ function UpdateUniversity({ location }) {
 
   const handleSave = async () => {
     try {
-      const token = localStorage.getItem('Authorization'); // 토큰 가져오기
-      await axios.patch(
-        '/api/members/university',
-        {
-          university: selectedUniversity, // 선택된 대학교를 요청 바디에 포함
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // 요청 헤더에 Authorization 토큰 추가
-          },
-        }
-      );
+      // const token = localStorage.getItem('Authorization');
+      // await axios.patch(
+      //   '/api/members/university',
+      //   {
+      //     university: selectedUniversity,
+      //   },
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
+      await AxiosInstance.patch('members/university', {
+        university: selectedUniversity,
+      });
 
       console.log('University updated to:', selectedUniversity);
       alert('대학교 업데이트 완료!');
@@ -72,37 +98,35 @@ function UpdateUniversity({ location }) {
   };
 
   return (
-    <MembersLayout>
-      <div className="update-university-container">
-        <label>
-          대학교를 검색해주세요.
-          <InputFieldWithButton
-            type="text"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            onClickHandler={handleSearchClick}
-            buttonImage="src/assets/images/search.png"
-            className="input-item"
-          />
-        </label>
+    <div className="update-university-container">
+      <label>
+        대학교를 검색해주세요.
+        <InputFieldWithButton
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          onClickHandler={handleSearchClick}
+          buttonImage="src/assets/images/search.png"
+          className="input-item"
+        />
+      </label>
 
-        {universityList.length > 0 && (
-          <div className="university-list">
-            {universityList.map((university, index) => (
-              <div
-                key={index}
-                className="university-item"
-                onClick={() => handleUniversitySelect(university)}
-              >
-                {university}
-              </div>
-            ))}
-          </div>
-        )}
+      {universityList.length > 0 && (
+        <div className="university-list">
+          {universityList.map((university, index) => (
+            <div
+              key={index}
+              className="university-item"
+              onClick={() => handleUniversitySelect(university)}
+            >
+              {university}
+            </div>
+          ))}
+        </div>
+      )}
 
-        <Button text="수정 완료" onClick={handleSave} />
-      </div>
-    </MembersLayout>
+      <Button text="수정 완료" onClick={handleSave} />
+    </div>
   );
 }
 
