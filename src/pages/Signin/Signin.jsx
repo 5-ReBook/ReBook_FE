@@ -50,7 +50,7 @@ function Signin() {
 
   const handleKakaoLogin = () => {
     // 백엔드의 카카오 OAuth 로그인 URL
-    const kakaoAuthUrl = `${import.meta.env.VITE_BASE_URL}auth/oauth/signin/kakao`;
+    const kakaoAuthUrl = `${import.meta.env.VITE_BASE_URL}/auth/oauth/signin/kakao`;
     // OAuth 로그인 페이지로 이동
     window.location.href = kakaoAuthUrl;
   };

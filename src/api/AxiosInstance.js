@@ -39,7 +39,7 @@ AxiosInstance.interceptors.response.use(
       try {
         // 리프레시 토큰을 사용해 새로운 액세스 토큰 발급
         const response = await axios.post(
-          `${import.meta.env.VITE_BASE_URL}auth/members/refreshtoken/reissue`,
+          `${import.meta.env.VITE_BASE_URL}/auth/members/refreshtoken/reissue`,
           {},
           {
             withCredentials: true, // 쿠키 사용을 위해 설정
