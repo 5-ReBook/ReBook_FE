@@ -5,7 +5,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import MembersLayout from '../../components/Layouts/MembersLayout';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
 import './styles/UpdateUniversity.css';

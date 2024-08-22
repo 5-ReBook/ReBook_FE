@@ -4,7 +4,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
-import { defaultLayoutConfig, useLayout } from '../../components/Layouts/provider/LayoutProvider';
+import {
+  defaultLayoutConfig,
+  useLayout,
+} from '../../components/Layouts/provider/LayoutProvider';
+import AxiosInstance from '../../api/AxiosInstance';
 
 function Signin() {
   const { setLayoutConfig } = useLayout();
@@ -44,6 +48,13 @@ function Signin() {
     }
   };
 
+  const handleKakaoLogin = () => {
+    // 백엔드의 카카오 OAuth 로그인 URL
+    const kakaoAuthUrl = `${import.meta.env.VITE_BASE_URL}auth/oauth/signin/kakao`; // 실제 백엔드 OAuth 로그인 엔드포인트로 변경하세요.
+    // OAuth 로그인 페이지로 이동
+    window.location.href = kakaoAuthUrl;
+  };
+
   const clearUsername = () => {
     setUsername(''); // username 필드를 비웁니다.
   };
@@ -65,7 +76,6 @@ function Signin() {
       setLayoutConfig(defaultLayoutConfig);
     };
   }, [setLayoutConfig, defaultLayoutConfig]);
-
 
   return (
     <div className="signin-container">
@@ -99,7 +109,7 @@ function Signin() {
         />
       </div>
       <hr className="divider" />
-      <button type="button" className="kakao-button">
+      <button onClick={handleKakaoLogin} type="button" className="kakao-button">
         <img
           src="src/assets/images/Signin/kakao_login_large_wide.png"
           alt="카카오로 로그인"
