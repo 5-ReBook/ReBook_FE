@@ -15,16 +15,23 @@ import UpdateUniversity from './pages/UpdateUniversity/UpdateUniversity';
 import UpdateMajors from './pages/UpdateMajors/UpdateMajors';
 import ChatRoomListPage from './pages/Chat/ChatRoomListPage';
 import ChatRoomPage from './pages/Chat/ChatRoomPage';
+import AxiosInstance from './api/AxiosInstance';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const hasAccess = localStorage.getItem('Authorization');
-
-    setIsAuthenticated(!!hasAccess);
-    setIsLoading(false);
+    AxiosInstance.get('/members/me')
+      .then(response => {
+        if (response.data.status === 'OK') {
+          setIsAuthenticated(true);
+          setIsLoading(false);
+        } else {
+          console.error('Failed to Authorize:', response.data.message);
+        }
+      })
+      .catch(error => console.error('Error with Authorize:', error));
   }, []);
 
   if (isLoading) {
