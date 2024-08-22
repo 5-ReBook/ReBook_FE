@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import axios from 'axios';
 
 // Axios 인스턴스 생성
@@ -28,8 +29,8 @@ AxiosInstance.interceptors.response.use(
     const originalRequest = error.config;
 
     // 401 에러 발생시
-    if (error.response.status === 401 && !originalRequest.retry) {
-      originalRequest.retry = true;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
       console.log('Token expired. Trying to refresh...');
 
       try {
