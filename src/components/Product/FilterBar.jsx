@@ -1,28 +1,31 @@
 import React from 'react';
+import './FilterBar.css';
 
 const FilterBar = ({ filters, onInputChange, onClickSearchButton }) => {
   return (
     <div className="FilterBar">
-      <select
-        name="filterType"
-        onChange={onInputChange}
-        value={filters.filterType}
-      >
-        <option value="title">제목</option>
-        <option value="university">대학교</option>
-        <option value="major">전공</option>
-      </select>
-      <input
-        name="searchInput"
-        onChange={onInputChange}
-        value={filters.searchInput}
-        placeholder="검색어를 입력하세요"
-        type="text"
-      />
-      <button type="button" onClick={onClickSearchButton}>
-        {' '}
-        🔍{' '}
-      </button>
+      <div className="search-filter">
+        <select
+          name="filterType"
+          onChange={onInputChange}
+          value={filters.filterType}
+        >
+          <option value="title">제목</option>
+          <option value="university">대학교</option>
+          <option value="major">전공</option>
+        </select>
+        <input
+          name="searchInput"
+          onChange={onInputChange}
+          value={filters.searchInput}
+          placeholder="검색어를 입력하세요"
+          type="text"
+        />
+        <button type="button" onClick={onClickSearchButton}>
+          {' '}
+          🔍{' '}
+        </button>
+      </div>
       <div className="price-filter">
         <span>최저가</span>
         <input

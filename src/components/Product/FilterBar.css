@@ -1,0 +1,84 @@
+.FilterBar {
+  flex-shrink: 0;
+  padding: 8px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+  top: 0;
+  box-sizing: border-box;
+  width: 100%; /* 화면 너비에 딱 맞도록 설정 */
+}
+
+.FilterBar .search-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.FilterBar .search-filter select {
+  flex-shrink: 0;
+  background-color: #f8f8f8;
+  color: #000000;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+}
+
+.FilterBar .search-filter input {
+  flex-grow: 1;
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 0.9rem;
+}
+
+.FilterBar .search-filter button {
+  flex-shrink: 0;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 4px 12px;
+  cursor: pointer;
+  width: auto;
+}
+
+.FilterBar .price-filter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: space-between;
+  width: 100%; /* 가로로 한 줄에 모두 들어가도록 설정 */
+}
+
+.FilterBar .price-filter span {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  color: #555;
+  white-space: nowrap;
+}
+
+.FilterBar .price-filter .price-input {
+  background-color: #be99ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  text-align: center;
+  padding: 0 4px;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+.FilterBar .price-filter input {
+  width: 60px; /* 숫자 입력 필드 너비 조정 */
+}
+
+.FilterBar .price-filter select {
+  background-color: #be99ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 1px 4px;
+  font-size: 0.9rem;
+}
