@@ -1,0 +1,27 @@
+/* ProductDetailPage.css */
+.product-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.product-detail button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.2rem;
+  color: #ffffff;
+  background-color: #8e44ad;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.product-detail button:hover {
+  background-color: #8e44ad;
+}
