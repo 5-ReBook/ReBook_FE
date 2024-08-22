@@ -2,12 +2,13 @@
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
+  align-items: flex-start; /* 이미지와 플레이스홀더를 왼쪽 정렬 */
 }
 
 .image-preview {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
 }
 
 .image-preview img {
@@ -19,24 +20,25 @@
 
 .image-preview button {
   position: absolute;
-  top: -5px;
-  right: -5px;
+  top: -8px;
+  right: -8px;
   background: rgba(0, 0, 0, 0.7);
   color: white;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 12px;
-  width: 20px;
-  height: 20px;
+  font-size: 14px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .image-upload-placeholder {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80px;
-  height: 80px;
+  display: block; /* 기본 블록 레벨 요소로 변경 */
+  width: 100px;
+  height: 100px;
   border: 2px dashed #ccc;
   border-radius: 5px;
   cursor: pointer;
@@ -45,4 +47,8 @@
 .upload-icon {
   font-size: 24px;
   color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* 아이콘을 placeholder 안에서 중앙 정렬 */
 }
