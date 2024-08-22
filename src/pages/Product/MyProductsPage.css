@@ -1,0 +1,18 @@
+.my-product-list {
+  width: 100%;
+  height: 100%;
+}
+
+.my-product-list .my-product-title {
+  padding: 8px;
+  font-weight: bold;
+  border-bottom: 1px solid lightgray;
+}
+
+.my-product-list .ProductList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  height: 95%;
+  overflow-y: auto;
+}
