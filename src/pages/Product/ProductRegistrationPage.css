@@ -1,0 +1,52 @@
+.product-registration {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  width: 100%;
+  padding: 20px; /* 여백을 더 크게 설정 */
+  box-sizing: border-box;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 12px; /* 패딩 추가 */
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  resize: none;
+  height: 120px; /* 텍스트 영역 높이 */
+  box-sizing: border-box;
+  font-family: inherit;
+  outline: none;
+}
+
+.form-group textarea::placeholder {
+  color: #aaa;
+}
+
+.form-group input,
+.form-group textarea {
+  margin-top: 8px; /* 입력 필드 간격 조정 */
+}
+
+.form-group button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.2rem;
+  color: #ffffff;
+  background-color: #8e44ad;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* 버튼과 위 요소 간격 조정 */
+}
+
+.form-group button:hover {
+  background-color: #7d3c98;
+}
