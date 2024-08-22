@@ -1,0 +1,35 @@
+/* SellerInfo.css */
+.seller-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.seller-info img {
+  margin-right: 12px;
+}
+
+.seller-info div {
+  flex-grow: 1;
+}
+
+.seller-info h3 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.seller-info p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 4px 0;
+}
+
+.status {
+  font-size: 0.9rem;
+  color: #ffffff;
+  background-color: #8e44ad;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
