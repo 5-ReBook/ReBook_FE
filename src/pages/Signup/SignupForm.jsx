@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
 import { validateUsername, validatePassword } from '../../utils/validation';
-import './styles/SignupForm.css';
+import {
+  defaultLayoutConfig,
+  useLayout,
+} from '../../components/Layouts/provider/LayoutProvider';
 
 function SignupForm() {
   const [username, setUsername] = useState('');
@@ -17,6 +20,22 @@ function SignupForm() {
   const [passwordInputType, setPasswordInputType] = useState('password');
 
   const nav = useNavigate();
+
+  const { setLayoutConfig } = useLayout();
+  useEffect(() => {
+    import('./styles/SignupForm.css');
+    // SignupForm 페이지에 필요한 레이아웃 설정 적용
+    setLayoutConfig({
+      header: true,
+      leftButton: 'goBack',
+      footerNav: false,
+    });
+
+    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
+    return () => {
+      setLayoutConfig(defaultLayoutConfig);
+    };
+  }, [setLayoutConfig, defaultLayoutConfig]);
 
   const handleUsernameChange = e => {
     const newUsername = e.target.value;
@@ -65,7 +84,7 @@ function SignupForm() {
 
     try {
       await axios.post(
-        `http://localhost/auth/members/signup/mail?username=${encodeURIComponent(username)}`
+        `https://api.rebook45.link/auth/members/signup/mail?username=${encodeURIComponent(username)}`
       );
       alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
       setIsEmailSent(true);
@@ -84,7 +103,7 @@ function SignupForm() {
 
     try {
       await axios.post(
-        'http://localhost/auth/members/signup/verify',
+        'https://api.rebook45.link/auth/members/signup/verify',
         {
           username,
           code: authNumber,
@@ -113,9 +132,14 @@ function SignupForm() {
 
     try {
       await axios.post(
-        'http://localhost/auth/members/signup',
+        'https://api.rebook45.link/auth/members/signup',
         { username, password },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
       alert('회원가입이 완료되었습니다.');
       setUsernameError('');
@@ -128,7 +152,7 @@ function SignupForm() {
   };
 
   return (
-    <>
+    <div className="signup-outer">
       <div className="input-group">
         {/* 아이디 입력 필드 */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -191,7 +215,7 @@ function SignupForm() {
           disabled={Boolean(usernameError || passwordError)}
         />
       </div>
-    </>
+    </div>
   );
 }
 
