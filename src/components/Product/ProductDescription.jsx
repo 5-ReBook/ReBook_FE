@@ -1,3 +1,5 @@
+import './ProductDescription.css';
+
 const ProductDescription = ({ title, content, price }) => {
   return (
     <div className="product-description">
