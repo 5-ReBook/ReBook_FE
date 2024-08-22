@@ -1,40 +1,42 @@
 .product-image-slider {
   position: relative;
-  width: 320px; /* 슬라이더의 고정된 폭 */
-  height: 240px; /* 슬라이더의 고정된 높이 */
+  width: 100%;
+  max-width: 100%;
+  height: 300px; /* 고정된 높이 설정 */
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  background-color: #f8f8f8; /* 이미지 배경색 */
+  overflow: hidden; /* 이미지를 슬라이더 컨테이너에 맞게 숨김 처리 */
+  background-color: #f0f0f0; /* 이미지가 없을 때 기본 배경색 */
 }
 
 .product-image-slider img {
-  width: auto;
-  height: auto;
-  min-width: 100px; /* 최소 너비 */
-  min-height: 100px; /* 최소 높이 */
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain; /* 이미지가 컨테이너 안에서 비율을 유지하며 최대 크기로 */
-  background-color: #f8f8f8; /* 이미지 배경색 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지가 컨테이너를 가득 채우면서도 비율을 유지하게 */
 }
 
 .product-image-slider button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5); /* 버튼 배경에 약간의 투명도 추가 */
   color: white;
   border: none;
-  padding: 8px;
+  border-radius: 50%; /* 버튼을 원형으로 변경 */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  z-index: 1;
 }
 
 .product-image-slider button:first-of-type {
-  left: 5px;
+  left: 10px;
 }
 
 .product-image-slider button:last-of-type {
-  right: 5px;
+  right: 10px;
 }
