@@ -14,26 +14,22 @@ AxiosInstance.interceptors.request.use(
   config => {
     const accessToken = localStorage.getItem('Authorization');
     if (accessToken) {
-      config.headers.Authorization = `Bearer=${accessToken}`;
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
-  error => {
-    return Promise.reject(error);
-  }
+  error => Promise.reject(error)
 );
 
 // 응답 인터셉터 설정
 AxiosInstance.interceptors.response.use(
-  response => {
-    return response;
-  },
+  response => response,
   async error => {
     const originalRequest = error.config;
 
     // 401 에러 발생시
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+    if (error.response.status === 401 && !originalRequest.retry) {
+      originalRequest.retry = true;
       console.log('Token expired. Trying to refresh...');
 
       try {
@@ -53,7 +49,7 @@ AxiosInstance.interceptors.response.use(
         localStorage.setItem('Authorization', newAccessToken);
 
         // 실패했던 요청에 새로운 액세스 토큰을 추가하여 재시도
-        originalRequest.headers.Authorization = `Bearer=${newAccessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return AxiosInstance(originalRequest);
       } catch (refreshError) {
         // 리프레시 토큰 갱신이 실패하면 사용자 로그아웃 처리 등의 로직 추가
