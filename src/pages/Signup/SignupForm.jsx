@@ -83,16 +83,16 @@ function SignupForm() {
     }
 
     try {
-      const baseURL = import.meta.env.VITE_BASE_URL;
-      if (!baseURL) {
-        console.error('VITE_BASE_URL is not defined');
-        return;
-      }
+      // const baseURL = import.meta.env.VITE_BASE_URL;
+      // if (!baseURL) {
+      //   console.error('VITE_BASE_URL is not defined');
+      //   return;
+      // }
       await axios.post(
-        `/auth/members/signup/mail?username=${encodeURIComponent(username)}`,
-        {
-          baseURL: import.meta.env.VITE_BASE_URL,
-        }
+        `https://api.rebook45.link/auth/members/signup/mail?username=${encodeURIComponent(username)}`
+        // {
+        //   baseURL: import.meta.env.VITE_BASE_URL,
+        // }
       );
       alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
       setIsEmailSent(true);
