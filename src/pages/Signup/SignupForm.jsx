@@ -84,8 +84,7 @@ function SignupForm() {
 
     try {
       await axios.post(
-        `/auth/members/signup/mail?username=${encodeURIComponent(username)}`,
-        { baseURL: import.meta.env.VITE_BASE_URL }
+        `${import.meta.env.VITE_BASE_URL}/auth/members/signup/mail?username=${encodeURIComponent(username)}`
       );
       alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
       setIsEmailSent(true);
