@@ -22,8 +22,7 @@ const FilterBar = ({ filters, onInputChange, onClickSearchButton }) => {
           type="text"
         />
         <button type="button" onClick={onClickSearchButton}>
-          {' '}
-          🔍{' '}
+          🔍
         </button>
       </div>
       <div className="price-filter">
