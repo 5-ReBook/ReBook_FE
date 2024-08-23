@@ -1,18 +1,18 @@
 .form-group {
   width: 100%; /* 부모 요소의 너비를 100%로 설정 */
-  margin-bottom: 4px; /* 아래 요소와의 간격을 유지 */
+  margin-bottom: 0.25rem; /* 4px을 0.25rem으로 변경하여 간격을 유지 */
 }
 
 .form-group input {
   width: 100%; /* 입력 필드가 가로로 꽉 차도록 설정 */
-  padding: 12px; /* 내부 여백을 설정 */
-  border-radius: 8px; /* 모서리를 둥글게 설정 */
+  padding: 0.75rem; /* 12px을 0.75rem으로 변경하여 내부 여백을 설정 */
+  border-radius: 0.5rem; /* 8px을 0.5rem으로 변경하여 모서리를 둥글게 설정 */
   border: 1px solid #ddd; /* 테두리를 설정 */
   font-size: 1rem; /* 글꼴 크기를 설정 */
   box-sizing: border-box; /* 패딩과 테두리를 포함한 너비를 계산 */
   outline: none; /* 포커스 시 나타나는 기본 테두리 제거 */
 }
 
-.for-group input::placeholder {
+.form-group input::placeholder {
   color: #aaa; /* placeholder 색상 설정 */
 }

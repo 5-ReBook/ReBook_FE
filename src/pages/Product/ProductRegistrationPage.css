@@ -3,23 +3,23 @@
   flex-direction: column;
   align-self: flex-start;
   width: 100%;
-  padding: 20px; /* 여백을 더 크게 설정 */
+  padding: 1.25rem; /* 20px을 1.25rem으로 변경 */
   box-sizing: border-box;
 }
 
 .form-group {
   width: 100%;
-  margin-bottom: 4px;
+  margin-bottom: 0.25rem; /* 4px을 0.25rem으로 변경 */
 }
 
 .form-group textarea {
   width: 100%;
-  padding: 12px; /* 패딩 추가 */
-  border-radius: 8px;
+  padding: 0.75rem; /* 12px을 0.75rem으로 변경 */
+  border-radius: 0.5rem; /* 8px을 0.5rem으로 변경 */
   border: 1px solid #ddd;
   font-size: 1rem;
   resize: none;
-  height: 120px; /* 텍스트 영역 높이 */
+  height: 7.5rem; /* 120px을 7.5rem으로 변경 */
   box-sizing: border-box;
   font-family: inherit;
   outline: none;
@@ -31,20 +31,20 @@
 
 .form-group input,
 .form-group textarea {
-  margin-top: 8px; /* 입력 필드 간격 조정 */
+  margin-top: 0.5rem; /* 8px을 0.5rem으로 변경 */
 }
 
 .form-group button {
   width: 100%;
-  padding: 12px;
+  padding: 0.75rem; /* 12px을 0.75rem으로 변경 */
   font-size: 1.2rem;
   color: #ffffff;
   background-color: #8e44ad;
   border: none;
-  border-radius: 10px;
+  border-radius: 0.625rem; /* 10px을 0.625rem으로 변경 */
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 20px; /* 버튼과 위 요소 간격 조정 */
+  margin-top: 1.25rem; /* 20px을 1.25rem으로 변경 */
 }
 
 .form-group button:hover {

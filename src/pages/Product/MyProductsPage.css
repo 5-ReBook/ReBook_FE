@@ -4,7 +4,7 @@
 }
 
 .my-product-list .my-product-title {
-  padding: 8px;
+  padding: 0.5rem; /* 8px을 0.5rem으로 변경 */
   font-weight: bold;
   border-bottom: 1px solid lightgray;
 }

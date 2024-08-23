@@ -1,23 +1,23 @@
 /* ProductDescription.css */
 .product-description {
   width: 100%;
-  margin-bottom: 16px;
-  padding: 16px;
+  margin-bottom: 1rem; /* 16px을 1rem으로 변경 */
+  padding: 1rem; /* 16px을 1rem으로 변경 */
   background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 0.625rem; /* 10px을 0.625rem으로 변경 */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* 2px 4px을 0.125rem 0.25rem으로 변경 */
 }
 
 .product-description h2 {
   font-size: 1.2rem;
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem; /* 8px을 0.5rem으로 변경 */
 }
 
 .product-description p {
   font-size: 1rem;
   color: #333;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem; /* 8px을 0.5rem으로 변경 */
 }
 
 .product-price {

@@ -1,17 +1,17 @@
 /* ProductDetails.css */
 .product-details {
   width: 100%;
-  margin-bottom: 16px;
-  padding: 16px;
+  margin-bottom: 1rem; /* 16px을 1rem으로 변경 */
+  padding: 1rem; /* 16px을 1rem으로 변경 */
   background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 0.625rem; /* 10px을 0.625rem으로 변경 */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* 2px 4px을 0.125rem 0.25rem으로 변경 */
 }
 
 .product-details p {
   font-size: 0.9rem;
   color: #555;
-  margin: 4px 0;
+  margin: 0.25rem 0; /* 4px을 0.25rem으로 변경 */
 }
 
 .product-details strong {

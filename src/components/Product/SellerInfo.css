@@ -3,11 +3,11 @@
   display: flex;
   align-items: center;
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 1rem; /* 16px을 1rem으로 변경 */
 }
 
 .seller-info img {
-  margin-right: 12px;
+  margin-right: 0.75rem; /* 12px을 0.75rem으로 변경 */
 }
 
 .seller-info div {
@@ -23,13 +23,13 @@
 .seller-info p {
   font-size: 0.9rem;
   color: #555;
-  margin: 4px 0;
+  margin: 0.25rem 0; /* 4px 0을 0.25rem 0으로 변경 */
 }
 
 .status {
   font-size: 0.9rem;
   color: #ffffff;
   background-color: #8e44ad;
-  padding: 4px 8px;
-  border-radius: 8px;
+  padding: 0.25rem 0.5rem; /* 4px 8px을 0.25rem 0.5rem으로 변경 */
+  border-radius: 0.5rem; /* 8px을 0.5rem으로 변경 */
 }

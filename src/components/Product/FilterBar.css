@@ -1,6 +1,6 @@
 .FilterBar {
   flex-shrink: 0;
-  padding: 8px;
+  padding: 0.5rem; /* 8px을 0.5rem으로 변경 */
   background-color: #f8f8f8;
   border-bottom: 1px solid #ddd;
   top: 0;
@@ -11,8 +11,8 @@
 .FilterBar .search-filter {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
+  gap: 0.5rem; /* 8px을 0.5rem으로 변경 */
+  margin-bottom: 0.5rem; /* 8px을 0.5rem으로 변경 */
   width: 100%;
 }
 
@@ -21,15 +21,15 @@
   background-color: #f8f8f8;
   color: #000000;
   border: none;
-  border-radius: 12px;
+  border-radius: 0.75rem; /* 12px을 0.75rem으로 변경 */
   font-weight: bold;
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem; /* 4px 8px을 0.25rem 0.5rem으로 변경 */
 }
 
 .FilterBar .search-filter input {
   flex-grow: 1;
-  padding: 4px 8px;
-  border-radius: 12px;
+  padding: 0.25rem 0.5rem; /* 4px 8px을 0.25rem 0.5rem으로 변경 */
+  border-radius: 0.75rem; /* 12px을 0.75rem으로 변경 */
   border: 1px solid #ddd;
   font-size: 0.9rem;
 }
@@ -38,8 +38,8 @@
   flex-shrink: 0;
   background-color: #f8f8f8;
   border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 4px 12px;
+  border-radius: 0.75rem; /* 12px을 0.75rem으로 변경 */
+  padding: 0.25rem 0.75rem; /* 4px 12px을 0.25rem 0.75rem으로 변경 */
   cursor: pointer;
   width: auto;
 }
@@ -47,7 +47,7 @@
 .FilterBar .price-filter {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0.25rem; /* 4px을 0.25rem으로 변경 */
   justify-content: space-between;
   width: 100%; /* 가로로 한 줄에 모두 들어가도록 설정 */
 }
@@ -63,22 +63,22 @@
   background-color: #be99ff;
   color: #ffffff;
   border: none;
-  border-radius: 12px;
+  border-radius: 0.75rem; /* 12px을 0.75rem으로 변경 */
   text-align: center;
-  padding: 0 4px;
+  padding: 0 0.25rem; /* 0 4px을 0 0.25rem으로 변경 */
   width: 100%;
   font-size: 0.9rem;
 }
 
 .FilterBar .price-filter input {
-  width: 60px; /* 숫자 입력 필드 너비 조정 */
+  width: 3.75rem; /* 60px을 3.75rem으로 변경 */
 }
 
 .FilterBar .price-filter select {
   background-color: #be99ff;
   color: #ffffff;
   border: none;
-  border-radius: 12px;
-  padding: 1px 4px;
+  border-radius: 0.75rem; /* 12px을 0.75rem으로 변경 */
+  padding: 0.0625rem 0.25rem; /* 1px 4px을 0.0625rem 0.25rem으로 변경 */
   font-size: 0.9rem;
 }

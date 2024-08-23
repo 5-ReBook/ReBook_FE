@@ -1,10 +1,10 @@
 .ProductListItem {
   display: flex;
-  padding: 12px;
-  margin-bottom: 8px;
+  padding: 0.75rem; /* 12px을 0.75rem으로 변경 */
+  margin-bottom: 0.5rem; /* 8px을 0.5rem으로 변경 */
   background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem; /* 8px을 0.5rem으로 변경 */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* 0 2px 4px을 rem으로 변경 */
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
   width: 100%;
@@ -12,16 +12,16 @@
 }
 
 .ProductListItem:hover {
-  transform: translateY(-2px);
+  transform: translateY(-0.125rem); /* 2px을 0.125rem으로 변경 */
 }
 
 .img_section {
   flex-shrink: 0;
-  width: 105px;
-  height: 105px;
-  margin-right: 12px;
+  width: 6.5625rem; /* 105px을 6.5625rem으로 변경 */
+  height: 6.5625rem; /* 105px을 6.5625rem으로 변경 */
+  margin-right: 0.75rem; /* 12px을 0.75rem으로 변경 */
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 0.5rem; /* 8px을 0.5rem으로 변경 */
 }
 
 .img_section img {
@@ -41,14 +41,14 @@
 .title {
   font-size: 1rem;
   font-weight: bold;
-  margin-bottom: 2px;
+  margin-bottom: 0.125rem; /* 2px을 0.125rem으로 변경 */
   color: #333;
 }
 
 .univAndMajor {
   font-size: 0.8rem;
   color: #777;
-  margin-bottom: 2px;
+  margin-bottom: 0.125rem; /* 2px을 0.125rem으로 변경 */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; /* 긴 텍스트는 생략 표시 */
@@ -61,21 +61,20 @@
 }
 
 .status-label {
-  padding: 4px 2px;
-  border-radius: 4px;
+  padding: 0.25rem 0.125rem; /* 4px 2px을 0.25rem 0.125rem으로 변경 */
+  border-radius: 0.25rem; /* 4px을 0.25rem으로 변경 */
   font-size: 0.7rem;
   font-weight: bold;
   color: #fff;
-  margin-top: 4px;
-  width: 60px;
+  margin-top: 0.25rem; /* 4px을 0.25rem으로 변경 */
+  width: 3.75rem; /* 60px을 3.75rem으로 변경 */
+  text-align: center;
 }
 
 .status-label.pending {
   background-color: #8e44ad;
-  text-align: center;
 }
 
 .status-label.completed {
   background-color: #c1c3c2;
-  text-align: center;
 }
