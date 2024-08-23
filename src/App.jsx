@@ -22,17 +22,22 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // axios.get('/api/members/me')
     AxiosInstance.get('/members/me')
       .then(response => {
         if (response.data.status === 'OK') {
           setIsAuthenticated(true);
-          setIsLoading(false);
         } else {
           console.error('Failed to Authorize:', response.data.message);
         }
       })
-      .catch(error => console.error('Error with Authorize:', error));
+      .catch(error => {
+        console.error('Error with Authorize:', error);
+        setIsAuthenticated(false);
+      })
+      .finally(setIsLoading(false));
   }, []);
+
 
   if (isLoading) {
     return <div>Loading...</div>; // 로딩 중 표시될 화면
