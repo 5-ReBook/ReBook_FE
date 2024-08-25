@@ -57,7 +57,9 @@ AxiosInstance.interceptors.response.use(
         console.error('Refresh token failed', refreshError);
 
         // 로그인 페이지로 리다이렉트
-        window.location.href = '/signin';
+        if (window.location.pathname !== '/signin') {
+          window.location.href = '/signin';
+        }
         return Promise.reject(refreshError);
       }
     }
