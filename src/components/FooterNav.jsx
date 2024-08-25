@@ -17,9 +17,7 @@ function FooterNav() {
   }
 
   return (
-    // fixme : 데스크탑 화면에서 헤더와 다르게
-    // 전체 width 차지하는 문제 해결해야 함.
-    <div className="footer-nav-container">
+    <footer className="footer-nav-container">
       <div className="footer-button-container">
         <button
           type="button"
@@ -70,7 +68,7 @@ function FooterNav() {
         </button>
         <span className="footer-button-label">마이페이지</span>
       </div>
-    </div>
+    </footer>
   );
 }
 
