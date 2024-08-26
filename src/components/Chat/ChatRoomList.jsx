@@ -40,16 +40,23 @@ const ChatRoomItem = ({ chatRoom }) => {
       className="chat-item"
       onClick={chatRoomClickHandler}
     >
-      <ProfileImage
-        src={`https://rb-dev-s3-images.s3.ap-northeast-2.amazonaws.com/profile/${chatUser.storedFileName}`} //TODO: 실제 사용자 프로필 주소로 변경
-        name={chatUser.nickname || chatUser.username}
-        size="sm"
-      />
-      <div className="chat-item-content">
-        <p className="chat-item-name">
-          {chatUser.nickname || chatUser.username}
-        </p>
-        <p className="chat-item-message">{chatRoom.lastMessage}&nbsp;</p>
+      <div className="chat-item-wrapper">
+        <ProfileImage
+          src={`https://rb-dev-s3-images.s3.ap-northeast-2.amazonaws.com/profile/${chatUser.storedFileName}`} // TODO: 실제 사용자 프로필 주소로 변경
+          name={chatUser.nickname || chatUser.username}
+          size="sm"
+        />
+        <div className="chat-item-content">
+          <p className="chat-item-name">
+            {chatUser.nickname || chatUser.username}
+          </p>
+          <p className="chat-item-message">{chatRoom.lastMessage}&nbsp;</p>
+        </div>
+      </div>
+      <div
+        className={`unread-message-cnt ${chatRoom.unreadCount > 0 ? 'visible' : ''}`}
+      >
+        {chatRoom.unreadCount}
       </div>
     </li>
   );
@@ -59,7 +66,7 @@ const ChatRoomList = ({ chatRooms }) => {
   return (
     <ul className="chat-list-items">
       {chatRooms.map(chatRoom => (
-        <ChatRoomItem chatRoom={chatRoom} />
+        <ChatRoomItem key={chatRoom.roomId} chatRoom={chatRoom} />
       ))}
     </ul>
   );
