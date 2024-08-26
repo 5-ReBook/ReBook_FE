@@ -1,15 +1,25 @@
 import ProductListItem from './ProductListItem';
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, lastProductElementRef }) => {
   return (
-    <div className="ProductList">
-      {products.map((product) => (
-        <ProductListItem
-          key={product.productId}
-          product={product}
-        />
-      ))}
-    </div>
+    <ul className="ProductList">
+      {products.map((product, index) => {
+        const uniqueKey = `${product.productId}-${index}`; // productId에 index를 결합하여 고유 키 생성
+        if (products.length === index + 1) {
+          return (
+            <li ref={lastProductElementRef} key={uniqueKey}>
+              <ProductListItem key={uniqueKey} product={product} />
+            </li>
+          );
+        } else {
+          return (
+            <li key={uniqueKey}>
+              <ProductListItem key={uniqueKey} product={product} />
+            </li>
+          );
+        }
+      })}
+    </ul>
   );
 };
 

@@ -1,48 +1,54 @@
 .image-gallery {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 0.625rem; /* 10px을 0.625rem으로 변경 */
+  margin-bottom: 1.25rem; /* 20px을 1.25rem으로 변경 */
+  align-items: flex-start; /* 이미지와 플레이스홀더를 왼쪽 정렬 */
 }
 
 .image-preview {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 6.25rem; /* 100px을 6.25rem으로 변경 */
+  height: 6.25rem; /* 100px을 6.25rem으로 변경 */
 }
 
 .image-preview img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 0.3125rem; /* 5px을 0.3125rem으로 변경 */
 }
 
 .image-preview button {
   position: absolute;
-  top: -5px;
-  right: -5px;
+  top: -0.5rem; /* -8px을 -0.5rem으로 변경 */
+  right: -0.5rem; /* -8px을 -0.5rem으로 변경 */
   background: rgba(0, 0, 0, 0.7);
   color: white;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 12px;
-  width: 20px;
-  height: 20px;
+  font-size: 0.875rem; /* 14px을 0.875rem으로 변경 */
+  width: 1.5rem; /* 24px을 1.5rem으로 변경 */
+  height: 1.5rem; /* 24px을 1.5rem으로 변경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .image-upload-placeholder {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80px;
-  height: 80px;
-  border: 2px dashed #ccc;
-  border-radius: 5px;
+  display: block; /* 기본 블록 레벨 요소로 변경 */
+  width: 6.25rem; /* 100px을 6.25rem으로 변경 */
+  height: 6.25rem; /* 100px을 6.25rem으로 변경 */
+  border: 0.125rem dashed #ccc; /* 2px을 0.125rem으로 변경 */
+  border-radius: 0.3125rem; /* 5px을 0.3125rem으로 변경 */
   cursor: pointer;
 }
 
 .upload-icon {
-  font-size: 24px;
+  font-size: 1.5rem; /* 24px을 1.5rem으로 변경 */
   color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* 아이콘을 placeholder 안에서 중앙 정렬 */
 }

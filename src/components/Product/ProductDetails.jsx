@@ -1,3 +1,5 @@
+import './ProductDetails.css';
+
 const ProductDetails = ({ university, major }) => {
   return (
     <div className="product-details">

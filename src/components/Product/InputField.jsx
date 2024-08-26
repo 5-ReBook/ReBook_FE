@@ -1,10 +1,6 @@
-const InputField = ({
-  label,
-  value,
-  onChange,
-  type = 'text',
-  placeholder,
-}) => {
+import './InputField.css';
+
+const InputField = ({ label, value, onChange, type = 'text', placeholder }) => {
   return (
     <div className="form-group">
       <input
