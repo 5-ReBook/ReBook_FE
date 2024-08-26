@@ -10,7 +10,7 @@
   overflow-y: auto;
 }
 
-.product-detail button {
+.product-detail .product-image-slider button {
   padding: 0.75rem; /* 12px을 0.75rem으로 변경 */
   font-size: 1.2rem;
   color: #ffffff;
@@ -21,6 +21,10 @@
   transition: background-color 0.3s ease;
 }
 
-.product-detail button:hover {
+.product-detail .product-image-slider button:hover {
   background-color: #504f50;
+}
+
+.product-detail > Button {
+  margin-top: 0.75rem;
 }
