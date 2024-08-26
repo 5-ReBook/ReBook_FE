@@ -1,10 +1,11 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Layout from './components/Layouts/Layout';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/Product/MainPage';
 import Signin from './pages/Signin/Signin';
 import ProductRegistrationPage from './pages/Product/ProductRegistrationPage';
 import ProductDetailPage from './pages/Product/ProductDetailPage';
+import ProductEditPage from './pages/Product/ProductEditPage';
 import MyProductsPage from './pages/Product/MyProductsPage';
 import SignupForm from './pages/Signup/SignupForm';
 import FindPassword from './pages/FindPassword/FindPassword';
@@ -51,13 +52,19 @@ function App() {
             }
           />
           <Route
-            path="/products/detail"
+            path="/products/:productId"
             element={
               isAuthenticated ? (
                 <ProductDetailPage />
               ) : (
                 <Navigate to="/signin" />
               )
+            }
+          />
+          <Route
+            path="/products/edit/:productId"
+            element={
+              isAuthenticated ? <ProductEditPage /> : <Navigate to="/signin" />
             }
           />
           <Route
