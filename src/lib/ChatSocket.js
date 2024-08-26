@@ -10,16 +10,11 @@ class ChatSocket {
     this.reconnectAttempts = 0;
   }
 
-  connect(senderUsername) {
+  connect() {
     console.log('Connecting...');
-    try {
-      const socket = new SockJS(
-        `${import.meta.env.VITE_BASE_URL}/chat/ws/stomp`
-      );
-      this.stompClient = Stomp.over(socket);
-    } catch (e) {
-      e.printStackTrace();
-    }
+
+    const socket = new WebSocket('ws://localhost/chat/ws/stomp');
+    this.stompClient = Stomp.over(socket);
 
     this.stompClient.connect(
       {},
@@ -31,6 +26,8 @@ class ChatSocket {
           message => {
             const recv = JSON.parse(message.body);
             if (this.onMessageReceived) {
+              if (this.senderUsername !== recv.senderUsername)
+                this.readMessage(recv.chatMessageId);
               this.onMessageReceived(recv);
             }
           }
@@ -68,6 +65,21 @@ class ChatSocket {
           roomId: this.chatRoomId,
           senderUsername: this.senderUsername,
           message: message,
+        })
+      );
+    }
+  }
+
+  readMessage(messageId) {
+    if (this.stompClient && this.stompClient.connected) {
+      this.stompClient.send(
+        '/chat/pub/message',
+        {},
+        JSON.stringify({
+          type: 'READ',
+          roomId: this.chatRoomId,
+          senderUsername: this.senderUsername,
+          chatMessageId: messageId,
         })
       );
     }

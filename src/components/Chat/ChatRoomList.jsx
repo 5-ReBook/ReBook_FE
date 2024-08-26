@@ -49,8 +49,7 @@ const ChatRoomItem = ({ chatRoom }) => {
         <p className="chat-item-name">
           {chatUser.nickname || chatUser.username}
         </p>
-        <p className="chat-item-message">{'최근메시지 적어야 합니다'}</p>
-        {/* {chatRoom.message}</p> */}
+        <p className="chat-item-message">{chatRoom.lastMessage}&nbsp;</p>
       </div>
     </li>
   );

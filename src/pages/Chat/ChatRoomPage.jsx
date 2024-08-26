@@ -13,10 +13,10 @@ const ChatRoomPage = () => {
   const { id } = useParams();
   const { loginInfo } = useLoginInfo();
   const [messages, setMessages] = useState([]);
-  const [chatScoket, setChatSocket] = useState(null);
+  const [chatSocket, setChatSocket] = useState(null);
 
   const onMessageReceived = message => {
-    console.log(message);
+    setMessages(prevMessages => [...prevMessages, message]);
   };
 
   useEffect(() => {
@@ -27,20 +27,24 @@ const ChatRoomPage = () => {
       .catch(error => {
         console.error('Error fetching messages', error);
       });
-    const chatSocket = new ChatSocket(
+    const newChatSocket = new ChatSocket(
       id,
       loginInfo.username,
       onMessageReceived
     );
-    chatSocket.connect();
+    newChatSocket.connect();
 
-    setChatSocket(chatSocket);
+    setChatSocket(newChatSocket);
+
+    return () => {
+      newChatSocket.disconnect();
+    };
   }, [id]);
   return (
     <div className="chat-container">
       <ChatHeader />
       <ChatMessageList messages={messages} />
-      <ChatMessageInput />
+      <ChatMessageInput chatSocket={chatSocket} />
     </div>
   );
 };
