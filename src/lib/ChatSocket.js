@@ -1,4 +1,3 @@
-import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 
 class ChatSocket {
@@ -13,7 +12,10 @@ class ChatSocket {
   connect() {
     console.log('Connecting...');
 
-    const socket = new WebSocket('ws://localhost/chat/ws/stomp');
+    const wsUrl = this.convertHttpToWs(
+      `${import.meta.env.VITE_BASE_URL}/chat/ws/stomp`
+    );
+    const socket = new WebSocket(wsUrl);
     this.stompClient = Stomp.over(socket);
 
     this.stompClient.connect(
@@ -89,6 +91,10 @@ class ChatSocket {
     if (this.stompClient) {
       this.stompClient.disconnect();
     }
+  }
+
+  convertHttpToWs(url) {
+    return url.replace(/^http/, 'ws');
   }
 }
 
