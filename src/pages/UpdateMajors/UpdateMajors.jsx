@@ -19,6 +19,7 @@ function UpdateMajors() {
   const [selectedMajors, setSelectedMajors] = useState([]); // 선택된 전공 리스트
   const navigate = useNavigate();
   const { setLayoutConfig } = useLayout();
+  const [majorQuantityError, setMajorQuantityError] = useState(false);
 
   useEffect(() => {
     import('./styles/UpdateMajors.css');
@@ -90,6 +91,14 @@ function UpdateMajors() {
   };
 
   const handleMajorSelect = major => {
+    if(selectedMajors.length >= 0 && selectedMajors.length < 6){
+      setMajorQuantityError(true);
+      alert('관심 전공은 최대 5개까지만 선택할 수 있습니다.');
+    }
+    else{
+      setMajorQuantityError(false);
+    }
+
     if (!selectedMajors.includes(major)) {
       setSelectedMajors(prevMajors => [...prevMajors, major]);
     }
@@ -102,6 +111,10 @@ function UpdateMajors() {
   };
 
   const handleSave = async () => {
+    if(majorQuantityError){
+      alert("선택된 관심 전공 갯수가 너무 많습니다!.");
+      return;
+    }
     const majorsToSave = selectedMajors.join(',');
     try {
       // const token = localStorage.getItem('Authorization');
