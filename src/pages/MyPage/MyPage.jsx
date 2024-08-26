@@ -15,7 +15,7 @@ function MyPage() {
     setLayoutConfig({
       header: true,
       leftButton: 'goBack',
-      footerNav: false,
+      footerNav: true,
     });
 
     // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
