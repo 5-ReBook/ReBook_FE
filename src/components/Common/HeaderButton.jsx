@@ -9,8 +9,6 @@ const HeaderButton = ({ buttonImage, buttonAction }) => {
     buttonAction();
   };
 
-  console.log('Button IMAGE ', buttonImage);
-
   return (
     <button className="header-button" onClick={buttonClick}>
       <Image boxSize={'1.5rem'} src={buttonImage} alt="header-button" />

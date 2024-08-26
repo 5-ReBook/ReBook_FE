@@ -17,24 +17,32 @@ import ChatRoomListPage from './pages/Chat/ChatRoomListPage';
 import ChatRoomPage from './pages/Chat/ChatRoomPage';
 import AxiosInstance from './api/AxiosInstance';
 import { HttpStatusCode } from 'axios';
+import { useLoginInfo } from './provider/LoginInfoProvider';
 
 function App() {
+  const { setLoginInfo } = useLoginInfo();
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate(); // useNavigate 훅 사용
 
   useEffect(() => {
     AxiosInstance.get('/members/me')
       .then(response => {
+        setLoginInfo(response.data.result); // 로그인 정보 설정
+
         if (
           response.status === HttpStatusCode.Ok &&
-          location.pathname === '/signin'
+          (location.pathname === '/signin' ||
+            location.pathname === '/signupform')
         ) {
           navigate('/'); // 인증 성공 시에만 리다이렉트
         }
       })
       .catch(error => {
         console.error('Error with Authorize:', error);
-        if (location.pathname !== '/signin') {
+        if (
+          location.pathname !== '/signin' &&
+          location.pathname !== '/signupform'
+        ) {
           navigate('/signin'); // 인증 실패 시에만 리다이렉트
         }
       })
@@ -60,7 +68,7 @@ function App() {
           <Route path="/products/me" element={<MyProductsPage />} />
           <Route path="/findpassword" element={<FindPassword />} />
           <Route path="/chat/roomlist" element={<ChatRoomListPage />} />
-          <Route path="/chat/room/:id" element={<ChatRoomPage />} />
+          <Route path="/chat/rooms/:id" element={<ChatRoomPage />} />
         </Routes>
       </Layout>
     </ChakraProvider>

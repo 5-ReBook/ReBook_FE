@@ -7,8 +7,10 @@ import SellerInfo from '../../components/Product/SellerInfo';
 import ProductDescription from '../../components/Product/ProductDescription';
 import ProductDetails from '../../components/Product/ProductDetails';
 import Button from '../../components/Button';
+import { useLoginInfo } from '../../provider/LoginInfoProvider';
 
 const ProductDetailPage = () => {
+  const { loginInfo } = useLoginInfo();
   const [product, setProduct] = useState(null);
   const nav = useNavigate();
   const { productId } = useParams();
@@ -21,7 +23,17 @@ const ProductDetailPage = () => {
   }, [productId]);
 
   const handleChatButtonClick = () => {
-    // 채팅하기 버튼 클릭시 실행될 로직
+    api
+      .post('/chat/rooms', {
+        sellerUsername: product.sellerUsername,
+        buyerUsername: loginInfo.username,
+        productId: product.productId,
+      })
+      .then(response => {
+        const room = response.data.result;
+        nav(`/chat/rooms/${room.roomId}`);
+      })
+      .catch(error => console.error('Failed to create chat room:', error));
   };
 
   if (!product) {
