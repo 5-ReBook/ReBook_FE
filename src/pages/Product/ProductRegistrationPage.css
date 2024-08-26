@@ -1,0 +1,52 @@
+.product-registration {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  width: 100%;
+  padding: 1.25rem; /* 20px을 1.25rem으로 변경 */
+  box-sizing: border-box;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 0.25rem; /* 4px을 0.25rem으로 변경 */
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem; /* 12px을 0.75rem으로 변경 */
+  border-radius: 0.5rem; /* 8px을 0.5rem으로 변경 */
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  resize: none;
+  height: 7.5rem; /* 120px을 7.5rem으로 변경 */
+  box-sizing: border-box;
+  font-family: inherit;
+  outline: none;
+}
+
+.form-group textarea::placeholder {
+  color: #aaa;
+}
+
+.form-group input,
+.form-group textarea {
+  margin-top: 0.5rem; /* 8px을 0.5rem으로 변경 */
+}
+
+.form-group button {
+  width: 100%;
+  padding: 0.75rem; /* 12px을 0.75rem으로 변경 */
+  font-size: 1.2rem;
+  color: #ffffff;
+  background-color: #8e44ad;
+  border: none;
+  border-radius: 0.625rem; /* 10px을 0.625rem으로 변경 */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1.25rem; /* 20px을 1.25rem으로 변경 */
+}
+
+.form-group button:hover {
+  background-color: #7d3c98;
+}

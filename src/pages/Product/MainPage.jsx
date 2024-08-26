@@ -1,8 +1,12 @@
-import { useEffect, useState } from 'react';
-import api from '../../api/AxiosInstance';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import AxiosInstance from '../../api/AxiosInstance';
 import FilterBar from '../../components/Product/FilterBar';
 import ProductList from '../../components/Product/ProductList';
-import Sidebar from '../../components/SideBar';
+import './MainPage.css';
+import {
+  defaultLayoutConfig,
+  useLayout,
+} from '../../components/Layouts/provider/LayoutProvider';
 
 const MainPage = () => {
   const [products, setProducts] = useState([]);
@@ -13,12 +17,35 @@ const MainPage = () => {
     maxPrice: '',
     sortOrder: 'asc',
   });
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const { setLayoutConfig } = useLayout();
 
-  const fetchProducts = () => {
-    let url = `/products?order=${filters.sortOrder}`;
+  const observer = useRef();
 
-    // 필터 값이 있으면 추가
+  const lastProductElementRef = useCallback(
+    node => {
+      if (isLoading) return;
+
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && hasMore) {
+          setCurrentPage(prevPage => prevPage + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore]
+  );
+
+  const fetchProducts = useCallback(() => {
+    if (isLoading || !hasMore) return;
+
+    setIsLoading(true);
+
+    let url = `/products?order=${filters.sortOrder}&page=${currentPage}&size=10`;
+
     if (filters.minPrice) url += `&minPrice=${filters.minPrice}`;
     if (filters.maxPrice) url += `&maxPrice=${filters.maxPrice}`;
     if (filters.searchInput) {
@@ -31,23 +58,38 @@ const MainPage = () => {
       }
     }
 
-    // 변경된 부분: api 인스턴스로 API 호출
-    api
-      .get(url)
+    AxiosInstance.get(url)
       .then(response => {
-        if (response.data.status === 'OK') {
-          setProducts(response.data.result);
-        } else {
-          console.error('Failed to fetch products:', response.data.message);
+        if (response.data && response.data.content) {
+          const newProducts = response.data.content;
+          setProducts(prevProducts => [...prevProducts, ...newProducts]);
+          setHasMore(response.data.currentPage + 1 < response.data.totalPages);
+
+          if (response.data.currentPage + 1 >= response.data.totalPages) {
+            observer.current.disconnect(); // 데이터 로드가 완료되면 Observer 해제
+          }
         }
       })
-      .catch(error => console.error('Error fetching products:', error));
-  };
+      .catch(error => console.error('Error fetching products:', error))
+      .finally(() => setIsLoading(false));
+  }, [filters, currentPage, isLoading, hasMore]);
 
   useEffect(() => {
-    setLayoutConfig;
+    setLayoutConfig({
+      header: true,
+      leftButton: 'none',
+      footerNav: true,
+    });
+
+    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
+    return () => {
+      setLayoutConfig(defaultLayoutConfig);
+    };
+  }, [setLayoutConfig, defaultLayoutConfig]);
+
+  useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [currentPage]);
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -55,25 +97,29 @@ const MainPage = () => {
       ...filters,
       [name]: value,
     });
+    setProducts([]);
+    setCurrentPage(0);
+    setHasMore(true);
   };
 
   const onClickSearchButton = () => {
+    setProducts([]);
+    setCurrentPage(0);
     fetchProducts();
   };
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
-
   return (
-    <div>
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+    <div className="product-list">
       <FilterBar
         filters={filters}
         onInputChange={handleInputChange}
         onClickSearchButton={onClickSearchButton}
       />
-      <ProductList products={products} />
+      <ProductList
+        products={products}
+        lastProductElementRef={lastProductElementRef}
+      />
+      {isLoading && <p>Loading...</p>}
     </div>
   );
 };

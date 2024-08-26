@@ -1,10 +1,13 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../../api/AxiosInstance';
+import { useState, useEffect } from 'react';
+import AxiosInstance from '../../api/AxiosInstance';
 import InputField from '../../components/Product/InputField';
 import Button from '../../components/Button';
-import Header from '../../components/Header';
 import ImageGallery from '../../components/Product/ImageGallery';
+import {
+  defaultLayoutConfig,
+  useLayout,
+} from '../../components/Layouts/provider/LayoutProvider';
+import './ProductRegistrationPage.css';
 
 const ProductRegistrationPage = () => {
   const [title, setTitle] = useState('');
@@ -13,7 +16,20 @@ const ProductRegistrationPage = () => {
   const [price, setPrice] = useState('');
   const [content, setContent] = useState('');
   const [images, setImages] = useState([]);
-  const nav = useNavigate();
+  const { setLayoutConfig } = useLayout();
+
+  useEffect(() => {
+    setLayoutConfig({
+      header: true,
+      leftButton: 'goBack',
+      footerNav: true,
+    });
+
+    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
+    return () => {
+      setLayoutConfig(defaultLayoutConfig);
+    };
+  }, [setLayoutConfig, defaultLayoutConfig]);
 
   const handleImageUpload = e => {
     const files = Array.from(e.target.files);
@@ -59,7 +75,7 @@ const ProductRegistrationPage = () => {
     });
 
     try {
-      const response = await api.post('/products', formData, {
+      const response = await AxiosInstance.post('/products', formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // 폼 데이터 전송 시 필요
         },
@@ -74,15 +90,6 @@ const ProductRegistrationPage = () => {
 
   return (
     <div className="product-registration">
-      <Header
-        title="ReBook"
-        leftChild={
-          <button type="button" onClick={() => nav(-1)}>
-            {'<'}
-          </button>
-        }
-      />
-
       <InputField
         label="글 제목"
         value={title}

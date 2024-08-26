@@ -1,36 +1,42 @@
 import { useEffect, useState } from 'react';
 import ProductList from '../../components/Product/ProductList';
-import Header from '../../components/Header';
-import Sidebar from '../../components/SideBar';
-import axios from 'axios';
+import AxiosInstance from '../../api/AxiosInstance';
+import {
+  defaultLayoutConfig,
+  useLayout,
+} from '../../components/Layouts/provider/LayoutProvider';
+import './MyProductsPage.css';
 
 const MyProductsPage = () => {
   const [products, setProducts] = useState([]);
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const { setLayoutConfig } = useLayout();
 
   useEffect(() => {
-    axios
-      .get('/src/db/productlist.json')
+    setLayoutConfig({
+      header: true,
+      leftButton: 'none',
+      footerNav: true,
+    });
+
+    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
+    return () => {
+      setLayoutConfig(defaultLayoutConfig);
+    };
+  }, [setLayoutConfig, defaultLayoutConfig]);
+
+  useEffect(() => {
+    AxiosInstance.get('/products/me')
       .then(response => {
-        setProducts(response.data);
+        setProducts(response.data.result);
       })
       .catch(error => {
         console.error('There was an error fetching the products!', error);
       });
   }, []);
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
-
   return (
-    <div>
-      <Header
-        title="ReBook"
-        leftChild={<button onClick={toggleSidebar}>=</button>}
-      />
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-
+    <div className="my-product-list">
+      <h2 className="my-product-title">내가 쓴글</h2>
       <ProductList products={products} />
     </div>
   );
