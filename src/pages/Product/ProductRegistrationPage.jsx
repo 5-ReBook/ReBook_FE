@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AxiosInstance from '../../api/AxiosInstance';
 import InputField from '../../components/Product/InputField';
 import Button from '../../components/Button';
@@ -17,6 +18,7 @@ const ProductRegistrationPage = () => {
   const [content, setContent] = useState('');
   const [images, setImages] = useState([]);
   const { setLayoutConfig } = useLayout();
+  const nav = useNavigate();
 
   useEffect(() => {
     setLayoutConfig({
@@ -82,9 +84,11 @@ const ProductRegistrationPage = () => {
       });
 
       console.log('Submitted:', response.data);
-      // nav('/'); // 등록 후 이동할 페이지 설정
+      alert('상품이 성공적으로 등록되었습니다.');
+      nav('/'); // 등록 후 이동할 페이지 설정
     } catch (error) {
       console.error('Error submitting product:', error);
+      alert('상품 등록에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
