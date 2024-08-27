@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
+import AxiosInstance from '../../api/AxiosInstance';
 import {
   defaultLayoutConfig,
   useLayout,
@@ -31,20 +31,10 @@ function Signin() {
 
   const handleSignin = async () => {
     try {
-      const response = await axios.post(
-        '/auth/signin',
-        {
-          username,
-          password,
-        },
-        {
-          baseURL: import.meta.env.VITE_BASE_URL,
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+      const response = await AxiosInstance.post('/auth/signin', {
+        username,
+        password,
+      });
 
       // 서버로부터 받은 액세스 토큰을 localStorage에 저장
       const accessToken = response.headers.access;
@@ -52,9 +42,6 @@ function Signin() {
 
       // 로그인 성공 후 필요한 로직 처리
       console.log('로그인 성공:', accessToken);
-
-      // 페이지 새로고침
-      window.location.reload();
       nav('/');
     } catch (error) {
       console.error('로그인 실패:', error);
@@ -118,8 +105,7 @@ function Signin() {
       </button>
       <p className="forgot-password-text">
         비밀번호를 혹시 잊어버렸습니까?
-        <br /> 그렇다면{' '}
-        {/* 만약 아이디가 입력되어있다면 비밀번호 찾기 페이지에 전달함 */}
+        <br /> 그렇다면 {/* fixme : 이거 누르면 로그인 페이지로 돌아와버림 */}
         <Link to="/findpassword" state={{ username }}>
           여기
         </Link>
