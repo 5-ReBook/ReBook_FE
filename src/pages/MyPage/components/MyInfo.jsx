@@ -71,7 +71,11 @@ function MyInfo() {
         const response = await AxiosInstance.patch(
           '/members/profilePicture',
           formData,
-          { 'Content-Type': 'multipart/form-data' }
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
         );
 
         setProfilePicture(response.data.result.storedFileName);
