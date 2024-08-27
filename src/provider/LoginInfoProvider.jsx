@@ -6,7 +6,13 @@ const LoginInfoContext = createContext();
 export const useLoginInfo = () => useContext(LoginInfoContext);
 
 export function LoginInfoProvider({ children }) {
-  const [loginInfo, setLoginInfo] = useState(null);
+  const [loginInfo, setLoginInfo] = useState({
+    username: '',
+    nickname: '',
+    university: '',
+    majors: '',
+    profilePicture: '',
+  });
 
   return (
     <LoginInfoContext.Provider value={{ loginInfo, setLoginInfo }}>
