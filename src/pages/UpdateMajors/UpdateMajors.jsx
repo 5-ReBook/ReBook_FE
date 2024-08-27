@@ -31,12 +31,6 @@ function UpdateMajors() {
 
     const fetchUserData = async () => {
       try {
-        // const token = localStorage.getItem('Authorization');
-        // const response = await axios.get('/api/members/me', {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // });
         const response = await AxiosInstance.get('members/me');
 
         const fetchedMajors = response.data.result.majors;
@@ -68,15 +62,6 @@ function UpdateMajors() {
     }
 
     try {
-      // const token = localStorage.getItem('Authorization');
-      // const response = await axios.get('/api/members/majors', {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      //   params: {
-      //     majorToSearch: searchTerm,
-      //   },
-      // });
       const response = await AxiosInstance.get('/members/majors', {
         params: {
           majorToSearch: searchTerm,
@@ -91,12 +76,16 @@ function UpdateMajors() {
   };
 
   const handleMajorSelect = major => {
-    if(selectedMajors.length >= 0 && selectedMajors.length < 6){
-      setMajorQuantityError(true);
+    if (selectedMajors.length === 5) {
       alert('관심 전공은 최대 5개까지만 선택할 수 있습니다.');
+      setMajorList([]); // 검색 결과를 초기화
+      setSearchTerm(''); // 검색어를 초기화
+      return;
     }
-    else{
+    if (selectedMajors.length < 6) {
       setMajorQuantityError(false);
+    } else {
+      setMajorQuantityError(true);
     }
 
     if (!selectedMajors.includes(major)) {
@@ -111,24 +100,12 @@ function UpdateMajors() {
   };
 
   const handleSave = async () => {
-    if(majorQuantityError){
-      alert("선택된 관심 전공 갯수가 너무 많습니다!.");
+    if (majorQuantityError) {
+      alert('선택된 관심 전공 갯수가 너무 많습니다!.');
       return;
     }
     const majorsToSave = selectedMajors.join(',');
     try {
-      // const token = localStorage.getItem('Authorization');
-      // await axios.patch(
-      //   '/api/members/majors',
-      //   {
-      //     majors: majorsToSave,
-      //   },
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   }
-      // );
       await AxiosInstance.patch('/members/majors', { majors: majorsToSave });
 
       console.log('Majors updated to:', majorsToSave);
