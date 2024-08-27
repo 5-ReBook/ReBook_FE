@@ -33,8 +33,7 @@ function App() {
         if (
           response.status === HttpStatusCode.Ok &&
           (location.pathname === '/signin' ||
-            location.pathname === '/signupform' ||
-            location.pathname === '/findpassword')
+            location.pathname === '/signupform')
         ) {
           navigate('/'); // 인증 성공 시에만 리다이렉트
         }
