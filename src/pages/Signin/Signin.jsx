@@ -105,7 +105,7 @@ function Signin() {
       </button>
       <p className="forgot-password-text">
         비밀번호를 혹시 잊어버렸습니까?
-        <br /> 그렇다면 {/* fixme : 이거 누르면 로그인 페이지로 돌아와버림 */}
+        <br /> 그렇다면
         <Link to="/findpassword" state={{ username }}>
           여기
         </Link>

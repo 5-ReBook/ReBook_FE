@@ -59,7 +59,6 @@ function MyInfo() {
     navigate('/mymajors', { state: { majors: majorsToSend } });
   };
 
-  // fixme : 사진 업로드 안됨! storedFileName이 null임 200 돌아오긴 하는데
   const handleEditPicture = async e => {
     const file = e.target.files[0];
 
