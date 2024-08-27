@@ -8,6 +8,7 @@ import {
   defaultLayoutConfig,
   useLayout,
 } from '../../components/Layouts/provider/LayoutProvider';
+import AxiosInstance from '../../api/AxiosInstance';
 
 function SignupForm() {
   const [username, setUsername] = useState('');
@@ -82,47 +83,36 @@ function SignupForm() {
       return;
     }
 
-    try {
-      // const baseURL = import.meta.env.VITE_BASE_URL;
-      // if (!baseURL) {
-      //   console.error('VITE_BASE_URL is not defined');
-      //   return;
-      // }
-      await axios.post(
-        `https://api.rebook45.link/auth/members/signup/mail?username=${encodeURIComponent(username)}`
-        // {
-        //   baseURL: import.meta.env.VITE_BASE_URL,
-        // }
-      );
-      alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
-      setIsEmailSent(true);
-    } catch (error) {
-      console.error('이메일 인증 요청 중 오류 발생:', error);
-      alert('이메일 인증 요청 중 오류가 발생했습니다.');
-    }
+    AxiosInstance.post(
+      `/auth/members/signup/mail?username=${encodeURIComponent(username)}`
+    )
+      .then(response => {
+        alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
+        setIsEmailSent(true);
+      })
+      .catch(error => {
+        console.error('이메일 인증 요청 중 오류 발생:', error);
+        alert('이메일 인증 요청 중 오류가 발생했습니다.');
+      });
   };
 
-  // POST /auth/members/signup/verify
   const handleAuthNumberCheck = async () => {
     if (authNumberError) {
       alert('인증번호를 다시 확인해 주세요.');
       return;
     }
 
-    try {
-      await axios.post(
-        '/auth/members/signup/verify',
-        {
-          username,
-          code: authNumber,
-        },
-        { baseURL: import.meta.env.VITE_BASE_URL, withCredentials: true }
-      );
-      alert('인증번호가 확인되었습니다.');
-    } catch (error) {
-      console.error('인증번호 확인 요청 중 오류 발생:', error);
-      alert('인증번호 확인 요청 중 오류가 발생했습니다.');
-    }
+    AxiosInstance.post('/auth/members/signup/verify', {
+      username,
+      code: authNumber,
+    })
+      .then(() => {
+        alert('인증번호가 확인되었습니다.');
+      })
+      .catch(error => {
+        console.error('인증번호 확인 요청 중 오류 발생:', error);
+        alert('인증번호 확인 요청 중 오류가 발생했습니다.');
+      });
   };
 
   // POST /auth/members/signup
@@ -138,26 +128,20 @@ function SignupForm() {
       return;
     }
 
-    try {
-      await axios.post(
-        '/auth/members/signup',
-        { username, password },
-        {
-          baseURL: import.meta.env.VITE_BASE_URL,
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      alert('회원가입이 완료되었습니다.');
-      setUsernameError('');
-      setPasswordError('');
-      nav('/signin');
-    } catch (error) {
-      console.error('회원가입 요청 중 오류 발생:', error);
-      alert('회원가입 요청 중 오류가 발생했습니다.');
-    }
+    AxiosInstance.post('/auth/members/signup', {
+      username,
+      password,
+    })
+      .then(() => {
+        alert('회원가입이 완료되었습니다.');
+        setUsernameError('');
+        setPasswordError('');
+        nav('/signin');
+      })
+      .catch(error => {
+        console.error('회원가입 요청 중 오류 발생:', error);
+        alert('회원가입 요청 중 오류가 발생했습니다.');
+      });
   };
 
   return (
