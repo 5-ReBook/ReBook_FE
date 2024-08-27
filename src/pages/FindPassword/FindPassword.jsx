@@ -152,7 +152,7 @@ function FindPassword() {
         await AxiosInstance.post('/auth/signout');
 
         localStorage.removeItem('Authorization');
-        // window.location.reload();
+        nav('/signin');
         console.log('User logged out');
       } catch (error) {
         console.error('Failed to log out:', error);
