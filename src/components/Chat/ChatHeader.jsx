@@ -34,6 +34,8 @@ const ChatHeader = ({ chatRoomId }) => {
       });
   }, []);
 
+  const username = productInfo.sellerUsername.split('@')[0];
+
   return (
     <div className="chat-header">
       <div className="product-info">
@@ -49,7 +51,7 @@ const ChatHeader = ({ chatRoomId }) => {
           </div>
         </div>
       </div>
-      <div className="chat-seller-info">이서준</div>
+      <div className="chat-seller-info">{username}</div>
     </div>
   );
 };
