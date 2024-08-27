@@ -34,11 +34,6 @@ const ChatHeader = ({ chatRoomId }) => {
       });
   }, []);
 
-  const username = productInfo.sellerUsername.substring(
-    0,
-    productInfo.sellerUsername.indexOf('@')
-  );
-
   return (
     <div className="chat-header">
       <div className="product-info">
@@ -47,14 +42,14 @@ const ChatHeader = ({ chatRoomId }) => {
           alt="product"
           className="product-image"
         />
-        <div className="product-details">
-          <div className="product-title">{productInfo.title}</div>
-          <div className="product-price">
+        <div className="chat-product-details">
+          <div className="chat-product-title">{productInfo.title}</div>
+          <div className="chat-product-price">
             {Number(productInfo.price).toLocaleString()}원
           </div>
         </div>
       </div>
-      <div className="seller-info">{username}</div>
+      <div className="chat-seller-info">이서준</div>
     </div>
   );
 };

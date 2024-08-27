@@ -18,20 +18,20 @@
   margin-right: 10px;
 }
 
-.product-details {
+.chat-product-details {
   display: flex;
   flex-direction: column;
 }
 
-.product-title {
+.chat-product-title {
   font-weight: bold;
 }
 
-.product-price {
+.chat-product-price {
   color: #a435f0;
   font-weight: bold;
 }
 
-.seller-info {
+.chat-seller-info {
   font-weight: bold;
 }
