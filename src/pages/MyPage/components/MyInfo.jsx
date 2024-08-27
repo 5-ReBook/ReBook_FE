@@ -3,30 +3,42 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
 import InputFieldWithButton from '../../../components/Common/InputFieldWithButton';
 import ProfilePicture from './ProfilePicture';
 import './MyInfo.css';
 import AxiosInstance from '../../../api/AxiosInstance';
+import { useLoginInfo } from '../../../provider/LoginInfoProvider';
 
 function MyInfo() {
-  const [username, setUsername] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [university, setUniversity] = useState('');
-  const [majors, setMajors] = useState('');
-  const [profilePicture, setProfilePicture] = useState(''); // 초기 프로필 이미지
+  // context 사용
+  const { loginInfo, setLoginInfo } = useLoginInfo();
+  const [username, setUsername] = useState(loginInfo.username || '');
+  const [nickname, setNickname] = useState(loginInfo.nickname || '');
+  const [university, setUniversity] = useState(loginInfo.university || '');
+  const [majors, setMajors] = useState(loginInfo.majors || '');
+  const [profilePicture, setProfilePicture] = useState(
+    loginInfo.profilePicture || ''
+  ); // 초기 프로필 이미지
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await AxiosInstance.get('/members/me');
-
         setProfilePicture(response.data.result.storedFileName);
         setUsername(response.data.result.username);
         setNickname(response.data.result.nickname);
         setUniversity(response.data.result.university);
         setMajors(response.data.result.majors);
+
+        // 전역 상태(loginInfo) 업데이트
+        setLoginInfo({
+          username: response.data.result.username,
+          nickname: response.data.result.nickname,
+          university: response.data.result.university,
+          majors: response.data.result.majors,
+          profilePicture: response.data.result.storedFileName,
+        });
       } catch (error) {
         console.error('Failed to fetch user data:', error);
       }
@@ -43,6 +55,14 @@ function MyInfo() {
       const response = await AxiosInstance.patch('/members/nickname', {
         nickname,
       });
+
+      setNickname(response.data.result.nickname);
+
+      // context 사용
+      setLoginInfo(prevInfo => ({
+        ...prevInfo,
+        nickname: response.data.result.nickname,
+      }));
 
       console.log('Nickname saved:', response.data.result.nickname);
     } catch (error) {
@@ -79,6 +99,12 @@ function MyInfo() {
 
         setProfilePicture(response.data.result.storedFileName);
 
+        // context 사용
+        setLoginInfo(prevInfo => ({
+          ...prevInfo,
+          profilePicture: response.data.result.storedFileName,
+        }));
+
         console.log(
           'Profile picture updated:',
           response.data.result.storedFileName
@@ -95,6 +121,12 @@ function MyInfo() {
 
       setProfilePicture(null);
       console.log('Profile picture deleted.');
+
+      // context 사용
+      setLoginInfo(prevInfo => ({
+        ...prevInfo,
+        profilePicture: null,
+      }));
     } catch (error) {
       console.error('Failed to delete profile picture:', error);
     }
