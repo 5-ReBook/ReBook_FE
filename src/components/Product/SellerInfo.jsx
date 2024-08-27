@@ -15,7 +15,7 @@ const SellerInfo = ({
         name={`${sellerName} 의 프로필사진`}
         size="md"
       />
-      <div>
+      <div className="seller-info-detail">
         <h3>{sellerName}</h3>
         <p>
           {sellerUniversity} {sellerMajor}

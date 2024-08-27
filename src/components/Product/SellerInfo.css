@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  margin-bottom: 1rem; /* 16px을 1rem으로 변경 */
+  margin: 0.5rem 0; /* 8px을 0.5rem으로 변경 */
 }
 
 .seller-info img {
@@ -12,6 +12,10 @@
 
 .seller-info div {
   flex-grow: 1;
+}
+
+.seller-info .seller-info-detail {
+  margin-left: 0.5rem;
 }
 
 .seller-info h3 {

@@ -17,18 +17,12 @@ const ProductDetailPage = () => {
   const { loginInfo } = useLoginInfo();
   const [product, setProduct] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const [sellerInfo, setSellerInfo] = useState(null);
+  const [isOwner, setIsOwner] = useState(false);
+  const [status, setStatus] = useState(''); // 상태 관리 추가
   const nav = useNavigate();
   const { productId } = useParams();
   const { setLayoutConfig } = useLayout();
-
-  // 예시 seller
-  const seller = {
-    id: 3,
-    profile: '809a9d80-5d4b-429e-b632-e4dfb2068031.png',
-    nickName: '이창식',
-    university: '서울대학교',
-    major: '컴퓨터공학부',
-  };
 
   useEffect(() => {
     setLayoutConfig({
@@ -37,28 +31,60 @@ const ProductDetailPage = () => {
       footerNav: true,
     });
 
-    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
     return () => {
       setLayoutConfig(defaultLayoutConfig);
     };
   }, [setLayoutConfig, defaultLayoutConfig]);
 
   useEffect(() => {
-    AxiosInstance.get(`/products/${productId}`)
-      .then(response => setProduct(response.data.result))
-      .catch(error => console.error('Failed to fetch product details:', error));
+    const fetchData = async () => {
+      try {
+        const productResponse = await AxiosInstance.get(
+          `/products/${productId}`
+        );
+        const fetchedProduct = productResponse.data.result;
+        setProduct(fetchedProduct);
+        setStatus(fetchedProduct.status); // 상태 초기화
+
+        const userInfoResponse = await AxiosInstance.get('/members/me');
+        const fetchedUserInfo = userInfoResponse.data.result;
+        setUserInfo(fetchedUserInfo);
+
+        if (fetchedProduct && fetchedProduct.sellerUsername) {
+          const sellerInfoResponse = await AxiosInstance.get(
+            `/members/info/${fetchedProduct.sellerUsername}`
+          );
+          const fetchedSellerInfo = sellerInfoResponse.data.result;
+          setSellerInfo(fetchedSellerInfo);
+
+          setIsOwner(fetchedSellerInfo.username === fetchedUserInfo.username);
+        }
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    };
+
+    fetchData();
   }, [productId]);
 
-  useEffect(() => {
-    if (product && product.sellerUsername) {
-      // 사용자 정보 조회 (sellerUsername를 사용하여 사용자 정보 조회)
-      // AxiosInstance.get(`/users/${product.sellerId}`) // 예시로 사용자 정보를 /users/:userId API로 조회
-      //   .then(response => setUserInfo(response.data.result))
-      //   .catch(error => console.error('Failed to fetch user details:', error));
+  const handleStatusChange = async newStatus => {
+    try {
+      const response = await AxiosInstance.patch(
+        `/products/status/${productId}`,
+        {
+          status: newStatus,
+        }
+      );
 
-      setUserInfo(seller);
+      if (response.status === 200) {
+        setStatus(newStatus);
+        alert('상태가 성공적으로 변경되었습니다.');
+      }
+    } catch (error) {
+      console.error('Failed to change product status:', error);
+      alert('상태 변경에 실패했습니다. 다시 시도해주세요.');
     }
-  }, [product]);
+  };
 
   const handleChatButtonClick = () => {
     api
@@ -74,20 +100,26 @@ const ProductDetailPage = () => {
       .catch(error => console.error('Failed to create chat room:', error));
   };
 
-  if (!product) {
+  const handleEditButtonClick = () => {
+    nav(`/products/edit/${productId}`);
+  };
+
+  if (!product || !sellerInfo) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="product-detail">
       <ProductImage imageFileNames={product.storeFileNameList} />
+
       <SellerInfo
-        sellerImageUrl={seller.profile}
-        sellerName={seller.nickName}
-        sellerUniversity={seller.university}
-        sellerMajor={seller.major}
-        status={product.status}
+        sellerImageUrl={''}
+        sellerName={sellerInfo.nickname || '이름 없음'}
+        sellerUniversity={sellerInfo.university || '대학교 정보 없음'}
+        sellerMajor={sellerInfo.majors || '전공 정보 없음'}
+        status={product.status || ''}
       />
+
       <ProductDescription
         title={product.title}
         content={product.content}
@@ -97,7 +129,23 @@ const ProductDetailPage = () => {
         university={product.bookUniversity}
         major={product.bookMajor}
       />
-      <Button onClick={handleChatButtonClick} text="채팅하기" />
+      {/* 상태 변경 버튼 추가 */}
+      {isOwner && (
+        <>
+          <Button
+            text={
+              status === 'Completed' ? '거래완료로 변경' : '판매중으로 변경'
+            }
+            onClick={() =>
+              handleStatusChange(
+                status === 'Completed' ? 'Pending' : 'Completed'
+              )
+            }
+          />
+          <Button onClick={handleEditButtonClick} text="수정하기" />
+        </>
+      )}
+      {!isOwner && <Button onClick={handleChatButtonClick} text="채팅하기" />}
     </div>
   );
 };

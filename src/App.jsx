@@ -6,6 +6,7 @@ import MainPage from './pages/Product/MainPage';
 import Signin from './pages/Signin/Signin';
 import ProductRegistrationPage from './pages/Product/ProductRegistrationPage';
 import ProductDetailPage from './pages/Product/ProductDetailPage';
+import ProductEditPage from './pages/Product/ProductEditPage';
 import MyProductsPage from './pages/Product/MyProductsPage';
 import SignupForm from './pages/Signup/SignupForm';
 import FindPassword from './pages/FindPassword/FindPassword';
@@ -66,6 +67,7 @@ function App() {
           <Route path="/products/new" element={<ProductRegistrationPage />} />
           <Route path="/products/:productId" element={<ProductDetailPage />} />
           <Route path="/products/me" element={<MyProductsPage />} />
+          <Route path="/products/edit/:productId" element={<ProductEditPage />} />
           <Route path="/findpassword" element={<FindPassword />} />
           <Route path="/chat/roomlist" element={<ChatRoomListPage />} />
           <Route path="/chat/rooms/:id" element={<ChatRoomPage />} />
