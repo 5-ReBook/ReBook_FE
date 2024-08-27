@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
 import { validateUsername, validatePassword } from '../../utils/validation';
-import './styles/SignupForm.css';
+import {
+  defaultLayoutConfig,
+  useLayout,
+} from '../../components/Layouts/provider/LayoutProvider';
+import AxiosInstance from '../../api/AxiosInstance';
 
 function SignupForm() {
   const [username, setUsername] = useState('');
@@ -17,6 +21,22 @@ function SignupForm() {
   const [passwordInputType, setPasswordInputType] = useState('password');
 
   const nav = useNavigate();
+
+  const { setLayoutConfig } = useLayout();
+  useEffect(() => {
+    import('./styles/SignupForm.css');
+    // SignupForm 페이지에 필요한 레이아웃 설정 적용
+    setLayoutConfig({
+      header: true,
+      leftButton: 'goBack',
+      footerNav: false,
+    });
+
+    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
+    return () => {
+      setLayoutConfig(defaultLayoutConfig);
+    };
+  }, [setLayoutConfig, defaultLayoutConfig]);
 
   const handleUsernameChange = e => {
     const newUsername = e.target.value;
@@ -63,39 +83,36 @@ function SignupForm() {
       return;
     }
 
-    try {
-      await axios.post(
-        `http://localhost/auth/members/signup/mail?username=${encodeURIComponent(username)}`
-      );
-      alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
-      setIsEmailSent(true);
-    } catch (error) {
-      console.error('이메일 인증 요청 중 오류 발생:', error);
-      alert('이메일 인증 요청 중 오류가 발생했습니다.');
-    }
+    AxiosInstance.post(
+      `/auth/members/signup/mail?username=${encodeURIComponent(username)}`
+    )
+      .then(response => {
+        alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
+        setIsEmailSent(true);
+      })
+      .catch(error => {
+        console.error('이메일 인증 요청 중 오류 발생:', error);
+        alert('이메일 인증 요청 중 오류가 발생했습니다.');
+      });
   };
 
-  // POST /auth/members/signup/verify
   const handleAuthNumberCheck = async () => {
     if (authNumberError) {
       alert('인증번호를 다시 확인해 주세요.');
       return;
     }
 
-    try {
-      await axios.post(
-        'http://localhost/auth/members/signup/verify',
-        {
-          username,
-          code: authNumber,
-        },
-        { withCredentials: true }
-      );
-      alert('인증번호가 확인되었습니다.');
-    } catch (error) {
-      console.error('인증번호 확인 요청 중 오류 발생:', error);
-      alert('인증번호 확인 요청 중 오류가 발생했습니다.');
-    }
+    AxiosInstance.post('/auth/members/signup/verify', {
+      username,
+      code: authNumber,
+    })
+      .then(() => {
+        alert('인증번호가 확인되었습니다.');
+      })
+      .catch(error => {
+        console.error('인증번호 확인 요청 중 오류 발생:', error);
+        alert('인증번호 확인 요청 중 오류가 발생했습니다.');
+      });
   };
 
   // POST /auth/members/signup
@@ -111,24 +128,24 @@ function SignupForm() {
       return;
     }
 
-    try {
-      await axios.post(
-        'http://localhost/auth/members/signup',
-        { username, password },
-        { withCredentials: true }
-      );
-      alert('회원가입이 완료되었습니다.');
-      setUsernameError('');
-      setPasswordError('');
-      nav('/signin');
-    } catch (error) {
-      console.error('회원가입 요청 중 오류 발생:', error);
-      alert('회원가입 요청 중 오류가 발생했습니다.');
-    }
+    AxiosInstance.post('/auth/members/signup', {
+      username,
+      password,
+    })
+      .then(() => {
+        alert('회원가입이 완료되었습니다.');
+        setUsernameError('');
+        setPasswordError('');
+        nav('/signin');
+      })
+      .catch(error => {
+        console.error('회원가입 요청 중 오류 발생:', error);
+        alert('회원가입 요청 중 오류가 발생했습니다.');
+      });
   };
 
   return (
-    <>
+    <div className="signup-outer">
       <div className="input-group">
         {/* 아이디 입력 필드 */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -191,7 +208,7 @@ function SignupForm() {
           disabled={Boolean(usernameError || passwordError)}
         />
       </div>
-    </>
+    </div>
   );
 }
 

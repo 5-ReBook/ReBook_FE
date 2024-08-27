@@ -1,0 +1,18 @@
+.mysecurity-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.logout-button {
+  border: 1px solid #9e6cff;
+  background-color: white;
+  color: #9e6cff;
+}
+
+.delete-account-button {
+  background-color: red;
+  color: white;
+}

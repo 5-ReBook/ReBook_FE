@@ -1,0 +1,23 @@
+.update-university-container {
+  margin-top: 1.4rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.university-list {
+  margin-top: 0.625rem; /* 10px을 0.625rem으로 변경 */
+  margin-bottom: 1.25rem; /* 20px을 1.25rem으로 변경 */
+  border: 0.0625rem solid #ccc; /* 1px을 0.0625rem으로 변경 */
+  border-radius: 0.625rem; /* 10px을 0.625rem으로 변경 */
+  max-height: 12.5rem; /* 200px을 12.5rem으로 변경 */
+  overflow-y: auto;
+}
+
+.university-item {
+  padding: 0.625rem; /* 10px을 0.625rem으로 변경 */
+  cursor: pointer;
+}
+
+.university-item:hover {
+  background-color: #f0f0f0;
+}

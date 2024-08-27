@@ -1,0 +1,19 @@
+.mypage-outer-container {
+  position: relative;
+  width: 100%;
+  max-height: 740px;
+  overflow-y: scroll;
+  padding: 1rem 2rem 1rem 2rem;
+  box-sizing: border-box;
+}
+
+/* 스크롤바는 보이지 않지만 스크롤 가능하게 설정 */
+.mypage-outer-container::-webkit-scrollbar {
+  display: none;
+}
+
+.myinfo-container__content,
+.mysecurity-container__content {
+  margin-top: 2.4rem; /* 스위치와의 간격 */
+  display: none;
+}

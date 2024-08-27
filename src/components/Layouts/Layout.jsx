@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import FooterNav from '../FooterNav';
 import Sidebar from '../SideBar';
 import './Layout.css';
 import { useLayout } from './provider/LayoutProvider';
-import { useNavigate } from 'react-router-dom';
 
-const Layout = ({ children }) => {
+function Layout({ children }) {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const nav = useNavigate();
   const { layoutConfig } = useLayout();
@@ -32,6 +32,6 @@ const Layout = ({ children }) => {
       <FooterNav />
     </div>
   );
-};
+}
 
 export default Layout;

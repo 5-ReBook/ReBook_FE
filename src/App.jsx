@@ -1,5 +1,6 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { ChakraProvider } from '@chakra-ui/react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Layout from './components/Layouts/Layout';
 import MainPage from './pages/Product/MainPage';
 import Signin from './pages/Signin/Signin';
@@ -9,20 +10,45 @@ import ProductEditPage from './pages/Product/ProductEditPage';
 import MyProductsPage from './pages/Product/MyProductsPage';
 import SignupForm from './pages/Signup/SignupForm';
 import FindPassword from './pages/FindPassword/FindPassword';
-import { ChakraProvider } from '@chakra-ui/react';
+import MyPage from './pages/MyPage/MyPage';
 import './App.css';
+import UpdateUniversity from './pages/UpdateUniversity/UpdateUniversity';
+import UpdateMajors from './pages/UpdateMajors/UpdateMajors';
 import ChatRoomListPage from './pages/Chat/ChatRoomListPage';
+import ChatRoomPage from './pages/Chat/ChatRoomPage';
+import AxiosInstance from './api/AxiosInstance';
+import { HttpStatusCode } from 'axios';
+import { useLoginInfo } from './provider/LoginInfoProvider';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { setLoginInfo } = useLoginInfo();
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   useEffect(() => {
-    const hasAccess = localStorage.getItem('Authorization');
+    AxiosInstance.get('/members/me')
+      .then(response => {
+        setLoginInfo(response.data.result); // 로그인 정보 설정
 
-    setIsAuthenticated(!!hasAccess);
-    setIsLoading(false);
-  }, []);
+        if (
+          response.status === HttpStatusCode.Ok &&
+          (location.pathname === '/signin' ||
+            location.pathname === '/signupform')
+        ) {
+          navigate('/'); // 인증 성공 시에만 리다이렉트
+        }
+      })
+      .catch(error => {
+        console.error('Error with Authorize:', error);
+        if (
+          location.pathname !== '/signin' &&
+          location.pathname !== '/signupform'
+        ) {
+          navigate('/signin'); // 인증 실패 시에만 리다이렉트
+        }
+      })
+      .finally(() => setIsLoading(false)); // 로딩 완료
+  }, [navigate]); // navigate를 의존성 배열에 추가
 
   if (isLoading) {
     return <div>Loading...</div>; // 로딩 중 표시될 화면
@@ -32,54 +58,19 @@ function App() {
     <ChakraProvider>
       <Layout>
         <Routes>
-          <Route
-            path="/signin"
-            element={!isAuthenticated ? <Signin /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/"
-            element={isAuthenticated ? <MainPage /> : <Navigate to="/signin" />}
-          />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/" element={<MainPage />} />
           <Route path="/signupform" element={<SignupForm />} />
-          <Route
-            path="/products/new"
-            element={
-              isAuthenticated ? (
-                <ProductRegistrationPage />
-              ) : (
-                <Navigate to="/signin" />
-              )
-            }
-          />
-          <Route
-            path="/products/:productId"
-            element={
-              isAuthenticated ? (
-                <ProductDetailPage />
-              ) : (
-                <Navigate to="/signin" />
-              )
-            }
-          />
-          <Route
-            path="/products/edit/:productId"
-            element={
-              isAuthenticated ? <ProductEditPage /> : <Navigate to="/signin" />
-            }
-          />
-          <Route
-            path="/products/me"
-            element={
-              isAuthenticated ? <MyProductsPage /> : <Navigate to="/signin" />
-            }
-          />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/myunv" element={<UpdateUniversity />} />
+          <Route path="/mymajors" element={<UpdateMajors />} />
+          <Route path="/products/new" element={<ProductRegistrationPage />} />
+          <Route path="/products/:productId" element={<ProductDetailPage />} />
+          <Route path="/products/me" element={<MyProductsPage />} />
+          <Route path="/products/edit/:productId" element={<ProductEditPage />} />
           <Route path="/findpassword" element={<FindPassword />} />
-          <Route
-            path="/chat/roomlist"
-            element={
-              isAuthenticated ? <ChatRoomListPage /> : <Navigate to="/signin" />
-            }
-          />
+          <Route path="/chat/roomlist" element={<ChatRoomListPage />} />
+          <Route path="/chat/rooms/:id" element={<ChatRoomPage />} />
         </Routes>
       </Layout>
     </ChakraProvider>

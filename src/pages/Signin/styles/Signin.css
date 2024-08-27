@@ -36,6 +36,9 @@
   color: white;
   height: 3rem; /* 48px을 3rem으로 변경 */
   border: 0.125rem solid #9b59b6; /* 2px을 0.125rem으로 변경 */
+  line-height: 1rem; /* 버튼 텍스트 중앙정렬 */
+  text-align: center;
+  vertical-align: middle;
 }
 
 .signup-button {

@@ -4,9 +4,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
 import { validateUsername, validatePassword } from '../../utils/validation';
-import './styles/FindPassword.css';
+import {
+  defaultLayoutConfig,
+  useLayout,
+} from '../../components/Layouts/provider/LayoutProvider';
 
-function SignupForm() {
+function FindPassword() {
   const location = useLocation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -18,12 +21,25 @@ function SignupForm() {
   const [passwordInputType, setPasswordInputType] = useState('password');
 
   const nav = useNavigate();
+  const { setLayoutConfig } = useLayout();
 
   useEffect(() => {
+    import('./styles/FindPassword.css');
+    setLayoutConfig({
+      header: true,
+      leftButton: 'goBack',
+      footerNav: false,
+    });
+
     if (location.state?.username) {
       setUsername(location.state.username);
     }
-  }, [location.state]);
+
+    // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
+    return () => {
+      setLayoutConfig(defaultLayoutConfig);
+    };
+  }, [setLayoutConfig, defaultLayoutConfig, location.state]);
 
   const handleUsernameChange = e => {
     const newUsername = e.target.value;
@@ -71,8 +87,12 @@ function SignupForm() {
     }
 
     try {
+      // `http://localhost/auth/members/signup/mail?username=${encodeURIComponent(username)}`
       await axios.post(
-        `http://localhost/auth/members/signup/mail?username=${encodeURIComponent(username)}`
+        `/auth/members/signup/mail?username=${encodeURIComponent(username)}`,
+        {
+          baseURL: import.meta.env.VITE_BASE_URL,
+        }
       );
       alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
       setIsEmailSent(true);
@@ -90,13 +110,14 @@ function SignupForm() {
     }
 
     try {
+      // 'http://localhost/auth/members/signup/verify',
       await axios.post(
-        'http://localhost/auth/members/signup/verify',
+        '/auth/members/signup/verify',
         {
           username,
           code: authNumber,
         },
-        { withCredentials: true }
+        { baseURL: import.meta.env.VITE_BASE_URL, withCredentials: true }
       );
       alert('인증번호가 확인되었습니다.');
     } catch (error) {
@@ -105,7 +126,6 @@ function SignupForm() {
     }
   };
 
-  //
   const handleReset = async () => {
     if (!username || !password) {
       alert('아이디와 새 비밀번호를 입력해 주세요.');
@@ -123,11 +143,14 @@ function SignupForm() {
       return;
     }
 
+    // 테스트 필요
     try {
+      // 'http://localhost/auth/members/password/reset',
       await axios.patch(
-        'http://localhost/auth/members/password/reset',
+        '/auth/members/password/reset',
         { username, password },
         {
+          baseURL: import.meta.env.VITE_BASE_URL,
           withCredentials: true,
         }
       );
@@ -136,6 +159,24 @@ function SignupForm() {
       );
       setUsernameError('');
       setPasswordError('');
+      const token = localStorage.getItem('Authorization');
+
+      try {
+        // '/api/auth/signout',
+        await axios.post('/auth/signout', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+          baseURL: import.meta.env.VITE_BASE_URL,
+        });
+
+        localStorage.removeItem('Authorization');
+        window.location.reload();
+        console.log('User logged out');
+      } catch (error) {
+        console.error('Failed to log out:', error);
+      }
       nav('/signin');
     } catch (error) {
       console.error('비밀번호 수정 중 오류 발생:', error);
@@ -144,7 +185,7 @@ function SignupForm() {
   };
 
   return (
-    <>
+    <div className="find-password-container">
       <div className="input-group">
         {/* 아이디 입력 필드 */}
         {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
@@ -207,8 +248,8 @@ function SignupForm() {
           disabled={Boolean(usernameError || passwordError)}
         />
       </div>
-    </>
+    </div>
   );
 }
 
-export default SignupForm;
+export default FindPassword;
