@@ -31,6 +31,7 @@
 .chat-item-content {
   display: flex;
   flex-direction: column;
+  width: 15rem; /* 임시방편으로 가로길이 설정*/
 }
 
 .chat-item-name {
@@ -43,6 +44,9 @@
   font-size: 14px;
   color: #666;
   margin: 4px 0 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .unread-message-cnt {
