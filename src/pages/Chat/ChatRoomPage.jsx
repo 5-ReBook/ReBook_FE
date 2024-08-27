@@ -42,7 +42,7 @@ const ChatRoomPage = () => {
   }, [id]);
   return (
     <div className="chat-container">
-      <ChatHeader />
+      <ChatHeader chatRoomId={id} />
       <ChatMessageList messages={messages} />
       <ChatMessageInput chatSocket={chatSocket} />
     </div>
