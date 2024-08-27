@@ -20,12 +20,6 @@ function MyInfo() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // const token = localStorage.getItem('Authorization');
-        // const response = await axios.get('/api/members/me', {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // });
         const response = await AxiosInstance.get('/members/me');
 
         setProfilePicture(response.data.result.storedFileName);
@@ -46,18 +40,6 @@ function MyInfo() {
 
   const handleNicknameSave = async () => {
     try {
-      // const token = localStorage.getItem('Authorization');
-      // const response = await axios.patch(
-      //   '/api/members/nickname',
-      //   {
-      //     nickname,
-      //   },
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   }
-      // );
       const response = await AxiosInstance.patch('/members/nickname', {
         nickname,
       });
@@ -77,6 +59,7 @@ function MyInfo() {
     navigate('/mymajors', { state: { majors: majorsToSend } });
   };
 
+  // fixme : 사진 업로드 안됨! storedFileName이 null임 200 돌아오긴 하는데
   const handleEditPicture = async e => {
     const file = e.target.files[0];
 
@@ -85,17 +68,6 @@ function MyInfo() {
       formData.append('picture', file);
 
       try {
-        // const token = localStorage.getItem('Authorization');
-        // const response = await axios.patch(
-        //   '/api/members/profilePicture',
-        //   formData,
-        //   {
-        //     headers: {
-        //       Authorization: `Bearer ${token}`,
-        //       'Content-Type': 'multipart/form-data',
-        //     },
-        //   }
-        // );
         const response = await AxiosInstance.patch(
           '/members/profilePicture',
           formData,
@@ -116,12 +88,6 @@ function MyInfo() {
 
   const handleDeletePicture = async () => {
     try {
-      // const token = localStorage.getItem('Authorization');
-      // await axios.delete('/api/members/profilePicture', {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // });
       await AxiosInstance.delete('/members/profilePicture');
 
       setProfilePicture(null);
