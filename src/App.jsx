@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Layout from './components/Layouts/Layout';
-import MainPage from './pages/MainPage';
+import MainPage from './pages/Product/MainPage';
 import Signin from './pages/Signin/Signin';
 import ProductRegistrationPage from './pages/Product/ProductRegistrationPage';
 import ProductDetailPage from './pages/Product/ProductDetailPage';
