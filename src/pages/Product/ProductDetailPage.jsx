@@ -34,7 +34,7 @@ const ProductDetailPage = () => {
     return () => {
       setLayoutConfig(defaultLayoutConfig);
     };
-  }, [setLayoutConfig, defaultLayoutConfig]);
+  }, [setLayoutConfig]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +44,7 @@ const ProductDetailPage = () => {
         );
         const fetchedProduct = productResponse.data.result;
         setProduct(fetchedProduct);
-        setStatus(fetchedProduct.status); // 상태 초기화
+        setStatus(fetchedProduct.status.toUpperCase()); // 상태를 대문자로 설정
 
         const userInfoResponse = await AxiosInstance.get('/members/me');
         const fetchedUserInfo = userInfoResponse.data.result;
@@ -77,7 +77,7 @@ const ProductDetailPage = () => {
       );
 
       if (response.status === 200) {
-        setStatus(newStatus);
+        setStatus(newStatus.toUpperCase()); // 상태를 대문자로 설정
         alert('상태가 성공적으로 변경되었습니다.');
       }
     } catch (error) {
@@ -117,7 +117,7 @@ const ProductDetailPage = () => {
         sellerName={sellerInfo.nickname || '이름 없음'}
         sellerUniversity={sellerInfo.university || '대학교 정보 없음'}
         sellerMajor={sellerInfo.majors || '전공 정보 없음'}
-        status={product.status || ''}
+        status={status} // 상태를 사용
       />
 
       <ProductDescription
@@ -134,11 +134,11 @@ const ProductDetailPage = () => {
         <>
           <Button
             text={
-              status === 'Completed' ? '거래완료로 변경' : '판매중으로 변경'
+              status === 'COMPLETED' ? '판매중으로 변경' : '판매완료로 변경'
             }
             onClick={() =>
               handleStatusChange(
-                status === 'Completed' ? 'Pending' : 'Completed'
+                status === 'COMPLETED' ? 'PENDING' : 'COMPLETED'
               )
             }
           />
