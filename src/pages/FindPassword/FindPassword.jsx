@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
@@ -8,6 +7,7 @@ import {
   defaultLayoutConfig,
   useLayout,
 } from '../../components/Layouts/provider/LayoutProvider';
+import AxiosInstance from '../../api/AxiosInstance';
 
 function FindPassword() {
   const location = useLocation();
@@ -86,20 +86,17 @@ function FindPassword() {
       return;
     }
 
-    try {
-      // `http://localhost/auth/members/signup/mail?username=${encodeURIComponent(username)}`
-      await axios.post(
-        `/auth/members/signup/mail?username=${encodeURIComponent(username)}`,
-        {
-          baseURL: import.meta.env.VITE_BASE_URL,
-        }
-      );
-      alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
-      setIsEmailSent(true);
-    } catch (error) {
-      console.error('이메일 인증 요청 중 오류 발생:', error);
-      alert('이메일 인증 요청 중 오류가 발생했습니다.');
-    }
+    AxiosInstance.post(
+      `/auth/members/signup/mail?username=${encodeURIComponent(username)}`
+    )
+      .then(response => {
+        alert('이메일 인증을 보냈습니다. 이메일을 확인해 주세요!');
+        setIsEmailSent(true);
+      })
+      .catch(error => {
+        console.error('이메일 인증 요청 중 오류 발생:', error);
+        alert('이메일 인증 요청 중 오류가 발생했습니다.');
+      });
   };
 
   // POST /auth/members/signup/verify
@@ -109,21 +106,17 @@ function FindPassword() {
       return;
     }
 
-    try {
-      // 'http://localhost/auth/members/signup/verify',
-      await axios.post(
-        '/auth/members/signup/verify',
-        {
-          username,
-          code: authNumber,
-        },
-        { baseURL: import.meta.env.VITE_BASE_URL, withCredentials: true }
-      );
-      alert('인증번호가 확인되었습니다.');
-    } catch (error) {
-      console.error('인증번호 확인 요청 중 오류 발생:', error);
-      alert('인증번호 확인 요청 중 오류가 발생했습니다.');
-    }
+    AxiosInstance.post('/auth/members/signup/verify', {
+      username,
+      code: authNumber,
+    })
+      .then(() => {
+        alert('인증번호가 확인되었습니다.');
+      })
+      .catch(error => {
+        console.error('인증번호 확인 요청 중 오류 발생:', error);
+        alert('인증번호 확인 요청 중 오류가 발생했습니다.');
+      });
   };
 
   const handleReset = async () => {
@@ -143,41 +136,28 @@ function FindPassword() {
       return;
     }
 
-    // 테스트 필요
     try {
-      // 'http://localhost/auth/members/password/reset',
-      await axios.patch(
-        '/auth/members/password/reset',
-        { username, password },
-        {
-          baseURL: import.meta.env.VITE_BASE_URL,
-          withCredentials: true,
-        }
-      );
+      await AxiosInstance.patch('/auth/members/password/reset', {
+        username,
+        password,
+      });
       alert(
         '비밀번호 수정이 완료되었습니다. 새 비밀번호로 다시 로그인해주세요!'
       );
       setUsernameError('');
       setPasswordError('');
-      const token = localStorage.getItem('Authorization');
 
       try {
         // '/api/auth/signout',
-        await axios.post('/auth/signout', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
-          baseURL: import.meta.env.VITE_BASE_URL,
-        });
+        await AxiosInstance.post('/auth/signout');
 
         localStorage.removeItem('Authorization');
-        window.location.reload();
+        nav('/signin');
         console.log('User logged out');
       } catch (error) {
         console.error('Failed to log out:', error);
       }
-      nav('/signin');
+      // nav('/signin');
     } catch (error) {
       console.error('비밀번호 수정 중 오류 발생:', error);
       alert('비밀번호 수정 중 오류가 발생했습니다.');

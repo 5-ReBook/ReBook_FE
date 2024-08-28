@@ -4,7 +4,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
 import Button from '../../components/Button';
 import {
@@ -39,15 +38,6 @@ function UpdateUniversity({ location }) {
 
   const handleSearchClick = async () => {
     try {
-      // const token = localStorage.getItem('Authorization');
-      // const response = await axios.get('/api/members/universities', {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      //   params: {
-      //     unvToSearch: searchTerm,
-      //   },
-      // });
       const response = await AxiosInstance.get('/members/universities', {
         params: {
           unvToSearch: searchTerm,
@@ -68,18 +58,6 @@ function UpdateUniversity({ location }) {
 
   const handleSave = async () => {
     try {
-      // const token = localStorage.getItem('Authorization');
-      // await axios.patch(
-      //   '/api/members/university',
-      //   {
-      //     university: selectedUniversity,
-      //   },
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   }
-      // );
       await AxiosInstance.patch('/members/university', {
         university: selectedUniversity,
       });

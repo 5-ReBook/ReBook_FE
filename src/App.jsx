@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { HttpStatusCode } from 'axios';
 import Layout from './components/Layouts/Layout';
 import MainPage from './pages/Product/MainPage';
 import Signin from './pages/Signin/Signin';
@@ -17,7 +18,6 @@ import UpdateMajors from './pages/UpdateMajors/UpdateMajors';
 import ChatRoomListPage from './pages/Chat/ChatRoomListPage';
 import ChatRoomPage from './pages/Chat/ChatRoomPage';
 import AxiosInstance from './api/AxiosInstance';
-import { HttpStatusCode } from 'axios';
 import { useLoginInfo } from './provider/LoginInfoProvider';
 
 function App() {
@@ -42,7 +42,8 @@ function App() {
         console.error('Error with Authorize:', error);
         if (
           location.pathname !== '/signin' &&
-          location.pathname !== '/signupform'
+          location.pathname !== '/signupform' &&
+          location.pathname !== '/findpassword'
         ) {
           navigate('/signin'); // 인증 실패 시에만 리다이렉트
         }
@@ -67,7 +68,11 @@ function App() {
           <Route path="/products/new" element={<ProductRegistrationPage />} />
           <Route path="/products/:productId" element={<ProductDetailPage />} />
           <Route path="/products/me" element={<MyProductsPage />} />
-          <Route path="/products/edit/:productId" element={<ProductEditPage />} />
+          <Route
+            path="/products/edit/:productId"
+            element={<ProductEditPage />}
+          />
+          {/* fixme : FindPassword 안 들어가지는 문제 해결하기 */}
           <Route path="/findpassword" element={<FindPassword />} />
           <Route path="/chat/roomlist" element={<ChatRoomListPage />} />
           <Route path="/chat/rooms/:id" element={<ChatRoomPage />} />
