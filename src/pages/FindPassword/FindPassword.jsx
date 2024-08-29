@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import InputFieldWithButton from '../../components/Common/InputFieldWithButton';
@@ -111,8 +110,10 @@ function FindPassword() {
       username,
       code: authNumber,
     })
-      .then(() => {
-        alert('인증번호가 확인되었습니다.');
+      .then(response => {
+        localStorage.setItem('mailauth', response.headers.authorization);
+        alert(`인증번호가 확인되었습니다.`);
+        console.log(`mailauth 토큰 : ${response.headers.authorization}`);
       })
       .catch(error => {
         console.error('인증번호 확인 요청 중 오류 발생:', error);
@@ -120,6 +121,7 @@ function FindPassword() {
       });
   };
 
+  // PATCH /auth/members/password/reset
   const handleReset = async () => {
     if (!username || !password) {
       alert('아이디와 새 비밀번호를 입력해 주세요.');
@@ -137,11 +139,20 @@ function FindPassword() {
       return;
     }
 
+    const mailauth = localStorage.getItem('mailauth');
     try {
-      await AxiosInstance.patch('/auth/members/password/reset', {
-        username,
-        password,
-      });
+      await AxiosInstance.patch(
+        '/auth/members/password/reset',
+        {
+          username,
+          password,
+        },
+        {
+          headers: {
+            Authorization: `${mailauth}`,
+          },
+        }
+      );
       alert(
         '비밀번호 수정이 완료되었습니다. 새 비밀번호로 다시 로그인해주세요!'
       );
