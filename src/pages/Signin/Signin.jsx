@@ -37,7 +37,7 @@ function Signin() {
       });
 
       // 서버로부터 받은 액세스 토큰을 localStorage에 저장
-      const accessToken = response.headers.access;
+      const accessToken = response.headers.get('Authorization');
       localStorage.setItem('Authorization', accessToken);
 
       // 로그인 성공 후 필요한 로직 처리
