@@ -149,7 +149,7 @@ function FindPassword() {
         },
         {
           headers: {
-            mailauth: `${mailauth}`,
+            Authorization: `${mailauth}`,
           },
         }
       );
