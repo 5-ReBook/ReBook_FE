@@ -139,7 +139,7 @@ function SignupForm() {
       },
       {
         headers: {
-          mailauth: `${mailauth}`,
+          Authorization: `${mailauth}`,
         },
       }
     )
