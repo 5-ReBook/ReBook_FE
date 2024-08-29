@@ -107,9 +107,9 @@ function SignupForm() {
       code: authNumber,
     })
       .then(response => {
-        localStorage.setItem('mailauth', response.headers.get('Authorization'));
+        localStorage.setItem('mailauth', response.headers.authorization);
         alert(`인증번호가 확인되었습니다.`);
-        console.log(`mailauth 토큰 : ${response.headers.get('Authorization')}`);
+        console.log(`mailauth 토큰 : ${response.headers.authorization}`);
       })
       .catch(error => {
         console.error('인증번호 확인 요청 중 오류 발생:', error);
