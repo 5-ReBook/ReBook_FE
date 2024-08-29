@@ -37,10 +37,11 @@ function Signin() {
       });
 
       // 서버로부터 받은 액세스 토큰을 localStorage에 저장
-      localStorage.setItem('Authorization', response.headers.authorization);
+      const accessToken = response.headers.access;
+      localStorage.setItem('Authorization', accessToken);
 
       // 로그인 성공 후 필요한 로직 처리
-      console.log('로그인 성공:', response.headers.authorization);
+      console.log('로그인 성공:', accessToken);
       nav('/');
     } catch (error) {
       console.error('로그인 실패:', error);

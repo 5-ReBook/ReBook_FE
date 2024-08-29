@@ -43,7 +43,7 @@ AxiosInstance.interceptors.response.use(
           }
         );
 
-        const newAccessToken = response.headers.authorization;
+        const newAccessToken = response.headers.get('Access');
         console.log('New token received: ', newAccessToken);
 
         // 새로운 액세스 토큰을 로컬 스토리지에 저장

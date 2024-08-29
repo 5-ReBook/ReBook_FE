@@ -95,7 +95,6 @@ function SignupForm() {
       });
   };
 
-  // POST /auth/members/signup/verify
   const handleAuthNumberCheck = async () => {
     if (authNumberError) {
       alert('인증번호를 다시 확인해 주세요.');
@@ -106,10 +105,8 @@ function SignupForm() {
       username,
       code: authNumber,
     })
-      .then(response => {
-        localStorage.setItem('mailauth', response.headers.authorization);
-        alert(`인증번호가 확인되었습니다.`);
-        console.log(`mailauth 토큰 : ${response.headers.authorization}`);
+      .then(() => {
+        alert('인증번호가 확인되었습니다.');
       })
       .catch(error => {
         console.error('인증번호 확인 요청 중 오류 발생:', error);
@@ -130,19 +127,10 @@ function SignupForm() {
       return;
     }
 
-    const mailauth = localStorage.getItem('mailauth');
-    AxiosInstance.post(
-      '/auth/members/signup',
-      {
-        username,
-        password,
-      },
-      {
-        headers: {
-          Authorization: `${mailauth}`,
-        },
-      }
-    )
+    AxiosInstance.post('/auth/members/signup', {
+      username,
+      password,
+    })
       .then(() => {
         alert('회원가입이 완료되었습니다.');
         setUsernameError('');
