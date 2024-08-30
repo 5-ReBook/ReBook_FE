@@ -131,6 +131,7 @@ function SignupForm() {
     }
 
     const mailauth = localStorage.getItem('mailauth');
+    console.log(`보내기 직전 로컬스토리지의 mailauth : ${mailauth}`);
     AxiosInstance.post(
       '/auth/members/signup',
       {

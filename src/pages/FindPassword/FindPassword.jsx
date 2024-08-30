@@ -140,6 +140,7 @@ function FindPassword() {
     }
 
     const mailauth = localStorage.getItem('mailauth');
+    console.log(`보내기 직전 로컬스토리지의 mailauth : ${mailauth}`);
     try {
       await AxiosInstance.patch(
         '/auth/members/password/reset',
