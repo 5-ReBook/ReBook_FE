@@ -132,18 +132,11 @@ function SignupForm() {
 
     const mailauth = localStorage.getItem('mailauth');
     console.log(`보내기 직전 로컬스토리지의 mailauth : ${mailauth}`);
-    AxiosInstance.post(
-      '/auth/members/signup',
-      {
-        username,
-        password,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${mailauth}`,
-        },
-      }
-    )
+    AxiosInstance.post('/auth/members/signup', {
+      username,
+      password,
+      mailauth: `Bearer ${mailauth}`,
+    })
       .then(() => {
         alert('회원가입이 완료되었습니다.');
         setUsernameError('');

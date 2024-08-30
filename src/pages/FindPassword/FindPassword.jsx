@@ -142,18 +142,11 @@ function FindPassword() {
     const mailauth = localStorage.getItem('mailauth');
     console.log(`보내기 직전 로컬스토리지의 mailauth : ${mailauth}`);
     try {
-      await AxiosInstance.patch(
-        '/auth/members/password/reset',
-        {
-          username,
-          password,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${mailauth}`,
-          },
-        }
-      );
+      await AxiosInstance.patch('/auth/members/password/reset', {
+        username,
+        password,
+        mailauth: `Bearer ${mailauth}`,
+      });
       alert(
         '비밀번호 수정이 완료되었습니다. 새 비밀번호로 다시 로그인해주세요!'
       );
