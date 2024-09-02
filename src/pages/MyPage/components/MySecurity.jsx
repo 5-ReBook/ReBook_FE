@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Button from '../../../components/Button';
 import './MySecurity.css';
 import AxiosInstance from '../../../api/AxiosInstance';
@@ -27,8 +26,6 @@ function MySecurity() {
     const confirmDeletion = window.confirm('정말 탈퇴하시겠습니까?');
 
     if (confirmDeletion) {
-      const token = localStorage.getItem('Authorization');
-
       try {
         // '/api/members'
         await AxiosInstance.delete('/members');
