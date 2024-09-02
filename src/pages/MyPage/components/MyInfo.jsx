@@ -17,8 +17,8 @@ function MyInfo() {
   const [university, setUniversity] = useState(loginInfo.university || '');
   const [majors, setMajors] = useState(loginInfo.majors || '');
   const [profilePicture, setProfilePicture] = useState(
-    loginInfo.profilePicture || ''
-  ); // 초기 프로필 이미지
+    loginInfo.profilePicture
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,6 +50,10 @@ function MyInfo() {
   const handleUniversityChange = e => setUniversity(e.target.value);
   const handleMajorsChange = e => setMajors(e.target.value);
 
+  useEffect(()=>{
+    console.log(`Updated nickname: ${loginInfo.nickname}`)
+  },[loginInfo.nickname]);
+
   const handleNicknameSave = async () => {
     try {
       const response = await AxiosInstance.patch('/members/nickname', {
@@ -64,7 +68,6 @@ function MyInfo() {
         nickname: response.data.result.nickname,
       }));
 
-      console.log('Nickname saved:', loginInfo.nickname);
       alert(`${response.data.result.nickname}(으)로 수정되었습니다!`);
     } catch (error) {
       console.error('Failed to save nickname:', error);
@@ -117,6 +120,11 @@ function MyInfo() {
   };
 
   const handleDeletePicture = async () => {
+    if(profilePicture == null){
+      alert("이미 기본 프로필입니다.");
+      return;
+    }
+
     try {
       await AxiosInstance.delete('/members/profilePicture');
 
