@@ -64,7 +64,8 @@ function MyInfo() {
         nickname: response.data.result.nickname,
       }));
 
-      console.log('Nickname saved:', response.data.result.nickname);
+      console.log('Nickname saved:', loginInfo.nickname);
+      alert(`${response.data.result.nickname}(으)로 수정되었습니다!`);
     } catch (error) {
       console.error('Failed to save nickname:', error);
     }
