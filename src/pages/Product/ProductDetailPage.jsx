@@ -16,7 +16,6 @@ import {
 const ProductDetailPage = () => {
   const { loginInfo } = useLoginInfo();
   const [product, setProduct] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
   const [sellerInfo, setSellerInfo] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
   const [status, setStatus] = useState(''); // 상태 관리 추가
@@ -46,10 +45,6 @@ const ProductDetailPage = () => {
         setProduct(fetchedProduct);
         setStatus(fetchedProduct.status.toUpperCase()); // 상태를 대문자로 설정
 
-        const userInfoResponse = await AxiosInstance.get('/members/me');
-        const fetchedUserInfo = userInfoResponse.data.result;
-        setUserInfo(fetchedUserInfo);
-
         if (fetchedProduct && fetchedProduct.sellerUsername) {
           const sellerInfoResponse = await AxiosInstance.get(
             `/members/info/${fetchedProduct.sellerUsername}`
@@ -57,7 +52,7 @@ const ProductDetailPage = () => {
           const fetchedSellerInfo = sellerInfoResponse.data.result;
           setSellerInfo(fetchedSellerInfo);
 
-          setIsOwner(fetchedSellerInfo.username === fetchedUserInfo.username);
+          setIsOwner(fetchedSellerInfo.username === loginInfo.username);
         }
       } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -109,43 +104,45 @@ const ProductDetailPage = () => {
   }
 
   return (
-    <div className="product-detail">
-      <ProductImage imageFileNames={product.storeFileNameList} />
+    <div className="product-detail-wrapper">
+      <div className="product-detail">
+        <ProductImage imageFileNames={product.storeFileNameList} />
 
-      <SellerInfo
-        sellerImageUrl={''}
-        sellerName={sellerInfo.nickname || '이름 없음'}
-        sellerUniversity={sellerInfo.university || '대학교 정보 없음'}
-        sellerMajor={sellerInfo.majors || '전공 정보 없음'}
-        status={status} // 상태를 사용
-      />
+        <SellerInfo
+          sellerImageUrl={sellerInfo.storedFileName || ''}
+          sellerName={sellerInfo.nickname || '이름 없음'}
+          sellerUniversity={sellerInfo.university || '대학교 정보 없음'}
+          sellerMajor={sellerInfo.majors || '전공 정보 없음'}
+          status={status} // 상태를 사용
+        />
 
-      <ProductDescription
-        title={product.title}
-        content={product.content}
-        price={product.price}
-      />
-      <ProductDetails
-        university={product.bookUniversity}
-        major={product.bookMajor}
-      />
-      {/* 상태 변경 버튼 추가 */}
-      {isOwner && (
-        <>
-          <Button
-            text={
-              status === 'COMPLETED' ? '판매중으로 변경' : '판매완료로 변경'
-            }
-            onClick={() =>
-              handleStatusChange(
-                status === 'COMPLETED' ? 'PENDING' : 'COMPLETED'
-              )
-            }
-          />
-          <Button onClick={handleEditButtonClick} text="수정하기" />
-        </>
-      )}
-      {!isOwner && <Button onClick={handleChatButtonClick} text="채팅하기" />}
+        <ProductDescription
+          title={product.title}
+          content={product.content}
+          price={product.price}
+        />
+        <ProductDetails
+          university={product.bookUniversity}
+          major={product.bookMajor}
+        />
+        {/* 상태 변경 버튼 추가 */}
+        {isOwner && (
+          <>
+            <Button
+              text={
+                status === 'COMPLETED' ? '판매중으로 변경' : '판매완료로 변경'
+              }
+              onClick={() =>
+                handleStatusChange(
+                  status === 'COMPLETED' ? 'PENDING' : 'COMPLETED'
+                )
+              }
+            />
+            <Button onClick={handleEditButtonClick} text="수정하기" />
+          </>
+        )}
+        {!isOwner && <Button onClick={handleChatButtonClick} text="채팅하기" />}
+      </div>
     </div>
   );
 };
