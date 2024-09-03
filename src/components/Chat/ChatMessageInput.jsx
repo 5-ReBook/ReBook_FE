@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import './ChatMessageInput.css';
 
-const ChatMessageInput = ({ chatSocket }) => {
+function ChatMessageInput({ chatSocket }) {
   const [message, setMessage] = useState('');
 
   const sendMessage = event => {
@@ -24,6 +24,6 @@ const ChatMessageInput = ({ chatSocket }) => {
       <button type="submit">➤</button>
     </form>
   );
-};
+}
 
 export default ChatMessageInput;
