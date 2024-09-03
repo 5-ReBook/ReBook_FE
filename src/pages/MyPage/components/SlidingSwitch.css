@@ -7,7 +7,7 @@
   height: 4vh; /* 슬라이딩 스위치의 높이를 뷰포트 높이의 5%로 설정 */
   max-height: 40px; /* 최대 높이를 40px로 제한 */
   background-color: #f0f0f0; /* 배경 색상 */
-  border-radius: 30%; /* 둥근 모서리 */
+  border-radius: 10%; /* 둥근 모서리 */
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -35,7 +35,7 @@
   width: 45%; /* 슬라이딩 블록의 너비를 전체의 45%로 설정 */
   height: 85%; /* 슬라이딩 블록의 높이를 컨테이너 높이의 85%로 설정 */
   background-color: #9e6cff;
-  border-radius: 30%;
+  border-radius: 20%;
   top: 7.5%; /* 슬라이딩 블록을 중앙에 맞추기 위해 설정 */
   transition: transform 0.3s ease;
   z-index: 1;
