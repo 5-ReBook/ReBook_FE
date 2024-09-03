@@ -8,6 +8,7 @@ const AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 // 액세스 토큰을 모든 요청에 자동으로 추가
