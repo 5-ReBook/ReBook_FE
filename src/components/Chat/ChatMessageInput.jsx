@@ -8,8 +8,16 @@ function ChatMessageInput({ chatSocket }) {
   const sendMessage = event => {
     event.preventDefault();
     if (message.trim() !== '') {
-      chatSocket.sendMessage(message);
-      setMessage('');
+      if (
+        chatSocket &&
+        chatSocket.stompClient &&
+        chatSocket.stompClient.connected
+      ) {
+        chatSocket.sendMessage(message);
+        setMessage('');
+      } else {
+        console.warn('Chat socket is not connected. Message not sent.');
+      }
     }
   };
 
