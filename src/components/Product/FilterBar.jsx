@@ -2,6 +2,43 @@ import React from 'react';
 import './FilterBar.css';
 
 const FilterBar = ({ filters, onInputChange, onClickSearchButton }) => {
+  // 유효성 검사 함수
+  const validateFilters = () => {
+    // 검색어 유효성 검사 (입력된 경우에만 체크)
+    if (filters.searchInput.trim() !== '' && filters.searchInput.length < 2) {
+      alert('검색어는 최소 2자 이상 입력해주세요.');
+      return false;
+    }
+
+    // 가격 유효성 검사 (입력된 경우에만 체크)
+    if (filters.minPrice && parseInt(filters.minPrice, 10) < 0) {
+      alert('최저가는 0 이상이어야 합니다.');
+      return false;
+    }
+
+    if (filters.maxPrice && parseInt(filters.maxPrice, 10) < 0) {
+      alert('최고가는 0 이상이어야 합니다.');
+      return false;
+    }
+
+    if (
+      filters.minPrice &&
+      filters.maxPrice &&
+      parseInt(filters.minPrice, 10) > parseInt(filters.maxPrice, 10)
+    ) {
+      alert('최저가는 최고가보다 클 수 없습니다.');
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSearchClick = () => {
+    if (validateFilters()) {
+      onClickSearchButton();
+    }
+  };
+
   return (
     <div className="FilterBar">
       <div className="search-filter">
@@ -21,7 +58,7 @@ const FilterBar = ({ filters, onInputChange, onClickSearchButton }) => {
           placeholder="검색어를 입력하세요"
           type="text"
         />
-        <button type="button" onClick={onClickSearchButton}>
+        <button type="button" onClick={handleSearchClick}>
           🔍
         </button>
       </div>
@@ -49,6 +86,7 @@ const FilterBar = ({ filters, onInputChange, onClickSearchButton }) => {
           onChange={onInputChange}
           value={filters.sortOrder}
         >
+          <option value="recent">최신순</option>
           <option value="asc">낮은 가격순</option>
           <option value="desc">높은 가격순</option>
         </select>
