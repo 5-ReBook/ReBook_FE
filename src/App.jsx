@@ -29,6 +29,7 @@ function App() {
     AxiosInstance.get('/members/me')
       .then(response => {
         setLoginInfo(response.data.result); // 로그인 정보 설정
+        console.log(response);
 
         if (
           response.status === HttpStatusCode.Ok &&
