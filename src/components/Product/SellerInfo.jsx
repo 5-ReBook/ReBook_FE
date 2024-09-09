@@ -1,5 +1,6 @@
 import ProfileImage from '../Common/ProfileImage';
 import './SellerInfo.css';
+import defaultImage from '/src/assets/images/basicprofile.png';
 
 const SellerInfo = ({
   sellerImageUrl,
@@ -8,13 +9,13 @@ const SellerInfo = ({
   sellerMajor,
   status,
 }) => {
+  const imageUrl = sellerImageUrl
+    ? `https://rb-dev-s3-images.s3.amazonaws.com/product/${sellerImageUrl}`
+    : defaultImage;
+
   return (
     <div className="seller-info">
-      <ProfileImage
-        src={`https://rb-dev-s3-images.s3.amazonaws.com/product/${sellerImageUrl}`}
-        name={`${sellerName} 의 프로필사진`}
-        size="md"
-      />
+      <ProfileImage src={imageUrl} name={`${sellerName}`} size="md" />
       <div className="seller-info-detail">
         <h3>{sellerName}</h3>
         <p>

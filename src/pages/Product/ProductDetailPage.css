@@ -1,4 +1,9 @@
 /* ProductDetailPage.css */
+.product-detail-wrapper {
+  width: 100%;
+  height: 93%;
+}
+
 .product-detail {
   display: flex;
   flex-direction: column;
@@ -7,7 +12,7 @@
   padding: 1rem; /* 16px을 1rem으로 변경 */
   box-sizing: border-box;
   height: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 .product-detail .product-image-slider button {
@@ -25,6 +30,6 @@
   background-color: #504f50;
 }
 
-.product-detail > Button {
-  margin-top: 0.75rem;
+.product-detail .Button {
+  margin-top: 1rem;
 }

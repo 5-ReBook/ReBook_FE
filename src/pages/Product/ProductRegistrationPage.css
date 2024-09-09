@@ -1,3 +1,8 @@
+.product-registration-wrapper {
+  width: 100%;
+  height: 93%;
+}
+
 .product-registration {
   display: flex;
   flex-direction: column;
@@ -5,6 +10,8 @@
   width: 100%;
   padding: 1.25rem; /* 20px을 1.25rem으로 변경 */
   box-sizing: border-box;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .form-group {
@@ -49,4 +56,87 @@
 
 .form-group button:hover {
   background-color: #7d3c98;
+}
+
+.delete-button {
+  margin-top: 0.75rem;
+  margin-bottom: 3rem;
+  background-color: rgb(225, 53, 53);
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: rgb(189, 49, 49);
+}
+
+/* University and Major Search Styles */
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.75rem; /* 12px을 0.75rem으로 변경 */
+  border-radius: 0.5rem; /* 8px을 0.5rem으로 변경 */
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  box-sizing: border-box;
+  font-family: inherit;
+  outline: none;
+}
+
+.search-bar button {
+  margin-left: 0.5rem; /* 8px을 0.5rem으로 변경 */
+  padding: 0.75rem; /* 12px을 0.75rem으로 변경 */
+  border-radius: 0.5rem; /* 8px을 0.5rem으로 변경 */
+  background-color: #ffffff;
+  color: white;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 0.97rem;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+  background-color: #f0f0f0;
+}
+
+.university-list,
+.major-list {
+  margin-top: 0.5rem; /* 8px을 0.5rem으로 변경 */
+  border: 1px solid #ddd;
+  border-radius: 0.5rem; /* 8px을 0.5rem으로 변경 */
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.university-item,
+.major-item {
+  padding: 0.75rem; /* 12px을 0.75rem으로 변경 */
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+.university-item:last-child,
+.major-item:last-child {
+  border-bottom: none;
+}
+
+.university-item:hover,
+.major-item:hover {
+  background-color: #f0f0f0;
+}
+
+.university-search {
+  margin-top: 1rem;
+}
+
+.major-search {
+  margin-top: 1rem;
 }

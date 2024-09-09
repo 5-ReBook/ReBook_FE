@@ -18,6 +18,8 @@ function ProductEditPage() {
   const [content, setContent] = useState('');
   const [images, setImages] = useState([]);
   const [existingImages, setExistingImages] = useState([]); // 기존 이미지를 저장하는 상태
+  const [universityList, setUniversityList] = useState([]);
+  const [majorList, setMajorList] = useState([]);
   const { setLayoutConfig } = useLayout();
   const nav = useNavigate();
   const { productId } = useParams();
@@ -92,7 +94,93 @@ function ProductEditPage() {
     setImages(prevImages => prevImages.filter((_, i) => i !== index));
   };
 
+  const handlePriceChange = e => {
+    const { value } = e.target;
+    const numericValue = value.replace(/[^0-9]/g, ''); // 숫자가 아닌 문자는 제거
+    setPrice(numericValue);
+  };
+
+  const handleUniversitySearch = async () => {
+    if (!university.trim()) {
+      alert('대학교를 입력하세요.');
+      return;
+    }
+
+    try {
+      const response = await AxiosInstance.get('/members/universities', {
+        params: {
+          unvToSearch: university,
+        },
+      });
+
+      setUniversityList(response.data.result);
+    } catch (error) {
+      console.error('Failed to fetch universities:', error);
+    }
+  };
+
+  const handleMajorSearch = async () => {
+    if (!major.trim()) {
+      alert('전공을 입력하세요.');
+      return;
+    }
+
+    try {
+      const response = await AxiosInstance.get('/members/majors', {
+        params: {
+          majorToSearch: major,
+        },
+      });
+
+      setMajorList(response.data.result);
+    } catch (error) {
+      console.error('Failed to fetch majors:', error);
+    }
+  };
+
+  const handleUniversitySelect = selectedUniversity => {
+    setUniversity(selectedUniversity);
+    setUniversityList([]); // 리스트를 숨기기 위해 초기화
+  };
+
+  const handleMajorSelect = selectedMajor => {
+    setMajor(selectedMajor);
+    setMajorList([]); // 리스트를 숨기기 위해 초기화
+  };
+
+  // 유효성 검사 함수
+  const validateInput = () => {
+    if (title.length < 1 || title.length > 100) {
+      alert('글 제목은 1자 이상 100자 이하로 입력해주세요.');
+      return false;
+    }
+    if (university.length < 1 || university.length > 50) {
+      alert('학교 이름은 1자 이상 50자 이하로 입력해주세요.');
+      return false;
+    }
+    if (major.length < 1 || major.length > 50) {
+      alert('전공은 1자 이상 50자 이하로 입력해주세요.');
+      return false;
+    }
+    if (price.length < 1 || isNaN(price) || parseInt(price, 10) <= 0) {
+      alert('유효한 가격을 입력해주세요.');
+      return false;
+    }
+    if (content.length < 10 || content.length > 1000) {
+      alert('게시글 내용은 10자 이상 1000자 이하로 입력해주세요.');
+      return false;
+    }
+    if (images.length === 0) {
+      alert('최소 1개의 이미지를 업로드해주세요.');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async () => {
+    if (!validateInput()) return;
+
     const formData = new FormData();
 
     // JSON 형태의 데이터를 추가
@@ -136,6 +224,22 @@ function ProductEditPage() {
     }
   };
 
+  const handleProductDelete = async () => {
+    const confirmDelete = window.confirm('정말로 이 상품을 삭제하시겠습니까?');
+    if (!confirmDelete) return;
+
+    try {
+      const response = await AxiosInstance.delete(`/products/${productId}`);
+      if (response.status === 200) {
+        alert('상품이 성공적으로 삭제되었습니다.');
+        nav('/'); // 삭제 후 메인 페이지로 이동
+      }
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      alert('상품 삭제에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
+
   return (
     <div className="product-registration">
       <InputField
@@ -143,28 +247,79 @@ function ProductEditPage() {
         value={title}
         onChange={e => setTitle(e.target.value)}
         placeholder="글 제목"
+        maxLength={100} // 최대 길이 제한
       />
 
-      <InputField
-        label="학교 이름"
-        value={university}
-        onChange={e => setUniversity(e.target.value)}
-        placeholder="학교 이름"
-      />
+      <div className="university-search">
+        <label>학교 이름</label>
+        <div className="search-bar">
+          <input
+            type="text"
+            value={university}
+            onChange={e => setUniversity(e.target.value)}
+            placeholder="학교 이름"
+          />
+          <button type="button" onClick={handleUniversitySearch}>
+            🔍
+          </button>
+        </div>
+        {universityList.length > 0 && (
+          <div className="university-list">
+            {universityList.map(univ => (
+              <div
+                key={univ}
+                className="university-item"
+                onClick={() => handleUniversitySelect(univ)}
+                onKeyDown={e =>
+                  e.key === 'Enter' && handleUniversitySelect(univ)
+                }
+                tabIndex={0} // 키보드 접근성을 위해 tabIndex 추가
+                role="button" // 키보드 접근성을 위해 role 추가
+              >
+                {univ}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-      <InputField
-        label="전공"
-        value={major}
-        onChange={e => setMajor(e.target.value)}
-        placeholder="전공"
-      />
+      <div className="major-search">
+        <label>전공</label>
+        <div className="search-bar">
+          <input
+            type="text"
+            value={major}
+            onChange={e => setMajor(e.target.value)}
+            placeholder="전공"
+          />
+          <button type="button" onClick={handleMajorSearch}>
+            🔍
+          </button>
+        </div>
+        {majorList.length > 0 && (
+          <div className="major-list">
+            {majorList.map(mjr => (
+              <div
+                key={mjr}
+                className="major-item"
+                onClick={() => handleMajorSelect(mjr)}
+                onKeyDown={e => e.key === 'Enter' && handleMajorSelect(mjr)}
+                tabIndex={0} // 키보드 접근성을 위해 tabIndex 추가
+                role="button" // 키보드 접근성을 위해 role 추가
+              >
+                {mjr}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       <InputField
         label="₩ 가격 입력"
         value={price}
-        onChange={e => setPrice(e.target.value)}
+        onChange={handlePriceChange} // 숫자만 허용
         placeholder="₩ 가격 입력"
-        type="number"
+        type="text" // type을 text로 설정하여 e 등의 입력을 막음
       />
 
       <div className="form-group">
@@ -172,6 +327,7 @@ function ProductEditPage() {
           placeholder="올릴 게시글 내용을 작성해주세요."
           value={content}
           onChange={e => setContent(e.target.value)}
+          maxLength={1000} // 최대 길이 제한
         />
       </div>
 
@@ -182,6 +338,11 @@ function ProductEditPage() {
       />
 
       <Button text="수정 완료" onClick={handleSubmit} />
+      <Button
+        className="delete-button"
+        text="삭제하기"
+        onClick={handleProductDelete}
+      />
     </div>
   );
 }

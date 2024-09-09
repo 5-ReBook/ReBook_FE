@@ -15,10 +15,10 @@ const MainPage = () => {
     searchInput: '',
     minPrice: '',
     maxPrice: '',
-    sortOrder: 'asc',
+    sortOrder: 'recent',
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [lastId, setLastId] = useState(null); // lastId를 사용하여 No-Offset Pagination 구현
+  const [currentPage, setCurrentPage] = useState(0); // offset pagination에서 페이지 번호를 사용
   const [hasMore, setHasMore] = useState(true);
   const { setLayoutConfig } = useLayout();
 
@@ -32,7 +32,7 @@ const MainPage = () => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && hasMore) {
-          fetchProducts(); // lastId 기반으로 새로운 데이터를 가져옴
+          setCurrentPage(prevPage => prevPage + 1); // 다음 페이지로 이동
         }
       });
       if (node) observer.current.observe(node);
@@ -46,7 +46,7 @@ const MainPage = () => {
 
     setIsLoading(true);
 
-    let url = `/products?order=${filters.sortOrder}&size=10`;
+    let url = `/products?sortOrder=${filters.sortOrder}&page=${currentPage}&size=10`;
 
     if (filters.minPrice) url += `&minPrice=${filters.minPrice}`;
     if (filters.maxPrice) url += `&maxPrice=${filters.maxPrice}`;
@@ -60,20 +60,11 @@ const MainPage = () => {
       }
     }
 
-    if (lastId) {
-      url += `&lastId=${lastId}`; // lastId를 쿼리 파라미터로 추가
-    }
-
     AxiosInstance.get(url)
       .then(response => {
         if (response.data && response.data.content) {
           const newProducts = response.data.content;
           setProducts(prevProducts => [...prevProducts, ...newProducts]);
-
-          // 새로운 lastId를 설정 (마지막 요소의 ID)
-          if (newProducts.length > 0) {
-            setLastId(newProducts[newProducts.length - 1].productId);
-          }
 
           // 더 이상 가져올 데이터가 없으면 hasMore를 false로 설정
           setHasMore(newProducts.length === 10); // 페이지 사이즈만큼의 데이터가 있을 때만 더 가져올 수 있음
@@ -81,7 +72,7 @@ const MainPage = () => {
       })
       .catch(error => console.error('Error fetching products:', error))
       .finally(() => setIsLoading(false));
-  }, [filters, lastId, isLoading, hasMore]);
+  }, [filters, currentPage, isLoading, hasMore]);
 
   useEffect(() => {
     setLayoutConfig({
@@ -90,15 +81,13 @@ const MainPage = () => {
       footerNav: true,
     });
 
+    fetchProducts(); // 컴포넌트 마운트 시 데이터 로드
+
     // 컴포넌트가 언마운트될 때 레이아웃을 기본값으로 복원
     return () => {
       setLayoutConfig(defaultLayoutConfig);
     };
-  }, [setLayoutConfig]);
-
-  useEffect(() => {
-    fetchProducts(); // 컴포넌트 마운트 시 데이터 로드
-  }, []); // lastId에 의존하지 않도록 빈 배열로 설정
+  }, [setLayoutConfig, currentPage]); // currentPage에 의존하도록 변경
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -106,16 +95,13 @@ const MainPage = () => {
       ...filters,
       [name]: value,
     });
-    setProducts([]);
-    setLastId(null); // lastId를 초기화
-    setHasMore(true);
   };
 
   const onClickSearchButton = () => {
     setProducts([]);
-    setLastId(null); // lastId를 초기화
+    setCurrentPage(0); // 검색 시 페이지를 초기화
     setHasMore(true);
-    fetchProducts();
+    fetchProducts(); // 검색 버튼 클릭 시에만 fetchProducts를 호출
   };
 
   return (
