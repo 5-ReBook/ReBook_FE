@@ -9,7 +9,7 @@ import ChatSocket from '../../lib/ChatSocket';
 import { useLoginInfo } from '../../provider/LoginInfoProvider';
 
 // Main Chat Component
-const ChatRoomPage = () => {
+function ChatRoomPage() {
   const { id } = useParams();
   const { loginInfo } = useLoginInfo();
   const [messages, setMessages] = useState([]);
@@ -47,6 +47,6 @@ const ChatRoomPage = () => {
       <ChatMessageInput chatSocket={chatSocket} />
     </div>
   );
-};
+}
 
 export default ChatRoomPage;

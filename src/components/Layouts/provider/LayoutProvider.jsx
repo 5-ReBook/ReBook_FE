@@ -6,11 +6,11 @@ export const useLayout = () => useContext(LayoutContext);
 
 export const defaultLayoutConfig = {
   header: true,
-  leftButton: 'menu', // "menu" | "goBack" | "none"
+  leftButton: 'goBack', // "menu" | "goBack" | "none"
   footerNav: true,
 };
 
-export const LayoutProvider = ({ children }) => {
+export function LayoutProvider({ children }) {
   const [layoutConfig, setLayoutConfig] = useState(defaultLayoutConfig);
 
   return (
@@ -18,4 +18,4 @@ export const LayoutProvider = ({ children }) => {
       {children}
     </LayoutContext.Provider>
   );
-};
+}

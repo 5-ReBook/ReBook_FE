@@ -13,7 +13,7 @@ import {
   useLayout,
 } from '../../components/Layouts/provider/LayoutProvider';
 
-const ProductDetailPage = () => {
+function ProductDetailPage() {
   const { loginInfo } = useLoginInfo();
   const [product, setProduct] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
@@ -87,7 +87,7 @@ const ProductDetailPage = () => {
   };
 
   const handleChatButtonClick = () => {
-    api
+    AxiosInstance
       .post('/chat/rooms', {
         sellerUsername: product.sellerUsername,
         buyerUsername: loginInfo.username,
@@ -113,7 +113,7 @@ const ProductDetailPage = () => {
       <ProductImage imageFileNames={product.storeFileNameList} />
 
       <SellerInfo
-        sellerImageUrl={''}
+        sellerImageUrl=""
         sellerName={sellerInfo.nickname || '이름 없음'}
         sellerUniversity={sellerInfo.university || '대학교 정보 없음'}
         sellerMajor={sellerInfo.majors || '전공 정보 없음'}
@@ -148,6 +148,6 @@ const ProductDetailPage = () => {
       {!isOwner && <Button onClick={handleChatButtonClick} text="채팅하기" />}
     </div>
   );
-};
+}
 
 export default ProductDetailPage;

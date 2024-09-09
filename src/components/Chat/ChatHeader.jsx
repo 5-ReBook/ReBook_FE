@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './ChatHeader.css';
 import AxiosInstance from '../../api/AxiosInstance';
 
-const ChatHeader = ({ chatRoomId }) => {
+function ChatHeader({ chatRoomId }) {
   const [productInfo, setProductInfo] = useState({
     bookMajor: '',
     bookUniversity: '',
@@ -14,27 +14,41 @@ const ChatHeader = ({ chatRoomId }) => {
     storeFileNameList: [],
     title: '',
   });
+  const [usernameToShow, setUsernameToShow] = useState('');
 
   useEffect(() => {
-    console.log(chatRoomId);
+    // 채팅방 정보 가져오기
     AxiosInstance.get(`/chat/rooms/${chatRoomId}`)
       .then(response => {
-        console.log('RESSSSS : ', response.data);
         AxiosInstance.get(`/products/${response.data.result.productId}`)
           .then(productResponse => {
-            console.log(productResponse.data.result);
             setProductInfo(productResponse.data.result);
           })
           .catch(error => {
-            console.error('Failed to fetch product info:', error);
+            console.error('상품 정보를 가져오는 데 실패했습니다:', error);
           });
       })
       .catch(error => {
-        console.error('Failed to fetch chat room info:', error);
+        console.error('채팅방 정보를 가져오는 데 실패했습니다:', error);
       });
-  }, []);
+  }, [chatRoomId]);
 
-  const username = productInfo.sellerUsername.split('@')[0];
+  useEffect(() => {
+    // productInfo.sellerUsername이 업데이트된 후에만 실행
+    if (productInfo.sellerUsername) {
+      AxiosInstance.get(`/members/info/${productInfo.sellerUsername}`)
+        .then(response => {
+          setUsernameToShow(
+            response.data.result.nickname == null
+              ? productInfo.sellerUsername.split('@')[0]
+              : response.data.result.nickname
+          );
+        })
+        .catch(error => {
+          console.error('판매자 정보를 가져오는 데 실패했습니다:', error);
+        });
+    }
+  }, [productInfo.sellerUsername]);
 
   return (
     <div className="chat-header">
@@ -51,9 +65,9 @@ const ChatHeader = ({ chatRoomId }) => {
           </div>
         </div>
       </div>
-      <div className="chat-seller-info">{username}</div>
+      <div className="chat-seller-info">{usernameToShow}</div>
     </div>
   );
-};
+}
 
 export default ChatHeader;

@@ -66,7 +66,7 @@ class ChatSocket {
           type: 'TALK',
           roomId: this.chatRoomId,
           senderUsername: this.senderUsername,
-          message: message,
+          message,
         })
       );
     }
@@ -89,7 +89,20 @@ class ChatSocket {
 
   disconnect() {
     if (this.stompClient) {
-      this.stompClient.disconnect();
+      // WebSocket이 아직 연결 중인지 확인
+      if (this.stompClient.ws.readyState === WebSocket.OPEN) {
+        this.stompClient.disconnect();
+      } else {
+        console.warn(
+          'WebSocket is not open. Current state:',
+          this.stompClient.ws.readyState
+        );
+        // WebSocket이 여전히 연결 중인 경우, 연결이 완료된 후에 disconnect를 호출하도록 설정
+        this.stompClient.ws.onopen = () => {
+          console.log('WebSocket is now open, disconnecting...');
+          this.stompClient.disconnect();
+        };
+      }
     }
   }
 
