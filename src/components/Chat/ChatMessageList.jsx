@@ -4,7 +4,7 @@ import { useLoginInfo } from '../../provider/LoginInfoProvider';
 import './ChatMessageList.css';
 import { dateStringToMessageTime } from '../../utils/dateUtil';
 
-const ChatMessageItem = ({ message, isUser }) => {
+function ChatMessageItem({ message, isUser }) {
   return (
     <li className={`message ${isUser ? 'user-message' : 'other-message'}`}>
       <div className="message-text">{message.message}</div>
@@ -13,9 +13,9 @@ const ChatMessageItem = ({ message, isUser }) => {
       </div>
     </li>
   );
-};
+}
 
-const ChatMessageList = ({ messages }) => {
+function ChatMessageList({ messages }) {
   const { loginInfo } = useLoginInfo();
 
   return (
@@ -29,6 +29,6 @@ const ChatMessageList = ({ messages }) => {
       ))}
     </ul>
   );
-};
+}
 
 export default ChatMessageList;

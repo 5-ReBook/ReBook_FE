@@ -13,7 +13,7 @@ import {
   useLayout,
 } from '../../components/Layouts/provider/LayoutProvider';
 
-const ProductDetailPage = () => {
+function ProductDetailPage() {
   const { loginInfo } = useLoginInfo();
   const [product, setProduct] = useState(null);
   const [sellerInfo, setSellerInfo] = useState(null);
@@ -82,7 +82,7 @@ const ProductDetailPage = () => {
   };
 
   const handleChatButtonClick = () => {
-    api
+    AxiosInstance
       .post('/chat/rooms', {
         sellerUsername: product.sellerUsername,
         buyerUsername: loginInfo.username,
@@ -145,6 +145,6 @@ const ProductDetailPage = () => {
       </div>
     </div>
   );
-};
+}
 
 export default ProductDetailPage;

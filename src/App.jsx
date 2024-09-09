@@ -23,36 +23,40 @@ import { useLoginInfo } from './provider/LoginInfoProvider';
 function App() {
   const { setLoginInfo } = useLoginInfo();
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate(); // useNavigate 훅 사용
+  const navigate = useNavigate();
 
   useEffect(() => {
-    AxiosInstance.get('/members/me')
-      .then(response => {
-        setLoginInfo(response.data.result); // 로그인 정보 설정
+    const fetchData = async () => {
+      try {
+        const response = await AxiosInstance.get('/members/me');
+        setLoginInfo(response.data.result);
 
         if (
           response.status === HttpStatusCode.Ok &&
           (location.pathname === '/signin' ||
             location.pathname === '/signupform')
         ) {
-          navigate('/'); // 인증 성공 시에만 리다이렉트
+          navigate('/');
         }
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error with Authorize:', error);
         if (
           location.pathname !== '/signin' &&
           location.pathname !== '/signupform' &&
           location.pathname !== '/findpassword'
         ) {
-          navigate('/signin'); // 인증 실패 시에만 리다이렉트
+          navigate('/signin');
         }
-      })
-      .finally(() => setIsLoading(false)); // 로딩 완료
-  }, [navigate]); // navigate를 의존성 배열에 추가
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [navigate, setLoginInfo]);
 
   if (isLoading) {
-    return <div>Loading...</div>; // 로딩 중 표시될 화면
+    return <div>Loading...</div>;
   }
 
   return (
@@ -72,7 +76,6 @@ function App() {
             path="/products/edit/:productId"
             element={<ProductEditPage />}
           />
-          {/* fixme : FindPassword 안 들어가지는 문제 해결하기 */}
           <Route path="/findpassword" element={<FindPassword />} />
           <Route path="/chat/roomlist" element={<ChatRoomListPage />} />
           <Route path="/chat/rooms/:id" element={<ChatRoomPage />} />

@@ -1,12 +1,14 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
 
 import './ChatRoomList.css';
+import { useNavigate } from 'react-router-dom';
 import ProfileImage from '../Common/ProfileImage';
 import AxiosInstance from '../../api/AxiosInstance';
 import { useLoginInfo } from '../../provider/LoginInfoProvider';
-import { useNavigate } from 'react-router-dom';
 
-const ChatRoomItem = ({ chatRoom }) => {
+function ChatRoomItem({ chatRoom }) {
   const nav = useNavigate();
   const { loginInfo } = useLoginInfo();
   const [chatUser, setChatUser] = useState({
@@ -60,9 +62,9 @@ const ChatRoomItem = ({ chatRoom }) => {
       </div>
     </li>
   );
-};
+}
 
-const ChatRoomList = ({ chatRooms }) => {
+function ChatRoomList({ chatRooms }) {
   return (
     <ul className="chat-list-items">
       {chatRooms.map(chatRoom => (
@@ -70,6 +72,6 @@ const ChatRoomList = ({ chatRooms }) => {
       ))}
     </ul>
   );
-};
+}
 
 export default ChatRoomList;

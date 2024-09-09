@@ -3,7 +3,7 @@ import './ChatRoomListPage.css';
 import ChatRoomList from '../../components/Chat/ChatRoomList';
 import AxiosInstance from '../../api/AxiosInstance';
 
-const ChatRoomListPage = () => {
+function ChatRoomListPage() {
   const [chatRooms, setChatRooms] = useState([]);
 
   useEffect(() => {
@@ -23,6 +23,6 @@ const ChatRoomListPage = () => {
       <ChatRoomList chatRooms={chatRooms} />
     </div>
   );
-};
+}
 
 export default ChatRoomListPage;
