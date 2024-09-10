@@ -10,7 +10,7 @@ import {
 } from '../../components/Layouts/provider/LayoutProvider';
 import './ProductRegistrationPage.css'; // 기존의 등록 페이지 스타일 재사용
 
-function ProductEditPage() {
+const ProductEditPage = () => {
   const [title, setTitle] = useState('');
   const [university, setUniversity] = useState('');
   const [major, setMajor] = useState('');
@@ -345,6 +345,6 @@ function ProductEditPage() {
       />
     </div>
   );
-}
+};
 
 export default ProductEditPage;

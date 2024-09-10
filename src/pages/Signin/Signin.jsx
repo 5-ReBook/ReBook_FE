@@ -31,10 +31,16 @@ function Signin() {
 
   const handleSignin = async () => {
     try {
-      const response = await AxiosInstance.post('/auth/signin', {
-        username,
-        password,
-      });
+      const response = await AxiosInstance.post(
+        '/auth/signin',
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       // 서버로부터 받은 액세스 토큰을 localStorage에 저장
       localStorage.setItem('Authorization', response.headers.authorization);
