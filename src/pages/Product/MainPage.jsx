@@ -77,7 +77,7 @@ const MainPage = () => {
   useEffect(() => {
     setLayoutConfig({
       header: true,
-      leftButton: 'none',
+      leftButton: 'goBack',
       footerNav: true,
     });
 

@@ -13,7 +13,7 @@ import {
   useLayout,
 } from '../../components/Layouts/provider/LayoutProvider';
 
-function ProductDetailPage() {
+const ProductDetailPage = () => {
   const { loginInfo } = useLoginInfo();
   const [product, setProduct] = useState(null);
   const [sellerInfo, setSellerInfo] = useState(null);
@@ -82,12 +82,11 @@ function ProductDetailPage() {
   };
 
   const handleChatButtonClick = () => {
-    AxiosInstance
-      .post('/chat/rooms', {
-        sellerUsername: product.sellerUsername,
-        buyerUsername: loginInfo.username,
-        productId: product.productId,
-      })
+    AxiosInstance.post('/chat/rooms', {
+      sellerUsername: product.sellerUsername,
+      buyerUsername: loginInfo.username,
+      productId: product.productId,
+    })
       .then(response => {
         const room = response.data.result;
         nav(`/chat/rooms/${room.roomId}`);
@@ -145,6 +144,6 @@ function ProductDetailPage() {
       </div>
     </div>
   );
-}
+};
 
 export default ProductDetailPage;

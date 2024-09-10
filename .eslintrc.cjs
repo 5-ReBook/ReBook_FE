@@ -25,5 +25,12 @@ module.exports = {
     'import/prefer-default-export': 'off', // named export를 선호
     'react/prop-types': 'off', // prop-types 사용을 강제하지 않음
     'react/jsx-props-no-spreading': 'off', // JSX에서 props spreading 허용
+    'react/function-component-definition': [
+      2,
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
   },
 };

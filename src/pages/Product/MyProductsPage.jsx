@@ -14,7 +14,7 @@ const MyProductsPage = () => {
   useEffect(() => {
     setLayoutConfig({
       header: true,
-      leftButton: 'none',
+      leftButton: 'goBack',
       footerNav: true,
     });
 
