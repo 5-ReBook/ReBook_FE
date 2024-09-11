@@ -4,18 +4,20 @@ import { useLoginInfo } from '../../provider/LoginInfoProvider';
 import './ChatMessageList.css';
 import { dateStringToMessageTime } from '../../utils/dateUtil';
 
-function ChatMessageItem({ message, isUser }) {
-  return (
-    <li className={`message ${isUser ? 'user-message' : 'other-message'}`}>
-      <div className="message-text">{message.message}</div>
-      <div className="message-time">
-        {dateStringToMessageTime(message.createdAt)}
-      </div>
-    </li>
-  );
-}
+const ChatMessageItem = ({ message, isUser }) => (
+  <li className={`message ${isUser ? 'user-message' : 'other-message'}`}>
+    <div className="message-text">{message.message}</div>
+    <div className="message-time">
+      {dateStringToMessageTime(message.createdAt)}
+    </div>
+    {/* isUser가 false일 때만 warningMessage가 있을 경우에만 경고 메시지를 보여줍니다. */}
+    {!isUser && message.warningMessage && (
+      <div className="message-warning">{message.warningMessage}</div>
+    )}
+  </li>
+);
 
-function ChatMessageList({ messages }) {
+const ChatMessageList = ({ messages }) => {
   const { loginInfo } = useLoginInfo();
 
   return (
@@ -29,6 +31,6 @@ function ChatMessageList({ messages }) {
       ))}
     </ul>
   );
-}
+};
 
 export default ChatMessageList;
