@@ -16,9 +16,10 @@ const MainPage = () => {
     minPrice: '',
     maxPrice: '',
     sortOrder: 'recent',
+    lastProductId: null, // 마지막 제품의 ID 추가
+    lastPrice: null, // 마지막 제품의 가격 추가
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0); // offset pagination에서 페이지 번호를 사용
   const [hasMore, setHasMore] = useState(true);
   const { setLayoutConfig } = useLayout();
 
@@ -32,12 +33,12 @@ const MainPage = () => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting && hasMore) {
-          setCurrentPage(prevPage => prevPage + 1); // 다음 페이지로 이동
+          fetchProducts(); // 새로운 데이터 가져오기
         }
       });
       if (node) observer.current.observe(node);
     },
-    [isLoading, hasMore]
+    [isLoading, hasMore, filters] // filters에 커서 값 추가
   );
 
   // API에서 데이터를 가져오는 함수
@@ -46,7 +47,11 @@ const MainPage = () => {
 
     setIsLoading(true);
 
-    let url = `/products?sortOrder=${filters.sortOrder}&page=${currentPage}&size=10`;
+    let url = `/products?sortOrder=${filters.sortOrder}&size=10`;
+
+    // 마지막으로 조회한 제품의 ID와 가격을 커서로 사용
+    if (filters.lastProductId) url += `&lastProductId=${filters.lastProductId}`;
+    if (filters.lastPrice) url += `&lastPrice=${filters.lastPrice}`;
 
     if (filters.minPrice) url += `&minPrice=${filters.minPrice}`;
     if (filters.maxPrice) url += `&maxPrice=${filters.maxPrice}`;
@@ -64,15 +69,41 @@ const MainPage = () => {
       .then(response => {
         if (response.data && response.data.content) {
           const newProducts = response.data.content;
-          setProducts(prevProducts => [...prevProducts, ...newProducts]);
 
-          // 더 이상 가져올 데이터가 없으면 hasMore를 false로 설정
-          setHasMore(newProducts.length === 10); // 페이지 사이즈만큼의 데이터가 있을 때만 더 가져올 수 있음
+          // 중복된 제품을 필터링하고 새로운 데이터를 추가
+          setProducts(prevProducts => {
+            const filteredProducts = newProducts.filter(
+              newProduct =>
+                !prevProducts.some(
+                  prevProduct => prevProduct.productId === newProduct.productId
+                )
+            );
+            return [...prevProducts, ...filteredProducts];
+          });
+
+          if (
+            newProducts.length === 0 ||
+            newProducts[newProducts.length - 1].productId ===
+              filters.lastProductId
+          ) {
+            setHasMore(false); // 더 이상 가져올 데이터가 없거나 마지막 데이터가 같을 경우
+          } else {
+            // 마지막 제품의 ID와 가격을 업데이트
+            const lastProduct = newProducts[newProducts.length - 1];
+            setFilters(prevFilters => ({
+              ...prevFilters,
+              lastProductId: lastProduct.productId,
+              lastPrice: lastProduct.price,
+            }));
+          }
+        } else {
+          // 응답에 데이터가 없는 경우
+          setHasMore(false);
         }
       })
       .catch(error => console.error('Error fetching products:', error))
       .finally(() => setIsLoading(false));
-  }, [filters, currentPage, isLoading, hasMore]);
+  }, [filters, isLoading, hasMore]);
 
   useEffect(() => {
     setLayoutConfig({
@@ -87,19 +118,25 @@ const MainPage = () => {
     return () => {
       setLayoutConfig(defaultLayoutConfig);
     };
-  }, [setLayoutConfig, currentPage]); // currentPage에 의존하도록 변경
+  }, [setLayoutConfig, filters]); // filters에 의존성 추가
 
   const handleInputChange = e => {
     const { name, value } = e.target;
     setFilters({
       ...filters,
       [name]: value,
+      lastProductId: null, // 필터 변경 시 커서 초기화
+      lastPrice: null,
     });
   };
 
   const onClickSearchButton = () => {
     setProducts([]);
-    setCurrentPage(0); // 검색 시 페이지를 초기화
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      lastProductId: null, // 검색 시 커서를 초기화
+      lastPrice: null,
+    }));
     setHasMore(true);
     fetchProducts(); // 검색 버튼 클릭 시에만 fetchProducts를 호출
   };
